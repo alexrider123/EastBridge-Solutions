@@ -1,0 +1,309 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+const wechatDeepLink = `weixin://contacts/profile/${t.contact.wechatId}`;
+const wechatDisplayName = 'Eastbridge Solutions';
+---
+
+<section id="contact" class="section contact-section">
+  <div class="container">
+    <div class="contact-inner">
+
+      <span class="section-label contact-label">{t.contact.label}</span>
+      <h2 class="section-headline contact-headline">{t.contact.headline}</h2>
+      <div class="contact-divider"></div>
+      <p class="contact-body">{t.contact.body}</p>
+
+      <!-- Contact channels as editorial link rows -->
+      <div class="contact-links">
+        <a href={`mailto:${t.contact.email}`} class="contact-link">
+          <div class="link-top">
+            <span class="link-label">{t.contact.emailLabel}</span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </div>
+          <span class="link-value">{t.contact.email}</span>
+        </a>
+
+        <a href={wechatDeepLink} class="contact-link contact-link--wechat" id="wechat-link">
+          <div class="link-top">
+            <span class="link-label">{t.contact.wechatLabel}</span>
+            <span class="link-arrow" aria-hidden="true">→</span>
+          </div>
+          <span class="link-value">{wechatDisplayName}</span>
+          <span class="link-hint">Open direct message in WeChat</span>
+        </a>
+      </div>
+
+      <div class="wechat-fallback" id="wechat-fallback" hidden>
+        <p class="wechat-fallback-text">If WeChat does not open automatically, copy the account ID and search in WeChat:</p>
+        <div class="wechat-id-row">
+          <button type="button" class="wechat-copy-btn" id="wechat-copy-btn" data-wechat-id={t.contact.wechatId}>Copy WeChat ID</button>
+          <span class="wechat-copy-status" id="wechat-copy-status" aria-live="polite"></span>
+        </div>
+        <p class="wechat-fallback-note">You can also scan the QR code below.</p>
+        <img
+          src="/wechat-qr.png"
+          alt="WeChat QR code"
+          class="wechat-qr"
+          loading="lazy"
+          onerror="this.style.display='none'"
+        />
+      </div>
+
+      <p class="contact-closing">{t.contact.closing}</p>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  const wechatLink = document.getElementById('wechat-link');
+  const fallback = document.getElementById('wechat-fallback');
+  const copyBtn = document.getElementById('wechat-copy-btn');
+  const copyStatus = document.getElementById('wechat-copy-status');
+
+  if (wechatLink && fallback) {
+    wechatLink.addEventListener('click', () => {
+      fallback.hidden = true;
+      window.setTimeout(() => {
+        if (document.visibilityState === 'visible') {
+          fallback.hidden = false;
+        }
+      }, 1100);
+    });
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      const wechatId = copyBtn.getAttribute('data-wechat-id');
+      if (!wechatId) return;
+
+      try {
+        await navigator.clipboard.writeText(wechatId);
+        if (copyStatus) copyStatus.textContent = 'ID copied';
+        window.setTimeout(() => {
+          if (copyStatus) copyStatus.textContent = '';
+        }, 1400);
+      } catch {
+        if (copyStatus) copyStatus.textContent = 'Copy not available';
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-section {
+    background-color: var(--color-navy);
+  }
+
+  .contact-inner {
+    max-width: 640px;
+  }
+
+  .contact-label {
+    color: var(--color-gold);
+  }
+
+  .contact-headline {
+    color: var(--color-off-white);
+  }
+
+  .contact-divider {
+    width: 36px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-block: var(--space-6);
+    opacity: 0.7;
+  }
+
+  .contact-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(248, 246, 241, 0.6);
+    margin-bottom: var(--space-10);
+    max-width: 540px;
+  }
+
+  :lang(zh) .contact-body {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ── Editorial link rows ── */
+  .contact-links {
+    border-top: 1px solid rgba(248, 246, 241, 0.1);
+    margin-bottom: var(--space-6);
+  }
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-6) 0;
+    border-bottom: 1px solid rgba(248, 246, 241, 0.1);
+    cursor: pointer;
+    transition: padding-left 200ms ease, transform 200ms ease, background-color 200ms ease;
+  }
+
+  .contact-link:hover {
+    padding-left: var(--space-4);
+  }
+
+  .link-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .link-label {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248, 246, 241, 0.3);
+  }
+
+  :lang(zh) .link-label {
+    letter-spacing: 0.08em;
+  }
+
+  .link-arrow {
+    font-size: 1rem;
+    color: var(--color-gold);
+    opacity: 0.5;
+    line-height: 1;
+    transition: opacity 200ms ease;
+  }
+
+  .contact-link:hover .link-arrow {
+    opacity: 1;
+  }
+
+  .link-value {
+    font-size: 1.05rem;
+    font-weight: 400;
+    color: var(--color-off-white);
+    font-family: var(--font-sans);
+    letter-spacing: 0.01em;
+    transition: color 200ms ease;
+  }
+
+  :lang(zh) .link-value {
+    font-family: var(--font-zh-sans);
+  }
+
+  .contact-link:hover .link-value {
+    color: var(--color-gold);
+  }
+
+  .contact-link--wechat {
+    margin-top: var(--space-3);
+    padding: var(--space-5);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    background: rgba(248, 246, 241, 0.03);
+  }
+
+  .contact-link--wechat:hover {
+    padding-left: var(--space-5);
+    transform: translateY(-1px);
+    background: rgba(248, 246, 241, 0.06);
+  }
+
+  .contact-link--wechat .link-label {
+    color: rgba(248, 246, 241, 0.65);
+  }
+
+  .contact-link--wechat .link-arrow {
+    color: var(--color-gold);
+    opacity: 0.7;
+  }
+
+  .contact-link--wechat .link-value {
+    color: var(--color-off-white);
+    font-weight: 500;
+  }
+
+  .contact-link--wechat:hover .link-value {
+    color: var(--color-gold);
+  }
+
+  .link-hint {
+    margin-top: 0.15rem;
+    font-size: 0.74rem;
+    color: rgba(248, 246, 241, 0.62);
+  }
+
+  .wechat-fallback {
+    margin-bottom: var(--space-10);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    background-color: rgba(248, 246, 241, 0.04);
+    padding: var(--space-5);
+  }
+
+  .wechat-fallback-text {
+    margin: 0;
+    margin-bottom: var(--space-3);
+    color: rgba(248, 246, 241, 0.76);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .wechat-id-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .wechat-copy-btn {
+    border: 1px solid rgba(201, 168, 76, 0.6);
+    background: transparent;
+    color: var(--color-gold);
+    padding: 0.36rem 0.65rem;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease;
+  }
+
+  .wechat-copy-btn:hover {
+    background-color: rgba(201, 168, 76, 0.16);
+    color: var(--color-gold-light);
+  }
+
+  .wechat-fallback-note {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-3);
+    font-size: 0.72rem;
+    color: rgba(248, 246, 241, 0.45);
+  }
+
+  .wechat-copy-status {
+    font-size: 0.78rem;
+    color: rgba(248, 246, 241, 0.7);
+  }
+
+  .wechat-qr {
+    width: min(220px, 100%);
+    height: auto;
+    border: 1px solid rgba(248, 246, 241, 0.18);
+    display: block;
+  }
+
+  /* ── Closing ── */
+  .contact-closing {
+    font-size: 0.82rem;
+    color: rgba(248, 246, 241, 0.28);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  :lang(zh) .contact-closing {
+    font-family: var(--font-zh-sans);
+    font-style: normal;
+  }
+</style>

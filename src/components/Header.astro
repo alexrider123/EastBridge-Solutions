@@ -1,0 +1,184 @@
+---
+import type { Translation } from '../i18n/en';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  t: Translation;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+const homeHref = `/${lang}/`;
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={homeHref} class="logo" aria-label="East Bridge Solutions">
+      <!-- Bridge mark SVG -->
+      <svg class="logo-mark" width="36" height="28" viewBox="0 0 36 28" fill="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <!-- Road deck -->
+        <line x1="1" y1="22" x2="35" y2="22" stroke="#C9A84C" stroke-width="1.5"/>
+        <!-- Left tower -->
+        <line x1="9" y1="22" x2="9" y2="5" stroke="#C9A84C" stroke-width="1.5"/>
+        <!-- Right tower -->
+        <line x1="27" y1="22" x2="27" y2="5" stroke="#C9A84C" stroke-width="1.5"/>
+        <!-- Main cable left: tower top → left anchor -->
+        <path d="M9 5 Q5 14 1 22" stroke="#C9A84C" stroke-width="1" fill="none"/>
+        <!-- Main cable right: tower top → right anchor -->
+        <path d="M27 5 Q31 14 35 22" stroke="#C9A84C" stroke-width="1" fill="none"/>
+        <!-- Center span cable -->
+        <path d="M9 5 Q18 10 27 5" stroke="#C9A84C" stroke-width="1" fill="none"/>
+        <!-- Hangers left tower -->
+        <line x1="5" y1="17" x2="5" y2="22" stroke="#C9A84C" stroke-width="0.75" opacity="0.7"/>
+        <!-- Hangers right tower -->
+        <line x1="31" y1="17" x2="31" y2="22" stroke="#C9A84C" stroke-width="0.75" opacity="0.7"/>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-en">East Bridge Solutions</span>
+        <span class="logo-zh">东桥咨询</span>
+      </div>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <ul class="nav-list">
+        <li><a href={`${homeHref}#about`} class="nav-link">{t.nav.about}</a></li>
+        <li><a href={`${homeHref}#services`} class="nav-link">{t.nav.services}</a></li>
+        <li><a href={`${homeHref}#experience`} class="nav-link">{t.nav.experience}</a></li>
+        <li><a href={`${homeHref}#who-we-work-with`} class="nav-link">{t.nav.whoWeWork}</a></li>
+        <li><a href={`${homeHref}#contact`} class="nav-link">{t.nav.contact}</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href={t.nav.langSwitchHref} class="lang-switch" aria-label="Switch language">
+        <span class="lang-switch-icon">⇄</span>
+        {t.nav.langSwitch}
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-navy);
+    border-bottom: 1px solid var(--color-border-dark);
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+    width: 100%;
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-4);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .logo-mark {
+    flex-shrink: 0;
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .logo-en {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-off-white);
+    opacity: 0.9;
+  }
+
+  .logo-zh {
+    font-family: var(--font-zh-serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--color-gold);
+  }
+
+  /* Nav */
+  .nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-list {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .nav-link {
+    font-size: 0.78rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: rgba(248, 246, 241, 0.65);
+    transition: color 180ms ease;
+    white-space: nowrap;
+  }
+
+  .nav-link:hover {
+    color: var(--color-off-white);
+  }
+
+  /* Language switch */
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-navy);
+    background-color: var(--color-gold);
+    border: 1px solid var(--color-gold);
+    padding: 0.4rem 0.9rem;
+    transition: all 180ms ease;
+    white-space: nowrap;
+  }
+
+  .lang-switch-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+  }
+
+  .lang-switch:hover {
+    background-color: var(--color-gold-light);
+    border-color: var(--color-gold-light);
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .nav {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .logo-en {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+    }
+  }
+</style>

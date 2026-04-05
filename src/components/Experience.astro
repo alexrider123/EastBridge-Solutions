@@ -1,0 +1,391 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="experience" class="section experience-section">
+  <div class="container">
+
+    <div class="exp-header">
+      <span class="section-label">{t.experience.label}</span>
+      <h2 class="section-headline">{t.experience.headline}</h2>
+      <div class="divider"></div>
+      <p class="exp-intro">{t.experience.intro}</p>
+    </div>
+
+    <!-- Carousel widget -->
+    <div class="exp-widget">
+
+      <!-- All cards stacked in the same spot -->
+      <div class="exp-cards">
+        {t.experience.items.map((item, i) => (
+          <div
+            class={`exp-card${i === 0 ? ' is-active' : ''}`}
+            data-index={String(i)}
+            aria-hidden={i !== 0 ? 'true' : 'false'}
+          >
+            <!-- Card header -->
+            <div class="exp-card-header">
+              <h3 class="exp-card-sector">{item.sector}</h3>
+            </div>
+
+            <!-- Three columns -->
+            <div class="exp-card-body">
+              <div class="exp-col exp-col--client">
+                <span class="exp-col-label">{t.experience.fieldLabels.profile}</span>
+                <p class="exp-col-text">{item.profile}</p>
+              </div>
+              <div class="exp-col exp-col--engagement">
+                <span class="exp-col-label">{t.experience.fieldLabels.engagement}</span>
+                <p class="exp-col-text">{item.body}</p>
+              </div>
+              <div class="exp-col exp-col--outcome">
+                <span class="exp-col-label">{t.experience.fieldLabels.outcome}</span>
+                <p class="exp-outcome-text">{item.outcome}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Navigation bar -->
+      <div class="exp-nav">
+        <button class="exp-nav-btn exp-nav-prev" type="button" aria-label="Previous" disabled>
+          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
+            <path d="M8.5 1L1.5 8L8.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+        </button>
+
+        <div class="exp-dots">
+          {t.experience.items.map((_, i) => (
+            <button
+              class={`exp-dot${i === 0 ? ' is-active' : ''}`}
+              data-index={String(i)}
+              type="button"
+              aria-label={`Go to slide ${i + 1}`}
+            ></button>
+          ))}
+        </div>
+
+        <button class="exp-nav-btn exp-nav-next" type="button" aria-label="Next">
+          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
+            <path d="M1.5 1L8.5 8L1.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
+          </svg>
+        </button>
+      </div>
+
+    </div><!-- /.exp-widget -->
+
+  </div>
+</section>
+
+<script>
+  const cards   = Array.from(document.querySelectorAll<HTMLElement>('.exp-card'));
+  const dots    = Array.from(document.querySelectorAll<HTMLButtonElement>('.exp-dot'));
+  const prevBtn = document.querySelector<HTMLButtonElement>('.exp-nav-prev')!;
+  const nextBtn = document.querySelector<HTMLButtonElement>('.exp-nav-next')!;
+  const widget  = document.querySelector<HTMLElement>('.exp-widget')!;
+
+  const TOTAL   = cards.length;
+  const ANIM_MS = 380;
+  let current   = 0;
+  let animating = false;
+
+  function updateNav() {
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === TOTAL - 1;
+  }
+
+  function go(next: number, dir: 'fwd' | 'bwd') {
+    if (animating || next === current) return;
+    animating = true;
+
+    // Prepare entering card direction
+    cards[next].classList.add(dir === 'fwd' ? 'from-right' : 'from-left');
+
+    // Swap
+    cards[current].classList.remove('is-active');
+    cards[current].setAttribute('aria-hidden', 'true');
+    cards[next].classList.add('is-active');
+    cards[next].setAttribute('aria-hidden', 'false');
+
+    dots[current].classList.remove('is-active');
+    dots[next].classList.add('is-active');
+
+    current = next;
+    updateNav();
+
+    setTimeout(() => {
+      cards[current].classList.remove('from-right', 'from-left');
+      animating = false;
+    }, ANIM_MS);
+  }
+
+  prevBtn.addEventListener('click', () => go(current - 1, 'bwd'));
+  nextBtn.addEventListener('click', () => go(current + 1, 'fwd'));
+  dots.forEach((d, i) => d.addEventListener('click', () => go(i, i > current ? 'fwd' : 'bwd')));
+
+  // Keyboard
+  widget.addEventListener('keydown', (e: KeyboardEvent) => {
+    if (e.key === 'ArrowLeft' && current > 0)          go(current - 1, 'bwd');
+    if (e.key === 'ArrowRight' && current < TOTAL - 1) go(current + 1, 'fwd');
+  });
+
+  // Swipe
+  let tx = 0;
+  widget.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  widget.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (dx < -50 && current < TOTAL - 1) go(current + 1, 'fwd');
+    if (dx > 50  && current > 0)         go(current - 1, 'bwd');
+  });
+
+  updateNav();
+</script>
+
+<style>
+  /* ─── Section ─── */
+  .experience-section {
+    background-color: var(--color-off-white);
+  }
+
+  .exp-header {
+    max-width: 580px;
+    margin-bottom: var(--space-12);
+  }
+
+  .exp-intro {
+    font-size: 0.87rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    line-height: 1.65;
+  }
+
+  :lang(zh) .exp-intro {
+    font-family: var(--font-zh-sans);
+    font-style: normal;
+  }
+
+  /* ─── Widget container ─── */
+  .exp-widget {
+    background-color: var(--color-navy);
+  }
+
+  /* ─── Card stack ─── */
+  .exp-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+
+  .exp-card {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+
+    /* Hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(18px);
+    transition:
+      opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 360ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s 360ms;
+  }
+
+  .exp-card.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    transition:
+      opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 360ms cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s 0s;
+  }
+
+  .exp-card.from-right { transform: translateX(18px); }
+  .exp-card.from-left  { transform: translateX(-18px); }
+
+  /* ─── Card header ─── */
+  .exp-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-6) var(--space-8);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .exp-card-sector {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--color-off-white);
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  :lang(zh) .exp-card-sector {
+    font-family: var(--font-zh-serif);
+  }
+
+  /* ─── Three-column body ─── */
+  .exp-card-body {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr 1fr;
+  }
+
+  .exp-col {
+    padding: var(--space-6) var(--space-8);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .exp-col--engagement,
+  .exp-col--outcome {
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ─── Column labels ─── */
+  .exp-col-label {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248, 246, 241, 0.4);
+    flex-shrink: 0;
+  }
+
+  /* ─── Body text (client + engagement) ─── */
+  .exp-col-text {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: rgba(248, 246, 241, 0.75);
+    margin: 0;
+  }
+
+  :lang(zh) .exp-col-text {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ─── Outcome text: gold, prominent ─── */
+  .exp-outcome-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--color-gold);
+    margin: 0;
+  }
+
+  :lang(zh) .exp-outcome-text {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ─── Navigation bar ─── */
+  .exp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    padding: var(--space-4) var(--space-6);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ─── Arrow buttons ─── */
+  .exp-nav-btn {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    color: rgba(248, 246, 241, 0.55);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: border-color 200ms ease, color 200ms ease, opacity 200ms ease;
+  }
+
+  .exp-nav-btn:hover:not(:disabled) {
+    border-color: var(--color-gold);
+    color: var(--color-gold);
+  }
+
+  .exp-nav-btn:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+  }
+
+  /* ─── Dots ─── */
+  .exp-dots {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .exp-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(248, 246, 241, 0.2);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: background 220ms ease, width 220ms ease, border-radius 220ms ease;
+  }
+
+  .exp-dot.is-active {
+    background: var(--color-gold);
+    width: 22px;
+    border-radius: 3px;
+  }
+
+  /* ─── Tablet: engagement full-width bottom row ─── */
+  @media (max-width: 860px) {
+    .exp-card-body {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+    }
+
+    .exp-col--client    { grid-column: 1; grid-row: 1; }
+    .exp-col--outcome   { grid-column: 2; grid-row: 1; }
+    .exp-col--engagement {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      border-left: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  /* ─── Mobile: single column ─── */
+  @media (max-width: 560px) {
+    .exp-card-body {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+    }
+
+    .exp-col--client    { grid-column: auto; grid-row: auto; }
+    .exp-col--outcome   { grid-column: auto; grid-row: auto; border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+    .exp-col--engagement { border-top: 1px solid rgba(255, 255, 255, 0.08); }
+
+    .exp-card-header,
+    .exp-col { padding-left: var(--space-4); padding-right: var(--space-4); }
+  }
+
+  /* ─── Reduced motion ─── */
+  @media (prefers-reduced-motion: reduce) {
+    .exp-card {
+      transform: none !important;
+      transition: opacity 200ms ease, visibility 0s 200ms;
+    }
+    .exp-card.is-active {
+      transition: opacity 200ms ease, visibility 0s 0s;
+    }
+  }
+</style>

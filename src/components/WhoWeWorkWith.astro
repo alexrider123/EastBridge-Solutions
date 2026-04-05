@@ -1,0 +1,118 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="who-we-work-with" class="section who-section">
+  <div class="container">
+
+    <div class="who-header">
+      <span class="section-label">{t.whoWeWork.label}</span>
+      <h2 class="section-headline">{t.whoWeWork.headline}</h2>
+      <div class="divider"></div>
+      <p class="who-intro">{t.whoWeWork.intro}</p>
+      <p class="who-note">{t.whoWeWork.note}</p>
+    </div>
+
+    <!-- Three white card rows on warm-gray background -->
+    <div class="sector-list">
+      {t.whoWeWork.sectors.map((sector, i) => (
+        <div class="sector-row">
+          <span class="sector-num" aria-hidden="true">0{i + 1}</span>
+          <p class="sector-text">{sector}</p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .who-section {
+    background-color: var(--color-warm-gray);
+  }
+
+  .who-header {
+    max-width: 600px;
+    margin-bottom: var(--space-12);
+  }
+
+  .who-intro {
+    font-size: 0.92rem;
+    color: var(--color-text-body);
+    line-height: 1.72;
+    font-style: normal;
+  }
+
+  :lang(zh) .who-intro {
+    font-family: var(--font-zh-sans);
+  }
+
+  .who-note {
+    margin-top: var(--space-3);
+    font-size: 0.92rem;
+    line-height: 1.72;
+    color: var(--color-text-body);
+  }
+
+  :lang(zh) .who-note {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ── White card rows on warm-gray ── */
+  .sector-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .sector-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+    gap: var(--space-6);
+    padding: var(--space-6) var(--space-8);
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    /* Subtle left gold accent */
+    border-left: 3px solid var(--color-gold);
+  }
+
+  /* Gold number — small and legible, no opacity tricks */
+  .sector-num {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--color-gold);
+    line-height: 1.75; /* aligns with first line of text */
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  /* Body text — full dark color, fully readable */
+  .sector-text {
+    font-size: 0.97rem;
+    line-height: 1.78;
+    color: var(--color-text-body);
+    margin: 0;
+  }
+
+  :lang(zh) .sector-text {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 680px) {
+    .sector-row {
+      grid-template-columns: 36px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-5) var(--space-5);
+    }
+  }
+</style>

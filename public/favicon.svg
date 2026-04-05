@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" fill="#1A2332"/>
+  <!-- Road deck -->
+  <line x1="1" y1="23" x2="31" y2="23" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Left tower -->
+  <line x1="8" y1="23" x2="8" y2="7" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Right tower -->
+  <line x1="24" y1="23" x2="24" y2="7" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Left cable: tower top to left anchor -->
+  <path d="M8 7 Q4.5 15 1 23" stroke="#C9A84C" stroke-width="1" fill="none"/>
+  <!-- Right cable: tower top to right anchor -->
+  <path d="M24 7 Q27.5 15 31 23" stroke="#C9A84C" stroke-width="1" fill="none"/>
+  <!-- Center span cable -->
+  <path d="M8 7 Q16 12 24 7" stroke="#C9A84C" stroke-width="1" fill="none"/>
+</svg>

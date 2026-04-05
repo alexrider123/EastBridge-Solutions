@@ -1,0 +1,72 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="footer-logo-en">East Bridge Solutions</span>
+      <span class="footer-logo-zh">东桥咨询</span>
+    </div>
+    <p class="footer-tagline">{t.footer.tagline}</p>
+    <p class="footer-copy">{t.footer.copyright}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-navy);
+    border-top: 1px solid var(--color-border-dark);
+    padding-block: var(--space-12);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .footer-logo-en {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(248, 246, 241, 0.5);
+  }
+
+  .footer-logo-zh {
+    font-family: var(--font-zh-serif);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    color: var(--color-gold);
+    opacity: 0.7;
+  }
+
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: rgba(248, 246, 241, 0.45);
+    letter-spacing: 0.04em;
+    font-style: italic;
+  }
+
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(248, 246, 241, 0.3);
+    letter-spacing: 0.02em;
+  }
+</style>

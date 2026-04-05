@@ -1,0 +1,136 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+const numbers = ['01', '02', '03', '04'];
+---
+
+<section id="services" class="section services-section">
+  <div class="container">
+    <div class="services-header">
+      <span class="section-label">{t.services.label}</span>
+      <h2 class="section-headline">{t.services.headline}</h2>
+      <div class="services-divider"></div>
+      <p class="services-intro">{t.services.intro}</p>
+    </div>
+
+    <div class="services-grid">
+      {t.services.items.map((item, i) => (
+        <div class="service-card">
+          <span class="service-number" aria-hidden="true">{numbers[i]}</span>
+          <h3 class="service-title">{item.title}</h3>
+          <p class="service-body">{item.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background-color: var(--color-warm-gray);
+  }
+
+  .services-header {
+    max-width: 640px;
+    margin-bottom: var(--space-16);
+  }
+
+  /* section-headline inherits navy from global — correct for light bg */
+
+  .services-divider {
+    width: 36px;
+    height: 1px;
+    background-color: var(--color-gold);
+    margin-block: var(--space-6);
+  }
+
+  .services-intro {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: var(--color-text-muted);
+    max-width: 580px;
+    font-style: italic;
+  }
+
+  :lang(zh) .services-intro {
+    font-family: var(--font-zh-sans);
+    font-style: normal;
+  }
+
+  /* Grid — cards stay dark for strong contrast against the warm-gray section */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background-color: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .service-card {
+    background-color: var(--color-navy);
+    padding: var(--space-10);
+    position: relative;
+    overflow: hidden;
+    transition: background-color 180ms ease;
+  }
+
+  .service-card:hover {
+    background-color: var(--color-navy-mid);
+  }
+
+  /* Ghost number */
+  .service-number {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-8);
+    font-family: var(--font-serif);
+    font-size: 4rem;
+    font-weight: 400;
+    color: var(--color-gold);
+    opacity: 0.1;
+    line-height: 1;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .service-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-off-white);
+    margin-bottom: var(--space-4);
+    position: relative;
+    z-index: 1;
+  }
+
+  :lang(zh) .service-title {
+    font-family: var(--font-zh-serif);
+  }
+
+  .service-body {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: rgba(248, 246, 241, 0.6);
+    position: relative;
+    z-index: 1;
+  }
+
+  :lang(zh) .service-body {
+    font-family: var(--font-zh-sans);
+  }
+
+  @media (max-width: 640px) {
+    .services-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-card {
+      padding: var(--space-8) var(--space-6);
+    }
+  }
+</style>

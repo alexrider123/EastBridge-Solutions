@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import About from '../../components/About.astro';
+import HowWeSupport from '../../components/HowWeSupport.astro';
+import Experience from '../../components/Experience.astro';
+import WhoWeWorkWith from '../../components/WhoWeWorkWith.astro';
+import Contact from '../../components/Contact.astro';
+import { useTranslations } from '../../i18n/utils';
+
+const t = useTranslations('zh');
+---
+
+<BaseLayout t={t} lang="zh">
+  <Hero t={t} />
+  <About t={t} />
+  <HowWeSupport t={t} />
+  <Experience t={t} />
+  <WhoWeWorkWith t={t} />
+  <Contact t={t} />
+</BaseLayout>

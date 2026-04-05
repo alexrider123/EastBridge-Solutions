@@ -1,0 +1,185 @@
+---
+import type { Translation } from '../i18n/en';
+
+interface Props {
+  t: Translation;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="founder" class="section founder-section">
+  <div class="container">
+
+    <!-- Section header -->
+    <div class="founder-header">
+      <span class="section-label">{t.founder.label}</span>
+      <h2 class="section-headline">{t.founder.headline}</h2>
+      <div class="divider"></div>
+      <p class="founder-location">
+        <span class="location-dot" aria-hidden="true"></span>
+        {t.founder.location}
+      </p>
+    </div>
+
+    <!-- Credential rows — all visible, cycling highlight -->
+    <div class="cred-list" aria-label="Founder credentials">
+      {t.founder.credentials.map((cred, i) => (
+        <div class={`cred${i === 0 ? ' is-active' : ''}`} data-cred-index={String(i)}>
+          <div class="cred-inner">
+            <span class="cred-num" aria-hidden="true">0{i + 1}</span>
+            <div class="cred-content">
+              <h3 class="cred-area">{cred.area}</h3>
+              <p class="cred-detail">{cred.detail}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const creds = Array.from(document.querySelectorAll<HTMLElement>('.cred'));
+
+  if (creds.length > 0) {
+    let active = 0;
+
+    function highlight(next: number) {
+      creds[active].classList.remove('is-active');
+      active = next % creds.length;
+      creds[active].classList.add('is-active');
+    }
+
+    // Auto-cycle every 3 seconds
+    setInterval(() => {
+      highlight(active + 1);
+    }, 3000);
+  }
+</script>
+
+<style>
+  .founder-section {
+    background-color: var(--color-off-white);
+  }
+
+  .founder-header {
+    max-width: 580px;
+    margin-bottom: var(--space-12);
+  }
+
+  .founder-location {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .location-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+  }
+
+  /* ── Credential rows ── */
+  .cred-list {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .cred {
+    border-bottom: 1px solid var(--color-border);
+    /* Gold left border: transparent by default, gold when active */
+    border-left: 3px solid transparent;
+    /* Smooth transitions for the spotlight effect */
+    transition:
+      border-left-color 400ms ease,
+      opacity 400ms ease;
+    opacity: 0.55;
+  }
+
+  /* Active credential: full opacity + gold left border */
+  .cred.is-active {
+    border-left-color: var(--color-gold);
+    opacity: 1;
+  }
+
+  .cred-inner {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: start;
+    gap: var(--space-6);
+    padding: var(--space-8) var(--space-8) var(--space-8) var(--space-6);
+  }
+
+  /* Small Playfair gold number — always fully visible */
+  .cred-num {
+    font-family: var(--font-serif);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--color-gold);
+    opacity: 1; /* not affected by parent opacity for the number itself */
+    line-height: 1.75;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .cred-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Area title — Playfair, transitions between navy (active) and muted (inactive) */
+  .cred-area {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin: 0;
+    color: var(--color-text-muted);
+    transition: color 400ms ease;
+  }
+
+  :lang(zh) .cred-area {
+    font-family: var(--font-zh-serif);
+  }
+
+  .cred.is-active .cred-area {
+    color: var(--color-navy);
+  }
+
+  /* Detail text — transitions between muted and body color */
+  .cred-detail {
+    font-size: 0.87rem;
+    line-height: 1.78;
+    margin: 0;
+    color: var(--color-text-muted);
+    transition: color 400ms ease;
+  }
+
+  :lang(zh) .cred-detail {
+    font-family: var(--font-zh-sans);
+  }
+
+  .cred.is-active .cred-detail {
+    color: var(--color-text-body);
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 680px) {
+    .cred-inner {
+      grid-template-columns: 36px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-6) var(--space-4) var(--space-6) var(--space-4);
+    }
+  }
+</style>
