@@ -114,6 +114,10 @@ export const en = {
       profile: 'Client',
       engagement: 'Engagement',
     },
+    mobileToggle: {
+      expand: 'View full engagement',
+      collapse: 'Hide engagement details',
+    },
     intro:
       'Our clients\' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.',
     items: [

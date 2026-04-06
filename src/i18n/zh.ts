@@ -116,6 +116,10 @@ export const zh: Translation = {
       profile: '客户',
       engagement: '委托详情',
     },
+    mobileToggle: {
+      expand: '展开委托详情',
+      collapse: '收起委托详情',
+    },
     intro:
       '我们对客户身份严格保密。以下案例反映了我们所支持的委托类型、规模与实际成果。',
     items: [
