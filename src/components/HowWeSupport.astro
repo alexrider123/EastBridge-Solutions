@@ -43,10 +43,29 @@ const numbers = ['01', '02', '03', '04'];
   if (flow) {
     const mobileQuery = window.matchMedia('(max-width: 640px)');
     const cards = Array.from(flow.querySelectorAll<HTMLElement>('.service-card'));
-    const steps = Array.from(flow.querySelectorAll<HTMLElement>('.services-mobile-step'));
+    const grid = flow.querySelector<HTMLElement>('[data-services-grid]');
+    const section = flow.closest<HTMLElement>('.services-section');
+    const lastIndex = cards.length - 1;
     let currentIndex = 0;
-    let observer: IntersectionObserver | null = null;
     let enteringTimer: number | null = null;
+    let boundaryDir = 0;
+    let boundaryGestureId = -1;
+    let releaseDirection = 0;
+    let wheelGestureId = 0;
+    let wheelHandledGestureId = -1;
+    let wheelPassGestureId = -1;
+    let lastWheelAt = 0;
+    let touchStartY = 0;
+    let touchHandled = false;
+    let touchConsumesGesture = false;
+    let touchGestureId = 0;
+
+    const headerOffset = () => {
+      const styles = getComputedStyle(document.documentElement);
+      const headerHeight = Number.parseFloat(styles.getPropertyValue('--header-height')) || 70;
+      const topGap = Number.parseFloat(styles.getPropertyValue('--space-6')) || 24;
+      return headerHeight + topGap;
+    };
 
     const clearEntering = () => {
       if (enteringTimer) {
@@ -56,10 +75,18 @@ const numbers = ['01', '02', '03', '04'];
       cards.forEach((card) => card.classList.remove('is-entering'));
     };
 
+    const updateFlowHeight = (index: number) => {
+      if (!cards[index]) return;
+      const nextHeight = Math.max(Math.ceil(cards[index].scrollHeight), 240);
+      flow.style.setProperty('--mobile-card-height', `${nextHeight}px`);
+    };
+
     const setCardState = (nextIndex: number) => {
-      if (nextIndex < 0 || nextIndex >= cards.length || nextIndex === currentIndex) return;
+      if (nextIndex < 0 || nextIndex >= cards.length || nextIndex === currentIndex) return false;
 
       clearEntering();
+      updateFlowHeight(nextIndex);
+
       cards.forEach((card, i) => {
         card.classList.toggle('is-active', i === nextIndex);
         card.classList.toggle('is-before', i < nextIndex);
@@ -72,11 +99,13 @@ const numbers = ['01', '02', '03', '04'];
       }, 440);
 
       currentIndex = nextIndex;
+      return true;
     };
 
     const setInitialMobileState = () => {
       clearEntering();
       currentIndex = 0;
+      updateFlowHeight(0);
       cards.forEach((card, i) => {
         card.classList.toggle('is-active', i === 0);
         card.classList.toggle('is-before', false);
@@ -85,34 +114,151 @@ const numbers = ['01', '02', '03', '04'];
       });
     };
 
+    const clearBoundary = () => {
+      boundaryDir = 0;
+      boundaryGestureId = -1;
+    };
+
+    const inTrapZone = () => {
+      if (!mobileQuery.matches || !section || !grid) return false;
+      const sectionRect = section.getBoundingClientRect();
+      const top = headerOffset();
+      return sectionRect.top <= top && sectionRect.bottom >= top + grid.offsetHeight + 8;
+    };
+
+    const canTrapDirection = (dir: number) => {
+      if (!inTrapZone()) {
+        releaseDirection = 0;
+        clearBoundary();
+        return false;
+      }
+      if (releaseDirection !== 0) {
+        if (dir === releaseDirection) return false;
+        releaseDirection = 0;
+      }
+      return true;
+    };
+
+    const applyDirection = (dir: number, gestureId: number): 'flip' | 'blocked' | 'allow' => {
+      if (dir > 0 && currentIndex < lastIndex) {
+        setCardState(currentIndex + 1);
+        clearBoundary();
+        return 'flip';
+      }
+      if (dir < 0 && currentIndex > 0) {
+        setCardState(currentIndex - 1);
+        clearBoundary();
+        return 'flip';
+      }
+      if (boundaryDir === dir && boundaryGestureId !== gestureId) {
+        clearBoundary();
+        releaseDirection = dir;
+        return 'allow';
+      }
+      boundaryDir = dir;
+      boundaryGestureId = gestureId;
+      return 'blocked';
+    };
+
+    const onWheel = (event: WheelEvent) => {
+      if (Math.abs(event.deltaY) < 4) return;
+      const dir = event.deltaY > 0 ? 1 : -1;
+      if (!canTrapDirection(dir)) return;
+
+      const now = performance.now();
+      if (now - lastWheelAt > 230) {
+        wheelGestureId += 1;
+        wheelHandledGestureId = -1;
+        wheelPassGestureId = -1;
+      }
+      lastWheelAt = now;
+
+      if (wheelPassGestureId === wheelGestureId) return;
+
+      if (wheelHandledGestureId === wheelGestureId) {
+        event.preventDefault();
+        return;
+      }
+
+      const outcome = applyDirection(dir, wheelGestureId);
+      if (outcome === 'allow') {
+        wheelPassGestureId = wheelGestureId;
+        return;
+      }
+
+      wheelHandledGestureId = wheelGestureId;
+      event.preventDefault();
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (!mobileQuery.matches) return;
+      touchStartY = event.touches[0]?.clientY ?? 0;
+      touchHandled = false;
+      touchConsumesGesture = false;
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      if (touchHandled) {
+        if (touchConsumesGesture) event.preventDefault();
+        return;
+      }
+
+      const currentY = event.touches[0]?.clientY ?? touchStartY;
+      const delta = touchStartY - currentY;
+      if (Math.abs(delta) < 16) return;
+
+      const dir = delta > 0 ? 1 : -1;
+      if (!canTrapDirection(dir)) return;
+
+      touchGestureId += 1;
+      const outcome = applyDirection(dir, touchGestureId);
+      touchHandled = true;
+      if (outcome === 'allow') {
+        touchConsumesGesture = false;
+        return;
+      }
+      touchConsumesGesture = true;
+      event.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      touchHandled = false;
+      touchConsumesGesture = false;
+    };
+
+    const onResize = () => {
+      if (!mobileQuery.matches) return;
+      updateFlowHeight(currentIndex);
+    };
+
     const enableMobileFlow = () => {
-      if (flow.classList.contains('is-mobile-flow') || cards.length !== steps.length || cards.length === 0) return;
+      if (flow.classList.contains('is-mobile-flow') || cards.length === 0) return;
 
       flow.classList.add('is-mobile-flow');
       setInitialMobileState();
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            const index = Number((entry.target as HTMLElement).dataset.stepIndex ?? -1);
-            if (Number.isNaN(index)) return;
-            setCardState(index);
-          });
-        },
-        {
-          threshold: 0.66,
-        }
-      );
-
-      steps.forEach((step) => observer?.observe(step));
+      window.addEventListener('wheel', onWheel, { passive: false });
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
+      requestAnimationFrame(() => updateFlowHeight(currentIndex));
     };
 
     const disableMobileFlow = () => {
-      observer?.disconnect();
-      observer = null;
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+      window.removeEventListener('resize', onResize);
       clearEntering();
+      clearBoundary();
+      releaseDirection = 0;
+      wheelHandledGestureId = -1;
+      wheelPassGestureId = -1;
+      touchHandled = false;
+      touchConsumesGesture = false;
       flow.classList.remove('is-mobile-flow');
+      flow.style.removeProperty('--mobile-card-height');
       cards.forEach((card) => {
         card.classList.remove('is-active', 'is-before', 'is-after');
         card.removeAttribute('aria-hidden');
@@ -230,13 +376,17 @@ const numbers = ['01', '02', '03', '04'];
     display: none;
   }
 
+  .services-mobile-flow {
+    --mobile-card-height: 320px;
+  }
+
   @media (max-width: 640px) {
     .services-grid {
       grid-template-columns: 1fr;
     }
 
     .service-card {
-      padding: var(--space-8) var(--space-6);
+      padding: var(--space-6) var(--space-4);
     }
 
     .services-mobile-flow.is-mobile-flow {
@@ -247,7 +397,7 @@ const numbers = ['01', '02', '03', '04'];
       display: block;
       position: sticky;
       top: calc(var(--header-height) + var(--space-6));
-      height: min(64vh, 460px);
+      height: var(--mobile-card-height);
       border: none;
       background: transparent;
       perspective: 1400px;
@@ -265,20 +415,20 @@ const numbers = ['01', '02', '03', '04'];
       opacity: 0;
       pointer-events: none;
       transform-origin: center top;
-      transform: rotateX(8deg) translateY(18px) scale(0.985);
+      transform: rotateX(4deg) translateY(12px) scale(0.992);
       transition:
-        opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-before {
-      transform: rotateX(-7deg) translateY(-16px) scale(0.98);
+      transform: rotateX(-4deg) translateY(-10px) scale(0.992);
       z-index: 1;
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-after {
-      transform: rotateX(7deg) translateY(16px) scale(0.98);
+      transform: rotateX(4deg) translateY(10px) scale(0.992);
       z-index: 1;
     }
 
@@ -291,23 +441,23 @@ const numbers = ['01', '02', '03', '04'];
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-active.is-entering {
-      transform: rotateX(0deg) translateY(0) scale(0.996);
+      transform: rotateX(0deg) translateY(0) scale(0.998);
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-steps {
       display: block;
       position: relative;
       z-index: 1;
-      padding-top: min(64vh, 460px);
+      padding-top: var(--mobile-card-height);
       margin-top: var(--space-3);
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-step {
-      height: 72vh;
+      height: 18vh;
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-step:last-child {
-      height: 66vh;
+      height: 12vh;
     }
   }
 
