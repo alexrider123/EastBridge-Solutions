@@ -18,17 +18,119 @@ const numbers = ['01', '02', '03', '04'];
       <p class="services-intro">{t.services.intro}</p>
     </div>
 
-    <div class="services-grid">
-      {t.services.items.map((item, i) => (
-        <div class="service-card">
-          <span class="service-number" aria-hidden="true">{numbers[i]}</span>
-          <h3 class="service-title">{item.title}</h3>
-          <p class="service-body">{item.body}</p>
-        </div>
-      ))}
+    <div class="services-mobile-flow" data-services-flow>
+      <div class="services-grid" data-services-grid>
+        {t.services.items.map((item, i) => (
+          <div class="service-card">
+            <span class="service-number" aria-hidden="true">{numbers[i]}</span>
+            <h3 class="service-title">{item.title}</h3>
+            <p class="service-body">{item.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="services-mobile-steps" aria-hidden="true">
+        {t.services.items.map((_, i) => (
+          <div class="services-mobile-step" data-step-index={String(i)}></div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const flow = document.querySelector<HTMLElement>('[data-services-flow]');
+  if (flow) {
+    const mobileQuery = window.matchMedia('(max-width: 640px)');
+    const cards = Array.from(flow.querySelectorAll<HTMLElement>('.service-card'));
+    const steps = Array.from(flow.querySelectorAll<HTMLElement>('.services-mobile-step'));
+    let currentIndex = 0;
+    let observer: IntersectionObserver | null = null;
+    let enteringTimer: number | null = null;
+
+    const clearEntering = () => {
+      if (enteringTimer) {
+        window.clearTimeout(enteringTimer);
+        enteringTimer = null;
+      }
+      cards.forEach((card) => card.classList.remove('is-entering'));
+    };
+
+    const setCardState = (nextIndex: number) => {
+      if (nextIndex < 0 || nextIndex >= cards.length || nextIndex === currentIndex) return;
+
+      clearEntering();
+      cards.forEach((card, i) => {
+        card.classList.toggle('is-active', i === nextIndex);
+        card.classList.toggle('is-before', i < nextIndex);
+        card.classList.toggle('is-after', i > nextIndex);
+        card.setAttribute('aria-hidden', i === nextIndex ? 'false' : 'true');
+      });
+      cards[nextIndex].classList.add('is-entering');
+      enteringTimer = window.setTimeout(() => {
+        cards[nextIndex].classList.remove('is-entering');
+      }, 440);
+
+      currentIndex = nextIndex;
+    };
+
+    const setInitialMobileState = () => {
+      clearEntering();
+      currentIndex = 0;
+      cards.forEach((card, i) => {
+        card.classList.toggle('is-active', i === 0);
+        card.classList.toggle('is-before', false);
+        card.classList.toggle('is-after', i > 0);
+        card.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
+      });
+    };
+
+    const enableMobileFlow = () => {
+      if (flow.classList.contains('is-mobile-flow') || cards.length !== steps.length || cards.length === 0) return;
+
+      flow.classList.add('is-mobile-flow');
+      setInitialMobileState();
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const index = Number((entry.target as HTMLElement).dataset.stepIndex ?? -1);
+            if (Number.isNaN(index)) return;
+            setCardState(index);
+          });
+        },
+        {
+          threshold: 0.66,
+        }
+      );
+
+      steps.forEach((step) => observer?.observe(step));
+    };
+
+    const disableMobileFlow = () => {
+      observer?.disconnect();
+      observer = null;
+      clearEntering();
+      flow.classList.remove('is-mobile-flow');
+      cards.forEach((card) => {
+        card.classList.remove('is-active', 'is-before', 'is-after');
+        card.removeAttribute('aria-hidden');
+      });
+    };
+
+    const syncMode = () => {
+      if (mobileQuery.matches) {
+        enableMobileFlow();
+      } else {
+        disableMobileFlow();
+      }
+    };
+
+    syncMode();
+    mobileQuery.addEventListener('change', syncMode);
+  }
+</script>
 
 <style>
   .services-section {
@@ -124,6 +226,10 @@ const numbers = ['01', '02', '03', '04'];
     font-family: var(--font-zh-sans);
   }
 
+  .services-mobile-steps {
+    display: none;
+  }
+
   @media (max-width: 640px) {
     .services-grid {
       grid-template-columns: 1fr;
@@ -131,6 +237,84 @@ const numbers = ['01', '02', '03', '04'];
 
     .service-card {
       padding: var(--space-8) var(--space-6);
+    }
+
+    .services-mobile-flow.is-mobile-flow {
+      position: relative;
+    }
+
+    .services-mobile-flow.is-mobile-flow .services-grid {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-height) + var(--space-6));
+      height: min(64vh, 460px);
+      border: none;
+      background: transparent;
+      perspective: 1400px;
+      z-index: 3;
+    }
+
+    .services-mobile-flow.is-mobile-flow .service-card {
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--color-border-dark);
+      background:
+        linear-gradient(165deg, rgba(43, 59, 84, 0.3) 0%, rgba(16, 22, 33, 0) 45%),
+        var(--color-navy);
+      box-shadow: 0 16px 28px rgba(12, 17, 26, 0.23);
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: center top;
+      transform: rotateX(8deg) translateY(18px) scale(0.985);
+      transition:
+        opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .services-mobile-flow.is-mobile-flow .service-card.is-before {
+      transform: rotateX(-7deg) translateY(-16px) scale(0.98);
+      z-index: 1;
+    }
+
+    .services-mobile-flow.is-mobile-flow .service-card.is-after {
+      transform: rotateX(7deg) translateY(16px) scale(0.98);
+      z-index: 1;
+    }
+
+    .services-mobile-flow.is-mobile-flow .service-card.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: rotateX(0deg) translateY(0) scale(1);
+      box-shadow: 0 20px 36px rgba(12, 17, 26, 0.27);
+      z-index: 2;
+    }
+
+    .services-mobile-flow.is-mobile-flow .service-card.is-active.is-entering {
+      transform: rotateX(0deg) translateY(0) scale(0.996);
+    }
+
+    .services-mobile-flow.is-mobile-flow .services-mobile-steps {
+      display: block;
+      position: relative;
+      z-index: 1;
+      padding-top: min(64vh, 460px);
+      margin-top: var(--space-3);
+    }
+
+    .services-mobile-flow.is-mobile-flow .services-mobile-step {
+      height: 72vh;
+    }
+
+    .services-mobile-flow.is-mobile-flow .services-mobile-step:last-child {
+      height: 66vh;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-mobile-flow.is-mobile-flow .service-card {
+      transition: opacity 220ms ease;
+      transform: none !important;
     }
   }
 </style>
