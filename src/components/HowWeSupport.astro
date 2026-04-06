@@ -44,21 +44,20 @@ const numbers = ['01', '02', '03', '04'];
     const mobileQuery = window.matchMedia('(max-width: 640px)');
     const cards = Array.from(flow.querySelectorAll<HTMLElement>('.service-card'));
     const grid = flow.querySelector<HTMLElement>('[data-services-grid]');
+    const steps = Array.from(flow.querySelectorAll<HTMLElement>('.services-mobile-step'));
     const section = flow.closest<HTMLElement>('.services-section');
     const lastIndex = cards.length - 1;
+    const FLIP_LOCK_MS = 340;
     let currentIndex = 0;
     let enteringTimer: number | null = null;
-    let boundaryDir = 0;
-    let boundaryGestureId = -1;
     let releaseDirection = 0;
-    let wheelGestureId = 0;
-    let wheelHandledGestureId = -1;
-    let wheelPassGestureId = -1;
-    let lastWheelAt = 0;
+    let flipLockedUntil = 0;
+    let anchorY: number[] = [];
     let touchStartY = 0;
+    let touchLastY = 0;
     let touchHandled = false;
-    let touchConsumesGesture = false;
-    let touchGestureId = 0;
+    let touchShouldBlock = false;
+    let listenersAttached = false;
 
     const headerOffset = () => {
       const styles = getComputedStyle(document.documentElement);
@@ -81,11 +80,25 @@ const numbers = ['01', '02', '03', '04'];
       flow.style.setProperty('--mobile-card-height', `${nextHeight}px`);
     };
 
+    const updateAnchors = () => {
+      const flowTop = flow.getBoundingClientRect().top + window.scrollY;
+      anchorY = steps.map((step) => flowTop + step.offsetTop);
+    };
+
+    const scrollToCardStep = (index: number) => {
+      if (!anchorY[index] && anchorY[index] !== 0) return;
+      window.scrollTo({
+        top: anchorY[index],
+        behavior: 'auto',
+      });
+    };
+
     const setCardState = (nextIndex: number) => {
       if (nextIndex < 0 || nextIndex >= cards.length || nextIndex === currentIndex) return false;
 
       clearEntering();
       updateFlowHeight(nextIndex);
+      updateAnchors();
 
       cards.forEach((card, i) => {
         card.classList.toggle('is-active', i === nextIndex);
@@ -106,17 +119,13 @@ const numbers = ['01', '02', '03', '04'];
       clearEntering();
       currentIndex = 0;
       updateFlowHeight(0);
+      updateAnchors();
       cards.forEach((card, i) => {
         card.classList.toggle('is-active', i === 0);
         card.classList.toggle('is-before', false);
         card.classList.toggle('is-after', i > 0);
         card.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
       });
-    };
-
-    const clearBoundary = () => {
-      boundaryDir = 0;
-      boundaryGestureId = -1;
     };
 
     const inTrapZone = () => {
@@ -126,109 +135,99 @@ const numbers = ['01', '02', '03', '04'];
       return sectionRect.top <= top && sectionRect.bottom >= top + grid.offsetHeight + 8;
     };
 
-    const canTrapDirection = (dir: number) => {
+    const applyDirection = (dir: number): 'consumed' | 'allow' => {
       if (!inTrapZone()) {
         releaseDirection = 0;
-        clearBoundary();
-        return false;
-      }
-      if (releaseDirection !== 0) {
-        if (dir === releaseDirection) return false;
-        releaseDirection = 0;
-      }
-      return true;
-    };
-
-    const applyDirection = (dir: number, gestureId: number): 'flip' | 'blocked' | 'allow' => {
-      if (dir > 0 && currentIndex < lastIndex) {
-        setCardState(currentIndex + 1);
-        clearBoundary();
-        return 'flip';
-      }
-      if (dir < 0 && currentIndex > 0) {
-        setCardState(currentIndex - 1);
-        clearBoundary();
-        return 'flip';
-      }
-      if (boundaryDir === dir && boundaryGestureId !== gestureId) {
-        clearBoundary();
-        releaseDirection = dir;
         return 'allow';
       }
-      boundaryDir = dir;
-      boundaryGestureId = gestureId;
-      return 'blocked';
+
+      const now = performance.now();
+      if (now < flipLockedUntil) {
+        return 'consumed';
+      }
+
+      if (releaseDirection !== 0 && dir !== releaseDirection) {
+        releaseDirection = 0;
+      }
+
+      if (dir > 0 && currentIndex < lastIndex) {
+        const changed = setCardState(currentIndex + 1);
+        if (changed) {
+          scrollToCardStep(currentIndex);
+          flipLockedUntil = now + FLIP_LOCK_MS;
+        }
+        releaseDirection = 0;
+        return 'consumed';
+      }
+      if (dir < 0 && currentIndex > 0) {
+        const changed = setCardState(currentIndex - 1);
+        if (changed) {
+          scrollToCardStep(currentIndex);
+          flipLockedUntil = now + FLIP_LOCK_MS;
+        }
+        releaseDirection = 0;
+        return 'consumed';
+      }
+
+      if (releaseDirection === dir) {
+        releaseDirection = 0;
+        return 'allow';
+      }
+
+      releaseDirection = dir;
+      flipLockedUntil = now + 120;
+      return 'consumed';
     };
 
     const onWheel = (event: WheelEvent) => {
       if (Math.abs(event.deltaY) < 4) return;
       const dir = event.deltaY > 0 ? 1 : -1;
-      if (!canTrapDirection(dir)) return;
-
-      const now = performance.now();
-      if (now - lastWheelAt > 230) {
-        wheelGestureId += 1;
-        wheelHandledGestureId = -1;
-        wheelPassGestureId = -1;
-      }
-      lastWheelAt = now;
-
-      if (wheelPassGestureId === wheelGestureId) return;
-
-      if (wheelHandledGestureId === wheelGestureId) {
+      const outcome = applyDirection(dir);
+      if (outcome === 'consumed') {
         event.preventDefault();
-        return;
       }
-
-      const outcome = applyDirection(dir, wheelGestureId);
-      if (outcome === 'allow') {
-        wheelPassGestureId = wheelGestureId;
-        return;
-      }
-
-      wheelHandledGestureId = wheelGestureId;
-      event.preventDefault();
     };
 
     const onTouchStart = (event: TouchEvent) => {
       if (!mobileQuery.matches) return;
       touchStartY = event.touches[0]?.clientY ?? 0;
+      touchLastY = touchStartY;
       touchHandled = false;
-      touchConsumesGesture = false;
+      touchShouldBlock = false;
     };
 
     const onTouchMove = (event: TouchEvent) => {
       if (touchHandled) {
-        if (touchConsumesGesture) event.preventDefault();
+        if (touchShouldBlock) event.preventDefault();
         return;
       }
 
       const currentY = event.touches[0]?.clientY ?? touchStartY;
+      touchLastY = currentY;
       const delta = touchStartY - currentY;
       if (Math.abs(delta) < 16) return;
 
       const dir = delta > 0 ? 1 : -1;
-      if (!canTrapDirection(dir)) return;
-
-      touchGestureId += 1;
-      const outcome = applyDirection(dir, touchGestureId);
+      const outcome = applyDirection(dir);
       touchHandled = true;
       if (outcome === 'allow') {
-        touchConsumesGesture = false;
+        touchShouldBlock = false;
         return;
       }
-      touchConsumesGesture = true;
+      touchShouldBlock = true;
       event.preventDefault();
     };
 
     const onTouchEnd = () => {
       touchHandled = false;
-      touchConsumesGesture = false;
+      touchShouldBlock = false;
+      touchStartY = touchLastY;
     };
 
     const onResize = () => {
       if (!mobileQuery.matches) return;
       updateFlowHeight(currentIndex);
+      updateAnchors();
     };
 
     const enableMobileFlow = () => {
@@ -236,27 +235,32 @@ const numbers = ['01', '02', '03', '04'];
 
       flow.classList.add('is-mobile-flow');
       setInitialMobileState();
+      if (listenersAttached) return;
+
       window.addEventListener('wheel', onWheel, { passive: false });
       window.addEventListener('touchstart', onTouchStart, { passive: true });
       window.addEventListener('touchmove', onTouchMove, { passive: false });
       window.addEventListener('touchend', onTouchEnd, { passive: true });
       window.addEventListener('resize', onResize, { passive: true });
+      listenersAttached = true;
       requestAnimationFrame(() => updateFlowHeight(currentIndex));
+      requestAnimationFrame(updateAnchors);
     };
 
     const disableMobileFlow = () => {
-      window.removeEventListener('wheel', onWheel);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchmove', onTouchMove);
-      window.removeEventListener('touchend', onTouchEnd);
-      window.removeEventListener('resize', onResize);
+      if (listenersAttached) {
+        window.removeEventListener('wheel', onWheel);
+        window.removeEventListener('touchstart', onTouchStart);
+        window.removeEventListener('touchmove', onTouchMove);
+        window.removeEventListener('touchend', onTouchEnd);
+        window.removeEventListener('resize', onResize);
+        listenersAttached = false;
+      }
       clearEntering();
-      clearBoundary();
       releaseDirection = 0;
-      wheelHandledGestureId = -1;
-      wheelPassGestureId = -1;
+      flipLockedUntil = 0;
       touchHandled = false;
-      touchConsumesGesture = false;
+      touchShouldBlock = false;
       flow.classList.remove('is-mobile-flow');
       flow.style.removeProperty('--mobile-card-height');
       cards.forEach((card) => {
@@ -396,7 +400,10 @@ const numbers = ['01', '02', '03', '04'];
     .services-mobile-flow.is-mobile-flow .services-grid {
       display: block;
       position: sticky;
-      top: calc(var(--header-height) + var(--space-6));
+      top: max(
+        calc(var(--header-height) + var(--space-4)),
+        calc((100svh - var(--mobile-card-height) + var(--header-height)) / 2)
+      );
       height: var(--mobile-card-height);
       border: none;
       background: transparent;
@@ -415,20 +422,25 @@ const numbers = ['01', '02', '03', '04'];
       opacity: 0;
       pointer-events: none;
       transform-origin: center top;
-      transform: rotateX(4deg) translateY(12px) scale(0.992);
+      transform: rotateX(10deg) rotateY(-3deg) translateY(20px) scale(0.975);
+      filter: brightness(0.9) saturate(0.86);
+      will-change: transform, opacity, filter;
       transition:
-        opacity 300ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-        box-shadow 300ms cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 360ms cubic-bezier(0.22, 1, 0.36, 1),
+        transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 360ms cubic-bezier(0.22, 1, 0.36, 1),
+        filter 360ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-before {
-      transform: rotateX(-4deg) translateY(-10px) scale(0.992);
+      opacity: 0.24;
+      transform: rotateX(-8deg) rotateY(2deg) translateY(-16px) scale(0.982);
       z-index: 1;
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-after {
-      transform: rotateX(4deg) translateY(10px) scale(0.992);
+      opacity: 0.24;
+      transform: rotateX(8deg) rotateY(-2deg) translateY(16px) scale(0.982);
       z-index: 1;
     }
 
@@ -437,11 +449,12 @@ const numbers = ['01', '02', '03', '04'];
       pointer-events: auto;
       transform: rotateX(0deg) translateY(0) scale(1);
       box-shadow: 0 20px 36px rgba(12, 17, 26, 0.27);
+      filter: none;
       z-index: 2;
     }
 
     .services-mobile-flow.is-mobile-flow .service-card.is-active.is-entering {
-      transform: rotateX(0deg) translateY(0) scale(0.998);
+      transform: rotateX(0deg) translateY(0) scale(0.994);
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-steps {
@@ -453,11 +466,11 @@ const numbers = ['01', '02', '03', '04'];
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-step {
-      height: 18vh;
+      height: clamp(240px, 46svh, 360px);
     }
 
     .services-mobile-flow.is-mobile-flow .services-mobile-step:last-child {
-      height: 12vh;
+      height: clamp(220px, 40svh, 320px);
     }
   }
 
