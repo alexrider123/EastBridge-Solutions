@@ -18,9 +18,9 @@ export const en = {
   },
 
   hero: {
-    headline: 'A trusted interface between China and Israel.',
+    headline: 'A trusted interface for Chinese enterprises operating in Israel.',
     subheadline:
-      'East Bridge Solutions supports Chinese enterprises in engaging, navigating, and operating in Israel — with ground-level knowledge and senior-level access.',
+      'Supporting Chinese enterprises in entering, building partnerships, and operating on the ground in Israel — with direct access and execution accountability.',
     cta: 'Get in touch',
   },
 
@@ -29,9 +29,10 @@ export const en = {
     headline: 'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
     body: [
       'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
-      'Present on the ground in Israel, we bring fluency in the institutional and commercial landscape and direct experience in the realities of cross-border engagement between the two countries.',
-      'Our work spans strategic advisory, relationship facilitation, and hands-on execution support. We work discreetly, with a small number of clients at any given time, and we hold ourselves accountable to outcomes.',
-      'Our model combines direct execution with access to specialized expertise when required. This enables us to remain agile while addressing technical, commercial, and industry-specific considerations as they arise.',
+      'Based in Israel, we work on the ground with a clear understanding of the country’s commercial, institutional, and regulatory landscape — and how it translates in practice for Chinese enterprises.',
+      'We take on a limited number of mandates, working directly with senior stakeholders to define market approach, establish the right relationships, and drive commercial engagement forward.',
+      'Our role is not limited to advice. We act as a consistent point of ownership across the engagement — aligning counterparties, managing execution, and ensuring that discussions translate into structured outcomes.',
+      'Where required, we bring in specialized expertise across legal, technical, and industry domains, while maintaining a single point of coordination and accountability throughout.',
     ],
     points: [
       {
@@ -84,7 +85,7 @@ export const en = {
     label: 'How We Support',
     headline: 'From orientation to operation.',
     intro:
-      'Engagement can start at any stage and scale as objectives evolve. Below are the broad areas in which we provide support.',
+      'We operate across the full lifecycle — from initial market definition to executed partnerships and local ownership. Engagement can begin at any stage, depending on your objectives.',
     items: [
       {
         title: 'Market Clarity',
@@ -192,11 +193,19 @@ export const en = {
   contact: {
     label: 'Contact',
     headline: 'Confidential enquiries welcome.',
-    body: 'If you are exploring a potential engagement or wish to understand more about how we work, we welcome a direct, confidential conversation. There is no obligation on either side.',
+    body: 'If you are evaluating entry into Israel or advancing an active opportunity, we welcome a direct and confidential discussion. All initial conversations are exploratory and without obligation.',
     emailLabel: 'Email',
     email: 'enquiries@eastbridge.solutions',
     wechatLabel: 'WeChat',
-    wechatId: 'danielc2024',
+    wechatId: 'EastBridgeSolutions',
+    wechatHint: 'Open direct message in WeChat',
+    wechatFallbackText:
+      'If WeChat does not open automatically, copy the account ID and search in WeChat:',
+    wechatCopyButton: 'Copy WeChat ID',
+    wechatFallbackNote: 'You can also scan the QR code below.',
+    wechatQrAlt: 'WeChat QR code',
+    wechatCopied: 'ID copied',
+    wechatCopyUnavailable: 'Copy not available',
     closing: 'All enquiries are handled personally and in confidence.',
   },
 

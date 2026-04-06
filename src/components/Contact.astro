@@ -7,7 +7,6 @@ interface Props {
 
 const { t } = Astro.props;
 const wechatDeepLink = `weixin://contacts/profile/${t.contact.wechatId}`;
-const wechatDisplayName = 'Eastbridge Solutions';
 ---
 
 <section id="contact" class="section contact-section">
@@ -34,28 +33,35 @@ const wechatDisplayName = 'Eastbridge Solutions';
             <span class="link-label">{t.contact.wechatLabel}</span>
             <span class="link-arrow" aria-hidden="true">→</span>
           </div>
-          <span class="link-value">{wechatDisplayName}</span>
-          <span class="link-hint">Open direct message in WeChat</span>
+          <span class="link-value">{t.contact.wechatId}</span>
+          <span class="link-hint">{t.contact.wechatHint}</span>
         </a>
       </div>
 
       <div class="wechat-fallback" id="wechat-fallback" hidden>
-        <p class="wechat-fallback-text">If WeChat does not open automatically, copy the account ID and search in WeChat:</p>
+        <p class="wechat-fallback-text">{t.contact.wechatFallbackText}</p>
         <div class="wechat-id-row">
-          <button type="button" class="wechat-copy-btn" id="wechat-copy-btn" data-wechat-id={t.contact.wechatId}>Copy WeChat ID</button>
+          <button
+            type="button"
+            class="wechat-copy-btn"
+            id="wechat-copy-btn"
+            data-wechat-id={t.contact.wechatId}
+            data-copy-success={t.contact.wechatCopied}
+            data-copy-fail={t.contact.wechatCopyUnavailable}
+          >
+            {t.contact.wechatCopyButton}
+          </button>
           <span class="wechat-copy-status" id="wechat-copy-status" aria-live="polite"></span>
         </div>
-        <p class="wechat-fallback-note">You can also scan the QR code below.</p>
+        <p class="wechat-fallback-note">{t.contact.wechatFallbackNote}</p>
         <img
           src="/wechat-qr.png"
-          alt="WeChat QR code"
+          alt={t.contact.wechatQrAlt}
           class="wechat-qr"
           loading="lazy"
           onerror="this.style.display='none'"
         />
       </div>
-
-      <p class="contact-closing">{t.contact.closing}</p>
 
     </div>
   </div>
@@ -81,16 +87,18 @@ const wechatDisplayName = 'Eastbridge Solutions';
   if (copyBtn) {
     copyBtn.addEventListener('click', async () => {
       const wechatId = copyBtn.getAttribute('data-wechat-id');
+      const copySuccessText = copyBtn.getAttribute('data-copy-success') || '';
+      const copyFailText = copyBtn.getAttribute('data-copy-fail') || '';
       if (!wechatId) return;
 
       try {
         await navigator.clipboard.writeText(wechatId);
-        if (copyStatus) copyStatus.textContent = 'ID copied';
+        if (copyStatus) copyStatus.textContent = copySuccessText;
         window.setTimeout(() => {
           if (copyStatus) copyStatus.textContent = '';
         }, 1400);
       } catch {
-        if (copyStatus) copyStatus.textContent = 'Copy not available';
+        if (copyStatus) copyStatus.textContent = copyFailText;
       }
     });
   }
@@ -294,16 +302,4 @@ const wechatDisplayName = 'Eastbridge Solutions';
     display: block;
   }
 
-  /* ── Closing ── */
-  .contact-closing {
-    font-size: 0.82rem;
-    color: rgba(248, 246, 241, 0.28);
-    font-style: italic;
-    line-height: 1.6;
-  }
-
-  :lang(zh) .contact-closing {
-    font-family: var(--font-zh-sans);
-    font-style: normal;
-  }
 </style>

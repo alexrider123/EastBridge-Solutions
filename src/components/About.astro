@@ -38,9 +38,9 @@ const [, ...restBody] = t.about.body;
 
   .about-core {
     display: grid;
-    grid-template-columns: minmax(320px, 1.1fr) minmax(0, 1.3fr);
-    gap: clamp(var(--space-10), 4vw, var(--space-20));
-    align-items: center;
+    grid-template-columns: minmax(300px, 1fr) minmax(0, 1.4fr);
+    gap: clamp(var(--space-8), 3.2vw, var(--space-16));
+    align-items: start;
   }
 
   .about-header {
@@ -50,7 +50,7 @@ const [, ...restBody] = t.about.body;
   .about-story {
     border-left: 1px solid rgba(201, 168, 76, 0.4);
     padding-left: var(--space-10);
-    max-width: 700px;
+    max-width: 760px;
   }
 
   .about-rest {
@@ -60,7 +60,7 @@ const [, ...restBody] = t.about.body;
 
   .about-para {
     font-size: 0.95rem;
-    line-height: 1.88;
+    line-height: 1.82;
     color: var(--color-text-body);
     margin: 0;
   }
