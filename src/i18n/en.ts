@@ -155,13 +155,13 @@ export const en = {
           'Guwahati-based medical device manufacturer — USFDA-certified producer of disposable and auto-disabling syringes under ISO 13485:2016, with a production capacity of 1.4 million units per day.',
         body: 'The client sought to identify Israeli buyers and distributors for its medical device product line. We mapped relevant prospects across Israel\'s healthcare procurement landscape, assessed commercial and regulatory fit, and facilitated targeted introductions to potential clients.',
         outcome:
-          'Identified and introduced a curated set of Israeli healthcare clients and procurement decision-makers.',
+          'Identified and introduced a curated set of Israeli healthcare clients and procurement decision-makers; negotiations ongoing.',
       },
       {
         sector: 'Technology & Financial Solutions',
         profile:
           'Hong Kong–based technology and financial solutions provider focused on data-driven platforms and advanced analytics, with international operations supporting enterprise clients across multiple markets.',
-        body: 'We helped them hire local talents and contributed to targeted business development efforts across the local ecosystem.',
+        body: 'The client sought to strengthen its presence in Israel by building local talent capacity and advancing targeted business development initiatives. We supported this objective by identifying and onboarding qualified local profiles while driving focused commercial outreach across the Israeli ecosystem.',
         outcome:
           'Reinforced the client\'s presence through access to qualified local talent and the development of targeted commercial engagement opportunities.',
       },
