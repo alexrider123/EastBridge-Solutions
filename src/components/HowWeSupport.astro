@@ -23,8 +23,17 @@ const numbers = ['01', '02', '03', '04'];
         {t.services.items.map((item, i) => (
           <div class="service-card">
             <span class="service-number" aria-hidden="true">{numbers[i]}</span>
+            <div class="card-mobile-top">
+              <span class="card-counter" aria-hidden="true">{numbers[i]} / 0{t.services.items.length}</span>
+            </div>
             <h3 class="service-title">{item.title}</h3>
+            <div class="card-rule"></div>
             <p class="service-body">{item.body}</p>
+            <div class="card-pips" aria-hidden="true">
+              {t.services.items.map((_, j) => (
+                <span class={`card-pip${j === i ? ' is-current' : ''}`}></span>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -137,7 +146,6 @@ const numbers = ['01', '02', '03', '04'];
 
       currentIndex = nextIndex;
       lastTransitionAt = Date.now();
-      cards[nextIndex].style.setProperty('--card-progress', `${((nextIndex + 1) / cards.length) * 100}%`);
       return true;
     };
 
@@ -153,7 +161,6 @@ const numbers = ['01', '02', '03', '04'];
         card.classList.toggle('is-after', i > 0);
         card.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
       });
-      cards[0].style.setProperty('--card-progress', `${(1 / cards.length) * 100}%`);
     };
 
     const inTrapZone = () => {
@@ -433,6 +440,13 @@ const numbers = ['01', '02', '03', '04'];
     --mobile-card-height: 320px;
   }
 
+  /* ── Mobile-only elements: hidden by default ── */
+  .card-mobile-top,
+  .card-rule,
+  .card-pips {
+    display: none;
+  }
+
   @media (max-width: 640px) {
     .services-grid {
       grid-template-columns: 1fr;
@@ -442,6 +456,58 @@ const numbers = ['01', '02', '03', '04'];
       padding: var(--space-8) var(--space-6);
     }
 
+    /* Show mobile-only elements */
+    .card-mobile-top {
+      display: flex;
+      align-items: center;
+      margin-bottom: var(--space-6);
+    }
+
+    .card-counter {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      opacity: 0.85;
+    }
+
+    :lang(zh) .card-counter {
+      letter-spacing: 0.1em;
+    }
+
+    .card-rule {
+      display: block;
+      width: 28px;
+      height: 1px;
+      background-color: var(--color-gold);
+      opacity: 0.4;
+      margin: var(--space-4) 0;
+    }
+
+    .card-pips {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: var(--space-8);
+    }
+
+    .card-pip {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: rgba(248, 246, 241, 0.2);
+      transition: background-color 280ms ease, width 280ms ease, border-radius 280ms ease;
+    }
+
+    .card-pip.is-current {
+      background-color: var(--color-gold);
+      width: 20px;
+      border-radius: 2.5px;
+    }
+
+    /* ── Mobile flow: sticky card carousel ── */
     .services-mobile-flow.is-mobile-flow {
       position: relative;
     }
@@ -459,82 +525,44 @@ const numbers = ['01', '02', '03', '04'];
       z-index: 3;
     }
 
+    /* ── Card: premium left-border design ── */
     .services-mobile-flow.is-mobile-flow .service-card {
       position: absolute;
       inset: 0;
-      border: 1px solid var(--color-border-dark);
-      background:
-        linear-gradient(165deg, rgba(43, 59, 84, 0.3) 0%, rgba(16, 22, 33, 0) 45%),
-        var(--color-navy);
-      box-shadow: none;
+      background: var(--color-navy);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      border-left: 3px solid var(--color-gold);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
       opacity: 0;
       pointer-events: none;
-      transform: translateY(12px) scale(0.985);
-      transition:
-        opacity 380ms cubic-bezier(0.22, 1, 0.36, 1),
-        transform 380ms cubic-bezier(0.22, 1, 0.36, 1),
-        border-color 380ms cubic-bezier(0.22, 1, 0.36, 1);
+      transition: opacity 280ms ease;
     }
 
-    .services-mobile-flow.is-mobile-flow .service-card.is-before {
-      opacity: 0;
-      border-color: rgba(201, 168, 76, 0.12);
-      transform: translateY(-8px) scale(0.985);
-      z-index: 1;
-    }
-
-    .services-mobile-flow.is-mobile-flow .service-card.is-after {
-      opacity: 0;
-      border-color: rgba(201, 168, 76, 0.12);
-      transform: translateY(12px) scale(0.985);
-      z-index: 1;
-    }
-
-    .services-mobile-flow.is-mobile-flow .service-card.is-active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-      border-color: rgba(201, 168, 76, 0.4);
-      z-index: 2;
-    }
-
-    .services-mobile-flow.is-mobile-flow .service-card.is-active.is-entering {
-      transform: translateY(0) scale(1.003);
-    }
-
-    .services-mobile-flow.is-mobile-flow .service-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      height: 2px;
-      width: 0%;
-      background-color: var(--color-gold);
-      opacity: 0;
-      transition: width 380ms cubic-bezier(0.22, 1, 0.36, 1), opacity 380ms ease;
-    }
-
-    .services-mobile-flow.is-mobile-flow .service-card.is-active::after {
-      width: var(--card-progress, 25%);
-      opacity: 0.65;
-    }
-
+    /* Hide the desktop ghost number on mobile */
     .services-mobile-flow.is-mobile-flow .service-number {
-      top: var(--space-4);
-      right: var(--space-4);
-      font-size: 2.4rem;
-      opacity: 0.14;
+      display: none;
     }
 
+    /* Override title padding (no ghost number to avoid) */
     .services-mobile-flow.is-mobile-flow .service-title {
-      padding-right: 3rem;
-      margin-bottom: var(--space-4);
+      padding-right: 0;
+      margin-bottom: 0;
+      font-size: 1.15rem;
     }
 
     .services-mobile-flow.is-mobile-flow .service-body {
-      line-height: 1.68;
+      font-size: 0.88rem;
+      line-height: 1.72;
     }
 
+    /* ── Card states ── */
+    .services-mobile-flow.is-mobile-flow .service-card.is-active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    /* ── Scroll anchor steps ── */
     .services-mobile-flow.is-mobile-flow .services-mobile-steps {
       display: block;
       position: relative;
@@ -553,10 +581,8 @@ const numbers = ['01', '02', '03', '04'];
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .services-mobile-flow.is-mobile-flow .service-card,
-    .services-mobile-flow.is-mobile-flow .service-card::after {
-      transition: opacity 220ms ease;
-      transform: none !important;
+    .services-mobile-flow.is-mobile-flow .service-card {
+      transition: opacity 150ms ease;
     }
   }
 </style>
