@@ -228,6 +228,15 @@ const numbers = ['01', '02', '03', '04'];
 
     const onWheel = (event: WheelEvent) => {
       if (Math.abs(event.deltaY) < 4) return;
+
+      // On mobile, wheel events are iOS/Android scroll momentum — not intentional gestures.
+      // Touch events handle card navigation with a one-gesture-one-advance guarantee.
+      // Here we only preventDefault to prevent page jitter in the trap zone.
+      if (mobileQuery.matches) {
+        if (inTrapZone()) event.preventDefault();
+        return;
+      }
+
       const dir = event.deltaY > 0 ? 1 : -1;
 
       if (!wheelGestureActive) {
