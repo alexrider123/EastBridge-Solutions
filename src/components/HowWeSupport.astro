@@ -277,21 +277,29 @@ const numbers = ['01', '02', '03', '04'];
     };
 
     const onTouchMove = (event: TouchEvent) => {
-      // Block page scroll from the very first pixel if we started in the trap zone.
-      // This prevents fast swipes from scrolling the section out of range before we act.
-      if (touchInZone) event.preventDefault();
+      if (!touchInZone) return;
 
-      if (touchHandled) return;
+      if (touchHandled) {
+        // Direction already decided — only block if we determined to consume this gesture.
+        if (touchShouldBlock) event.preventDefault();
+        return;
+      }
 
       const currentY = event.touches[0]?.clientY ?? touchStartY;
       touchLastY = currentY;
       const delta = touchStartY - currentY;
-      if (Math.abs(delta) < 8) return; // reduced from 16 for faster direction lock-in
+
+      if (Math.abs(delta) < 8) {
+        // Direction undecided — block for now so we preserve the ability to preventDefault.
+        event.preventDefault();
+        return;
+      }
 
       const dir = delta > 0 ? 1 : -1;
       const outcome = processDirection(dir);
       touchHandled = true;
       touchShouldBlock = outcome !== 'allow';
+      if (touchShouldBlock) event.preventDefault();
     };
 
     const onTouchEnd = () => {
