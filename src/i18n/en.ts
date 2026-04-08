@@ -185,8 +185,9 @@ export const en = {
     headline: 'Established enterprises. Real mandates.',
     intro:
       'We work with established Chinese enterprises engaging the Israeli market for strategic and commercial purposes — typically organisations with 1,500 or more employees and a defined international mandate.',
-    note:
-      'To date, we have worked primarily with the three company profiles below, while remaining open to discussion on how we may support additional organisations.',
+    note: 'Our work is shaped by a number of recurring engagement patterns, reflecting where we have developed the deepest experience.',
+    closing:
+      'We remain open to engagements beyond these profiles where there is a strong alignment and where we can contribute meaningfully.',
     sectors: [
       'Multinational industrial organisations pursuing strategic enterprise customers, global key accounts, and long-term commercial relationships in Israel',
       'Tier-1 and Tier-2 technology and component suppliers assessing the Israeli market for customers, applications, and commercial entry',
