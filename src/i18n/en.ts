@@ -184,14 +184,27 @@ export const en = {
     label: 'Who We Work With',
     headline: 'Established enterprises. Real mandates.',
     intro:
-      'We work with established Chinese enterprises engaging the Israeli market for strategic and commercial purposes — typically organisations with 1,500 or more employees and a defined international mandate.',
-    note: 'Our work is shaped by a number of recurring engagement patterns, reflecting where we have developed the deepest experience.',
+      'We work with established Chinese enterprises across different stages of engaging the Israeli market for strategic and commercial purposes — typically organisations with 1,500 or more employees.',
+    note: 'Some are at an early stage, without a clearly defined approach or local presence, while others are already progressing initial engagements.',
     closing:
-      'We remain open to engagements beyond these profiles where there is a strong alignment and where we can contribute meaningfully.',
+      'The profiles outlined here reflect where we are most frequently involved, while remaining open to engagements where there is strong alignment.',
     sectors: [
-      'Multinational industrial organisations pursuing strategic enterprise customers, global key accounts, and long-term commercial relationships in Israel',
-      'Tier-1 and Tier-2 technology and component suppliers assessing the Israeli market for customers, applications, and commercial entry',
-      'Medical and aesthetics groups exploring Israeli partnerships for technology sourcing, distribution access, and R&D collaboration',
+      {
+        title: 'Multinational Industrial Groups',
+        body: 'Developing strategic enterprise customers, global key accounts, and long-term commercial relationships in Israel',
+      },
+      {
+        title: 'Tier-1 & Tier-2 Technology and Component Suppliers',
+        body: 'Engaging the Israeli market across customers, applications, and commercial opportunities',
+      },
+      {
+        title: 'Medical & Aesthetics Groups',
+        body: 'Building partnerships in Israel across technology sourcing, distribution, and R&D collaboration',
+      },
+      {
+        title: 'Consumer & Distribution Groups',
+        body: 'Seeking access to Israeli products, technologies, and brands through sourcing, partnerships, and structured distribution channels',
+      },
     ],
   },
 
