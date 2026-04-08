@@ -186,8 +186,6 @@ export const en = {
     intro:
       'We work with established Chinese enterprises across different stages of engaging the Israeli market for strategic and commercial purposes — typically organisations with 1,500 or more employees.',
     note: 'Some are at an early stage, without a clearly defined approach or local presence, while others are already progressing initial engagements.',
-    closing:
-      'The profiles outlined here reflect where we are most frequently involved, while remaining open to engagements where there is strong alignment.',
     sectors: [
       {
         title: 'Multinational Industrial Groups',

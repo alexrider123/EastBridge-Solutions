@@ -8,163 +8,301 @@ interface Props {
 const { t } = Astro.props;
 ---
 
-<section id="who-we-work-with" class="section who-section">
-  <div class="container">
-    <div class="who-layout">
+<section id="who-we-work-with" class="section who-section" data-who-section>
+  <!--
+    Desktop: tall scroll wrapper (5× viewport) + sticky inner container.
+    Scroll progress through the wrapper drives which item is shown.
+    Mobile: plain stacked layout, no scroll tricks.
+  -->
+  <div class="who-sticky" data-who-sticky>
+    <div class="container">
+      <div class="who-body">
 
-      <div class="who-header">
-        <span class="section-label">{t.whoWeWork.label}</span>
-        <h2 class="section-headline">{t.whoWeWork.headline}</h2>
-        <div class="divider"></div>
-        <p class="who-intro">{t.whoWeWork.intro}</p>
-        <p class="who-note">{t.whoWeWork.note}</p>
-        <p class="who-closing">{t.whoWeWork.closing}</p>
-      </div>
+        <!-- Left: context panel -->
+        <div class="who-panel">
+          <span class="section-label">{t.whoWeWork.label}</span>
+          <h2 class="section-headline">{t.whoWeWork.headline}</h2>
+          <div class="divider"></div>
+          <div class="who-prose">
+            <p class="who-p">{t.whoWeWork.intro}</p>
+            <p class="who-p">{t.whoWeWork.note}</p>
+          </div>
+        </div>
 
-      <div class="sector-list">
-        {t.whoWeWork.sectors.map((sector, i) => (
-          <div class="sector-row">
-            <span class="sector-num" aria-hidden="true">0{i + 1}</span>
-            <div class="sector-content">
-              <p class="sector-title">{sector.title}</p>
-              <p class="sector-body">{sector.body}</p>
+        <!-- Right: intro + one item at a time, driven by scroll -->
+        <div class="sector-display" data-sector-display>
+          <div class="sector-items-wrap">
+            {t.whoWeWork.sectors.map((sector, i) => (
+              <div
+                class={`sector-item${i === 0 ? ' is-active' : ''}`}
+                data-sector-item
+                aria-hidden={i !== 0 ? 'true' : undefined}
+              >
+                <span class="sector-num" aria-hidden="true">0{i + 1}</span>
+                <h3 class="sector-title">{sector.title}</h3>
+                <p class="sector-body">{sector.body}</p>
+              </div>
+            ))}
+
+            <!-- Progress dots -->
+            <div class="sector-dots" aria-hidden="true">
+              {t.whoWeWork.sectors.map((_, i) => (
+                <span
+                  class={`sector-dot${i === 0 ? ' is-active' : ''}`}
+                  data-sector-dot
+                ></span>
+              ))}
             </div>
           </div>
-        ))}
-      </div>
+        </div>
 
+      </div>
     </div>
   </div>
 </section>
 
 <style>
+  /* ── Section: tall wrapper on desktop ── */
   .who-section {
     background-color: var(--color-warm-gray);
   }
 
-  /* ── Layout ── */
-  .who-layout {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-12);
-  }
-
-  @media (min-width: 681px) {
-    .who-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
-      align-items: start;
+  /* ── Desktop: sticky inner container ── */
+  @media (min-width: 641px) {
+    .who-section {
+      padding-block: 0;
+      height: calc(100vh * 2);
     }
 
-    .who-header {
+    .who-sticky {
       position: sticky;
-      top: calc(var(--header-height) + var(--space-8));
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
     }
   }
 
-  /* ── Left column: header + text ── */
-  .who-header {
-    max-width: 520px;
+  /* ── Two-column grid ── */
+  .who-body {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: var(--space-16);
+    align-items: stretch;
+    width: 100%;
   }
 
-  .who-intro {
+  /* ── Left: context panel (dark) ── */
+  .who-panel {
+    background-color: var(--color-navy);
+    padding: var(--space-10);
+  }
+
+  .who-panel .section-headline {
+    color: var(--color-off-white);
+  }
+
+  .who-prose {
+  }
+
+  .who-p {
     font-size: 0.92rem;
-    color: var(--color-text-body);
-    line-height: 1.75;
+    font-family: var(--font-sans);
+    color: rgba(248, 246, 241, 0.72);
+    line-height: 1.78;
+    margin: 0 0 var(--space-5);
   }
 
-  :lang(zh) .who-intro {
+  .who-p:last-child {
+    margin-bottom: 0;
+  }
+
+  :lang(zh) .who-p {
     font-family: var(--font-zh-sans);
   }
 
-  .who-note {
-    margin-top: var(--space-4);
-    font-size: 0.92rem;
-    line-height: 1.75;
-    color: var(--color-text-body);
+  /* ── Right: intro + overlapping sector items ── */
+  .sector-display {
+    position: relative;
+    overflow: hidden;
   }
 
-  :lang(zh) .who-note {
-    font-family: var(--font-zh-sans);
+  .sector-items-wrap {
+    position: relative;
+    height: 100%;
   }
 
-  .who-closing {
-    margin-top: var(--space-4);
-    font-size: 0.88rem;
-    line-height: 1.72;
-    color: var(--color-text-muted);
-    font-style: italic;
-  }
-
-  :lang(zh) .who-closing {
-    font-family: var(--font-zh-sans);
-  }
-
-  /* ── Right column: sector list ── */
-  .sector-list {
+  .sector-item {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
-    border-top: 1px solid var(--color-border);
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
   }
 
-  .sector-row {
-    display: grid;
-    grid-template-columns: 44px 1fr;
-    align-items: start;
-    gap: var(--space-5);
-    padding: var(--space-6) 0;
-    border-bottom: 1px solid var(--color-border);
+  .sector-item.is-active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .sector-num {
-    font-family: var(--font-serif);
-    font-size: 0.72rem;
+    display: block;
+    font-size: 0.6rem;
     font-weight: 500;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.2em;
     color: var(--color-gold);
-    opacity: 0.8;
-    line-height: 1.6;
-    padding-top: 2px; /* align with title baseline */
+    margin-bottom: var(--space-5);
     user-select: none;
-    flex-shrink: 0;
-  }
-
-  .sector-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
   }
 
   .sector-title {
     font-family: var(--font-serif);
-    font-size: 0.97rem;
-    font-weight: 600;
+    font-size: 1.9rem;
+    font-weight: 400;
     color: var(--color-navy);
-    line-height: 1.4;
+    line-height: 1.2;
     margin: 0;
+  }
+
+  .sector-title::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 2px;
+    background-color: var(--color-gold);
+    opacity: 0.75;
+    margin: var(--space-6) 0;
   }
 
   :lang(zh) .sector-title {
     font-family: var(--font-zh-serif);
+    font-size: 1.5rem;
   }
 
   .sector-body {
     font-size: 0.88rem;
-    line-height: 1.72;
+    line-height: 1.95;
+    letter-spacing: 0.015em;
     color: var(--color-text-muted);
     margin: 0;
+    max-width: none;
   }
 
   :lang(zh) .sector-body {
     font-family: var(--font-zh-sans);
   }
 
-  /* ── Mobile ── */
-  @media (max-width: 680px) {
-    .sector-row {
-      grid-template-columns: 36px 1fr;
-      gap: var(--space-4);
+  /* Progress dots */
+  .sector-dots {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    gap: var(--space-3);
+  }
+
+  .sector-dot {
+    width: 22px;
+    height: 3px;
+    border-radius: 2px;
+    background-color: var(--color-text-muted);
+    opacity: 0.3;
+    transition: background-color 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  }
+
+  .sector-dot.is-active {
+    background-color: var(--color-gold);
+    opacity: 1;
+    width: 32px;
+  }
+
+  /* ── Mobile: plain stacked layout ── */
+  @media (max-width: 640px) {
+    .who-body {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+
+    .who-panel {
+      padding: var(--space-8);
+    }
+
+    .sector-items-wrap {
+      height: auto;
+    }
+
+    .sector-item {
+      position: static;
+      inset: unset;
+      display: block;
+      opacity: 1;
+      transform: none;
+      transition: none;
+      pointer-events: auto;
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .sector-item:first-child {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .sector-dots {
+      display: none;
+    }
+
+    .sector-title {
+      font-size: 1.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sector-item {
+      transition: opacity 150ms ease;
+      transform: none !important;
     }
   }
 </style>
+
+<script>
+  const section = document.querySelector<HTMLElement>('[data-who-section]');
+  if (section) {
+    const items = Array.from(section.querySelectorAll<HTMLElement>('[data-sector-item]'));
+    const dots = Array.from(section.querySelectorAll<HTMLElement>('[data-sector-dot]'));
+
+    // Only run on desktop
+    if (window.matchMedia('(min-width: 641px)').matches) {
+      let currentIndex = 0;
+
+      function setActive(index: number) {
+        if (index === currentIndex && items[index].classList.contains('is-active')) return;
+        currentIndex = index;
+        items.forEach((item, i) => {
+          const active = i === index;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-hidden', active ? 'false' : 'true');
+        });
+        dots.forEach((dot, i) => dot.classList.toggle('is-active', i === index));
+      }
+
+      function onScroll() {
+        // rect.top is negative once we've scrolled past the section top
+        const top = section.getBoundingClientRect().top;
+        const scrollable = section.offsetHeight - window.innerHeight;
+        if (scrollable <= 0) return;
+
+        const progress = Math.max(0, Math.min(1, -top / scrollable));
+        const index = Math.min(Math.floor(progress * items.length), items.length - 1);
+        setActive(index);
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll(); // initialise on load
+    }
+  }
+</script>
