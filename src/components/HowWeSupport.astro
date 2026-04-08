@@ -19,6 +19,11 @@ const numbers = ['01', '02', '03', '04'];
     </div>
 
     <div class="services-mobile-flow" data-services-flow>
+      <div class="mobile-section-bar" aria-hidden="true">
+        <span class="mobile-bar-label">{t.services.label}</span>
+        <span class="mobile-bar-counter" data-mobile-counter>01 / 0{t.services.items.length}</span>
+      </div>
+
       <div class="services-grid" data-services-grid>
         {t.services.items.map((item, i) => (
           <div class="service-card">
@@ -72,7 +77,9 @@ const numbers = ['01', '02', '03', '04'];
     let touchLastY = 0;
     let touchHandled = false;
     let touchShouldBlock = false;
+    let touchInZone = false;
     let listenersAttached = false;
+    const mobileCounter = flow.querySelector<HTMLElement>('[data-mobile-counter]');
 
     const headerOffset = () => {
       const styles = getComputedStyle(document.documentElement);
@@ -146,6 +153,10 @@ const numbers = ['01', '02', '03', '04'];
 
       currentIndex = nextIndex;
       lastTransitionAt = Date.now();
+      if (mobileCounter) {
+        const n = nextIndex + 1;
+        mobileCounter.textContent = `0${n} / 0${cards.length}`;
+      }
       return true;
     };
 
@@ -161,6 +172,7 @@ const numbers = ['01', '02', '03', '04'];
         card.classList.toggle('is-after', i > 0);
         card.setAttribute('aria-hidden', i === 0 ? 'false' : 'true');
       });
+      if (mobileCounter) mobileCounter.textContent = `01 / 0${cards.length}`;
     };
 
     const inTrapZone = () => {
@@ -187,9 +199,13 @@ const numbers = ['01', '02', '03', '04'];
 
       if (!isFlowCaptured) {
         isFlowCaptured = true;
-        updateAnchors();
-        scrollToCardStep(currentIndex);
-        return 'consumed';
+        if (!mobileQuery.matches) {
+          // Desktop only: first gesture snaps viewport to card, no advance yet
+          updateAnchors();
+          scrollToCardStep(currentIndex);
+          return 'consumed';
+        }
+        // Mobile: fall through — first swipe advances immediately
       }
 
       if (releaseDirection !== 0 && dir !== releaseDirection) {
@@ -257,28 +273,25 @@ const numbers = ['01', '02', '03', '04'];
       touchLastY = touchStartY;
       touchHandled = false;
       touchShouldBlock = false;
+      touchInZone = inTrapZone(); // decide NOW before any page movement
     };
 
     const onTouchMove = (event: TouchEvent) => {
-      if (touchHandled) {
-        if (touchShouldBlock) event.preventDefault();
-        return;
-      }
+      // Block page scroll from the very first pixel if we started in the trap zone.
+      // This prevents fast swipes from scrolling the section out of range before we act.
+      if (touchInZone) event.preventDefault();
+
+      if (touchHandled) return;
 
       const currentY = event.touches[0]?.clientY ?? touchStartY;
       touchLastY = currentY;
       const delta = touchStartY - currentY;
-      if (Math.abs(delta) < 16) return;
+      if (Math.abs(delta) < 8) return; // reduced from 16 for faster direction lock-in
 
       const dir = delta > 0 ? 1 : -1;
       const outcome = processDirection(dir);
       touchHandled = true;
-      if (outcome === 'allow') {
-        touchShouldBlock = false;
-        return;
-      }
-      touchShouldBlock = true;
-      event.preventDefault();
+      touchShouldBlock = outcome !== 'allow';
     };
 
     const onTouchEnd = () => {
@@ -447,9 +460,11 @@ const numbers = ['01', '02', '03', '04'];
 
   .services-mobile-flow {
     --mobile-card-height: 320px;
+    --mobile-bar-h: 44px;
   }
 
   /* ── Mobile-only elements: hidden by default ── */
+  .mobile-section-bar,
   .card-mobile-top,
   .card-rule,
   .card-pips {
@@ -516,6 +531,40 @@ const numbers = ['01', '02', '03', '04'];
       border-radius: 2.5px;
     }
 
+    /* ── Sticky context bar ── */
+    .mobile-section-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--mobile-bar-h, 44px);
+      padding: 0 var(--space-6);
+      position: sticky;
+      top: var(--header-height);
+      z-index: 4;
+      background-color: var(--color-warm-gray);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+    }
+
+    .mobile-bar-label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-navy);
+      opacity: 0.5;
+    }
+
+    :lang(zh) .mobile-bar-label {
+      letter-spacing: 0.08em;
+    }
+
+    .mobile-bar-counter {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      color: var(--color-gold);
+    }
+
     /* ── Mobile flow: sticky card carousel ── */
     .services-mobile-flow.is-mobile-flow {
       position: relative;
@@ -525,8 +574,8 @@ const numbers = ['01', '02', '03', '04'];
       display: block;
       position: sticky;
       top: max(
-        calc(var(--header-height) + var(--space-4)),
-        calc((100svh - var(--mobile-card-height) + var(--header-height)) / 2)
+        calc(var(--header-height) + var(--mobile-bar-h, 44px) + var(--space-3)),
+        calc((100svh - var(--mobile-card-height) + var(--header-height) + var(--mobile-bar-h, 44px)) / 2)
       );
       height: var(--mobile-card-height);
       border: none;
