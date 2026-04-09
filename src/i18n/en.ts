@@ -29,10 +29,10 @@ export const en = {
     headline: 'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
     body: [
       'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
-      'Based in Israel, we work on the ground with a clear understanding of the country’s commercial, institutional, and regulatory landscape — and how it translates in practice for Chinese enterprises.',
-      'We take on a limited number of mandates, working directly with senior stakeholders to define market approach, establish the right relationships, and drive commercial engagement forward.',
-      'Our role is not limited to advice. We act as a consistent point of ownership across the engagement — aligning counterparties, managing execution, and ensuring that discussions translate into structured outcomes.',
-      'Where required, we bring in specialized expertise across legal, technical, and industry domains, while maintaining a single point of coordination and accountability throughout.',
+      "We work directly with Chinese enterprises on market entry, partnership development, and transaction-related initiatives in Israel. Engagements are focused, commercially driven, and aligned with clearly defined outcomes — whether establishing initial market presence, advancing strategic relationships, or supporting cross-border opportunities.",
+      "Based in Israel, we operate on the ground with a practical understanding of the local commercial, institutional, and regulatory environment — and how it translates in execution for Chinese organisations. Our role is not limited to advisory. We take responsibility for driving progress: aligning stakeholders, structuring engagement, and ensuring that discussions convert into tangible outcomes.",
+      "The firm is led from Israel, with direct involvement across all client engagements. The lead advisor holds an MBA from the Hong Kong University of Science and Technology.",
+      "We work with a limited number of clients at any given time. Each mandate is handled with direct involvement, continuity, and full accountability throughout the engagement.",
     ],
     points: [
       {
@@ -97,7 +97,7 @@ export const en = {
       },
       {
         title: 'Deal Execution',
-        body: 'For active opportunities. We support execution from engagement to alignment and negotiation, with a high-impact, success-driven approach focused on closing outcomes.',
+        body: 'For active opportunities. We support execution from engagement to alignment, negotiation, structuration and, if needed, logistics.',
       },
       {
         title: 'Local Representation',
