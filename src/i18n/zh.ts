@@ -124,6 +124,7 @@ export const zh: Translation = {
       '我们对客户身份严格保密。以下案例反映了我们所支持的委托类型、规模与实际成果。',
     items: [
       {
+        active: true,
         sector: '工业与制造业',
         profile:
           '总部位于东莞的全球科技硬件机械组件二级供应商，员工逾1,600人，在5个国家设有大型工业设施，年收入数亿美元。',
@@ -131,6 +132,7 @@ export const zh: Translation = {
         outcome: '成功促成逾1,000万美元的初始订单，2026年营收目标为1亿美元。',
       },
       {
+        active: true,
         sector: '上市医疗集团',
         profile:
           '总部位于广州的医疗器械全方案提供商，拥有自主研发能力及丰富临床产品线，产品应用于逾15,000家医院，出口至90余个国家。',
@@ -138,6 +140,7 @@ export const zh: Translation = {
         outcome: '协助达成一项总交易金额达1,500万美元的商业合作协议。',
       },
       {
+        active: true,
         sector: '医疗美容',
         profile:
           '总部位于深圳的综合医疗与医美设备集团，员工逾1,300人，拥有五处生产基地，产品覆盖中国85%的大型医院，销售网络延伸至70余个国家。',
@@ -145,6 +148,7 @@ export const zh: Translation = {
         outcome: '帮助客户完成跨境并购决策评估，清晰呈现技术成熟度、执行风险与资本需求。',
       },
       {
+        active: false, // set to true to restore this card
         sector: '艺术与投资顾问',
         profile:
           '总部位于上海的精品艺术顾问公司，专注于高端艺术品收藏、投资及跨文化项目，国际网络覆盖中国、欧洲及美洲市场。',
@@ -152,6 +156,7 @@ export const zh: Translation = {
         outcome: '成功为客户引荐并锁定一批以色列高净值客户与投资人。',
       },
       {
+        active: true,
         sector: '医疗器械制造',
         profile:
           '总部位于印度古瓦哈提的医疗器械制造商，持有USFDA认证，专注于一次性及自毁式注射器的生产，符合ISO 13485:2016标准，日产能达140万支。',
@@ -159,6 +164,7 @@ export const zh: Translation = {
         outcome: '成功识别并引荐一批以色列医疗采购方与采购决策者。',
       },
       {
+        active: true,
         sector: '科技与金融解决方案',
         profile:
           '总部位于香港的科技与金融解决方案提供商，专注于数据驱动平台与高级分析，国际业务覆盖多个市场的企业级客户。',
@@ -166,6 +172,7 @@ export const zh: Translation = {
         outcome: '通过引入合格本地人才与开拓定向商业机会，有效强化了客户在以色列的市场存在。',
       },
       {
+        active: true,
         sector: '技术与元器件',
         profile:
           '总部位于深圳的工业及军用级SSD与DRAM存储解决方案一级供应商，员工120余人，服务覆盖欧洲、北美、南美及亚太地区的OEM客户。',

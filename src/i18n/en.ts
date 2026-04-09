@@ -122,6 +122,7 @@ export const en = {
       'Our clients\' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.',
     items: [
       {
+        active: true,
         sector: 'Industrial & Manufacturing',
         profile:
           'Dongguan-based tier-2 supplier of mechanical assemblies for global tech hardware — 1,600+ employees, industrial facilities across 5 countries, hundreds of millions in annual revenues.',
@@ -130,6 +131,7 @@ export const en = {
           'Secured over US$10 million in initial orders. 2026 revenue target: US$100 million.',
       },
       {
+        active: true,
         sector: 'Publicly-Traded Medical Group',
         profile:
           'Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries.',
@@ -138,6 +140,7 @@ export const en = {
           'Supported a commercial agreement with a total deal value of US$15 million.',
       },
       {
+        active: true,
         sector: 'Medical Aesthetics',
         profile:
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
@@ -146,6 +149,7 @@ export const en = {
           'Enabled the client to evaluate a cross-border acquisition with clear visibility into technology readiness, execution risk, and capital requirements.',
       },
       {
+        active: false, // set to true to restore this card
         sector: 'Art & Investment Advisory',
         profile:
           'Shanghai-based boutique art advisory firm — multidisciplinary consultancy specialising in high-end art collecting, investment, and cross-cultural programming, with an international network spanning China, Europe, and the Americas.',
@@ -154,6 +158,7 @@ export const en = {
           'Sourced and secured introductions to a curated set of high-net-worth Israeli clients and investors.',
       },
       {
+        active: true,
         sector: 'Medical Devices Manufacturing',
         profile:
           'Guwahati-based medical device manufacturer — USFDA-certified producer of disposable and auto-disabling syringes under ISO 13485:2016, with a production capacity of 1.4 million units per day.',
@@ -162,6 +167,7 @@ export const en = {
           'Identified and introduced a curated set of Israeli healthcare clients and procurement decision-makers; negotiations ongoing.',
       },
       {
+        active: true,
         sector: 'Technology & Financial Solutions',
         profile:
           'Hong Kong–based technology and financial solutions provider focused on data-driven platforms and advanced analytics, with international operations supporting enterprise clients across multiple markets.',
@@ -170,6 +176,7 @@ export const en = {
           'Reinforced the client\'s presence through access to qualified local talent and the development of targeted commercial engagement opportunities.',
       },
       {
+        active: true,
         sector: 'Technology & Components',
         profile:
           'Shenzhen-based tier-1 supplier of industrial and military-grade SSD and DRAM storage solutions — 120+ employees, OEM customers across Europe, North America, South America, and Asia-Pacific.',

@@ -23,7 +23,7 @@ const { t } = Astro.props;
     </div>
 
     <!-- Credential rows — all visible, cycling highlight -->
-    <div class="cred-list" aria-label="Founder credentials">
+    <div class="cred-list">
       {t.founder.credentials.map((cred, i) => (
         <div class={`cred${i === 0 ? ' is-active' : ''}`} data-cred-index={String(i)}>
           <div class="cred-inner">

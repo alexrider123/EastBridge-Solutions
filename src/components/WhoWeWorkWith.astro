@@ -16,13 +16,15 @@ const { t } = Astro.props;
   -->
   <div class="who-sticky" data-who-sticky>
     <div class="container">
+      <div class="who-header">
+        <span class="section-label">{t.whoWeWork.label}</span>
+        <h2 class="section-headline">{t.whoWeWork.headline}</h2>
+        <div class="divider"></div>
+      </div>
       <div class="who-body">
 
         <!-- Left: context panel -->
         <div class="who-panel">
-          <span class="section-label">{t.whoWeWork.label}</span>
-          <h2 class="section-headline">{t.whoWeWork.headline}</h2>
-          <div class="divider"></div>
           <div class="who-prose">
             <p class="who-p">{t.whoWeWork.intro}</p>
             <p class="who-p">{t.whoWeWork.note}</p>
@@ -86,20 +88,20 @@ const { t } = Astro.props;
   /* ── Two-column grid ── */
   .who-body {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-16);
     align-items: stretch;
     width: 100%;
   }
 
   /* ── Left: context panel (dark) ── */
-  .who-panel {
-    background-color: var(--color-navy);
-    padding: var(--space-10);
+  .who-header {
+    margin-bottom: var(--space-8);
   }
 
-  .who-panel .section-headline {
-    color: var(--color-off-white);
+  .who-panel {
+    background-color: var(--color-navy);
+    padding: var(--space-16) var(--space-10);
   }
 
   .who-prose {
@@ -110,7 +112,7 @@ const { t } = Astro.props;
     font-family: var(--font-sans);
     color: rgba(248, 246, 241, 0.72);
     line-height: 1.78;
-    margin: 0 0 var(--space-5);
+    margin: 0 0 var(--space-8);
   }
 
   .who-p:last-child {
@@ -137,7 +139,9 @@ const { t } = Astro.props;
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: var(--space-10) var(--space-6) var(--space-12);
+    overflow: hidden;
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -152,11 +156,11 @@ const { t } = Astro.props;
 
   .sector-num {
     display: block;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.2em;
     color: var(--color-gold);
-    margin-bottom: var(--space-5);
+    margin-bottom: var(--space-8);
     user-select: none;
   }
 
@@ -176,7 +180,7 @@ const { t } = Astro.props;
     height: 2px;
     background-color: var(--color-gold);
     opacity: 0.75;
-    margin: var(--space-6) 0;
+    margin: var(--space-4) 0 var(--space-8);
   }
 
   :lang(zh) .sector-title {
@@ -200,25 +204,26 @@ const { t } = Astro.props;
   /* Progress dots */
   .sector-dots {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    bottom: var(--space-4);
+    left: var(--space-6);
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-4);
+    align-items: center;
   }
 
   .sector-dot {
-    width: 22px;
-    height: 3px;
+    width: 36px;
+    height: 4px;
     border-radius: 2px;
     background-color: var(--color-text-muted);
-    opacity: 0.3;
-    transition: background-color 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+    opacity: 0.35;
+    transition: background-color 0.4s ease-out, opacity 0.4s ease-out, width 0.4s ease-out;
   }
 
   .sector-dot.is-active {
     background-color: var(--color-gold);
     opacity: 1;
-    width: 32px;
+    width: 72px;
   }
 
   /* ── Mobile: plain stacked layout ── */

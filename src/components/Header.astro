@@ -50,7 +50,7 @@ const homeHref = `/${lang}/`;
     </nav>
 
     <div class="header-actions">
-      <a href={t.nav.langSwitchHref} class="lang-switch" aria-label="Switch language">
+      <a href={t.nav.langSwitchHref} class="lang-switch">
         <span class="lang-switch-icon">⇄</span>
         {t.nav.langSwitch}
       </a>
@@ -179,6 +179,15 @@ const homeHref = `/${lang}/`;
     .logo-en {
       font-size: 0.65rem;
       letter-spacing: 0.12em;
+    }
+
+    .header-inner {
+      gap: var(--space-4);
+    }
+
+    .lang-switch {
+      padding: 0.35rem 0.7rem;
+      font-size: 0.72rem;
     }
   }
 </style>

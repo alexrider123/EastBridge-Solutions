@@ -23,7 +23,7 @@ const { t } = Astro.props;
 
       <!-- All cards stacked in the same spot -->
       <div class="exp-cards">
-        {t.experience.items.map((item, i) => (
+        {t.experience.items.filter(item => item.active).map((item, i) => (
           <div
             class={`exp-card${i === 0 ? ' is-active' : ''}`}
             data-index={String(i)}
@@ -77,7 +77,7 @@ const { t } = Astro.props;
         </button>
 
         <div class="exp-dots">
-          {t.experience.items.map((_, i) => (
+          {t.experience.items.filter(item => item.active).map((_, i) => (
             <button
               class={`exp-dot${i === 0 ? ' is-active' : ''}`}
               data-index={String(i)}
