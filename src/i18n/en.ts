@@ -22,6 +22,7 @@ export const en = {
     subheadline:
       'Supporting Chinese enterprises in entering, building partnerships, and operating on the ground in Israel — with direct access and execution accountability.',
     cta: 'Get in touch',
+    ctaSecondary: 'Our Track Record',
   },
 
   about: {
@@ -29,10 +30,9 @@ export const en = {
     headline: 'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
     body: [
       'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
-      "We work directly with Chinese enterprises on market entry, partnership development, and transaction-related initiatives in Israel. Engagements are focused, commercially driven, and aligned with clearly defined outcomes — whether establishing initial market presence, advancing strategic relationships, or supporting cross-border opportunities.",
-      "Based in Israel, we operate on the ground with a practical understanding of the local commercial, institutional, and regulatory environment — and how it translates in execution for Chinese organisations. Our role is not limited to advisory. We take responsibility for driving progress: aligning stakeholders, structuring engagement, and ensuring that discussions convert into tangible outcomes.",
-      "The firm is led from Israel, with direct involvement across all client engagements. The lead advisor holds an MBA from the Hong Kong University of Science and Technology.",
-      "We work with a limited number of clients at any given time. Each mandate is handled with direct involvement, continuity, and full accountability throughout the engagement.",
+      "We work with Chinese enterprises on market entry, partnerships, and transaction-related initiatives in Israel. Engagements are focused on tangible business outcomes — from establishing a local presence to advancing strategic opportunities.",
+      "Operating on the ground, we navigate Israel's commercial and regulatory environment and take direct responsibility for execution — coordinating stakeholders, structuring interactions, and ensuring progress toward concrete outcomes.",
+      "The firm is led by its founder, Daniel Israeli, with direct involvement across all client engagements. Daniel Israeli holds an MBA from the Hong Kong University of Science and Technology and Tel Aviv University, with direct experience working with Chinese enterprises and on-the-ground exposure in China.",
     ],
     points: [
       {

@@ -15,7 +15,11 @@ const { t } = Astro.props;
       <div class="divider-line"></div>
       <h1 class="hero-headline">{t.hero.headline}</h1>
       <p class="hero-sub">{t.hero.subheadline}</p>
-      <a href="#contact" class="hero-cta">{t.hero.cta}</a>
+      <div class="hero-cta-group">
+        <a href="#contact" class="hero-cta">{t.hero.cta}</a>
+        <span class="hero-cta-sep" aria-hidden="true"></span>
+        <a href="#experience" class="hero-cta--ghost">{t.hero.ctaSecondary}</a>
+      </div>
     </div>
 
     <div class="hero-geo" aria-hidden="true">
@@ -117,7 +121,15 @@ const { t } = Astro.props;
     font-size: 1rem;
   }
 
-  /* CTA */
+  /* CTA group */
+  .hero-cta-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+  }
+
+  /* Primary CTA */
   .hero-cta {
     display: inline-block;
     font-size: 0.78rem;
@@ -138,6 +150,51 @@ const { t } = Astro.props;
     background-color: var(--color-gold);
     color: var(--color-navy);
     border-color: var(--color-gold);
+  }
+
+  /* Vertical separator */
+  .hero-cta-sep {
+    display: inline-block;
+    width: 1px;
+    height: 1rem;
+    background-color: rgba(201, 168, 76, 0.3);
+    flex-shrink: 0;
+  }
+
+  /* Secondary CTA — typographic link style */
+  .hero-cta--ghost {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(248, 246, 241, 0.45);
+    background-image: linear-gradient(rgba(201, 168, 76, 0.5), rgba(201, 168, 76, 0.5));
+    background-size: 0% 1px;
+    background-position: left bottom 0;
+    background-repeat: no-repeat;
+    padding-bottom: 2px;
+    transition: color 220ms ease, background-size 220ms ease;
+  }
+
+  :lang(zh) .hero-cta--ghost {
+    letter-spacing: 0.06em;
+  }
+
+  .hero-cta--ghost::after {
+    content: ' →';
+    display: inline-block;
+    transition: transform 220ms ease;
+    font-style: normal;
+  }
+
+  .hero-cta--ghost:hover {
+    color: rgba(248, 246, 241, 0.85);
+    background-size: 100% 1px;
+  }
+
+  .hero-cta--ghost:hover::after {
+    transform: translateX(4px);
   }
 
   /* Geometric decoration */
