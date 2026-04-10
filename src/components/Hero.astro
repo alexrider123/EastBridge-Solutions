@@ -273,11 +273,18 @@ const { t } = Astro.props;
       flex-shrink: 0;
     }
 
-    /* Chinese chars are compact — allow larger size */
+    /* Chinese: primary button stretches to fill left portion — anchors the row */
+    :lang(zh) .hero-cta-group {
+      justify-content: flex-start;
+      gap: var(--space-4);
+    }
+
     :lang(zh) .hero-cta {
+      flex: 1;
+      text-align: center;
       font-size: clamp(0.88rem, 4vw, 0.98rem);
       letter-spacing: 0.04em;
-      padding: 0.6em 1.1rem;
+      padding: 0.65em 0;
     }
 
     .hero-cta-sep {
@@ -296,6 +303,7 @@ const { t } = Astro.props;
     :lang(zh) .hero-cta--ghost {
       font-size: clamp(0.88rem, 4vw, 0.98rem);
       letter-spacing: 0.04em;
+      flex-shrink: 0;
     }
   }
 </style>
