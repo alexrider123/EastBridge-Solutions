@@ -85,7 +85,7 @@ export const en = {
     label: 'How We Support',
     headline: 'From orientation to operation.',
     intro:
-      'We operate across the full lifecycle — from initial market definition to executed partnerships and local ownership. Engagement can begin at any stage, depending on your objectives.',
+      "We operate across the full lifecycle — from initial market definition to executed partnerships and local ownership.\nEngagement can begin at any stage, depending on your objectives.",
     items: [
       {
         title: 'Market Clarity',

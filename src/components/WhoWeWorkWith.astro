@@ -264,11 +264,18 @@ const { t } = Astro.props;
     /* Tappable header row */
     .sector-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: var(--space-4);
       cursor: pointer;
       padding: var(--space-5) 0;
       user-select: none;
+    }
+
+    /* Override desktop margin so row height is consistent across all items */
+    .sector-header .sector-num {
+      margin-bottom: 0;
+      padding-top: 0.1rem;
+      flex-shrink: 0;
     }
 
     /* Title fills remaining space */
@@ -312,6 +319,7 @@ const { t } = Astro.props;
       overflow: hidden;
       transition: max-height 0.35s ease, padding-bottom 0.35s ease;
       padding: 0;
+      padding-left: calc(1.4rem + var(--space-4));
       font-size: 0.88rem;
       line-height: 1.78;
     }
