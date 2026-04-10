@@ -258,16 +258,18 @@ const { t } = Astro.props;
 
     .hero-cta-group {
       flex-wrap: nowrap;
-      gap: clamp(0.5rem, 2vw, var(--space-4));
+      width: 100%;
       align-items: center;
+      gap: 0;
     }
 
     .hero-cta {
-      font-size: clamp(0.64rem, 3.2vw, 0.95rem);
+      font-size: clamp(0.88rem, 4vw, 1rem);
       letter-spacing: 0.09em;
-      padding: 0.6em clamp(0.7rem, 2.2vw, 1.1rem);
+      padding: 0.65em 1rem;
       white-space: nowrap;
       flex-shrink: 0;
+      margin-right: var(--space-3);
     }
 
     :lang(zh) .hero-cta {
@@ -276,14 +278,16 @@ const { t } = Astro.props;
 
     .hero-cta-sep {
       background-color: rgba(201, 168, 76, 0.55);
-      height: 1rem;
+      height: 1.1rem;
       flex-shrink: 0;
+      margin-right: auto;
     }
 
     .hero-cta--ghost {
-      font-size: clamp(0.64rem, 3.2vw, 0.95rem);
+      font-size: clamp(0.88rem, 4vw, 1rem);
       letter-spacing: 0.09em;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     :lang(zh) .hero-cta--ghost {
