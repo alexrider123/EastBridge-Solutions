@@ -32,7 +32,7 @@ export const en = {
       'East Bridge Solutions is an advisory and execution firm working at the interface of China and Israel.',
       "We work with Chinese enterprises on market entry, partnerships, and transaction-related initiatives in Israel. Engagements are focused on tangible business outcomes — from establishing a local presence to advancing strategic opportunities.",
       "Operating on the ground, we navigate Israel's commercial and regulatory environment and take direct responsibility for execution — coordinating stakeholders, structuring interactions, and ensuring progress toward concrete outcomes.",
-      "The firm is led by its founder, Daniel Israeli, with direct involvement across all client engagements. Daniel Israeli holds an MBA from the Hong Kong University of Science and Technology and Tel Aviv University, with direct experience working with Chinese enterprises and on-the-ground exposure in China.",
+      "The firm is led by its founder, Daniel Israeli, with direct involvement across all client engagements. Daniel Israeli holds an MBA from the Hong Kong University of Science and Technology and Tel Aviv University, and has direct experience working with Chinese enterprises in cross-border business contexts, including on-the-ground exposure in China. His background includes senior procurement roles, engagement with Israel's technology, innovation, and investment ecosystem, and leading mandates for international companies establishing operations in Israel.",
     ],
     points: [
       {
