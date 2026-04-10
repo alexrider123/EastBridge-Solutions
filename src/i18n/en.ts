@@ -59,7 +59,7 @@ export const en = {
   },
 
   founder: {
-    label: 'Our Founder',
+    label: 'Founder',
     headline: 'Background, experience, and operating exposure.',
     location: 'Based in Tel Aviv, Israel',
     credentials: [
