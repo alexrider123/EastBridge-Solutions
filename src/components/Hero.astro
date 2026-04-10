@@ -259,39 +259,43 @@ const { t } = Astro.props;
     .hero-cta-group {
       flex-wrap: nowrap;
       width: 100%;
+      justify-content: space-between;
       align-items: center;
       gap: 0;
     }
 
+    /* English: uppercase + letter-spacing is wide — scale conservatively */
     .hero-cta {
-      font-size: clamp(0.88rem, 4vw, 1rem);
-      letter-spacing: 0.09em;
-      padding: 0.65em 1rem;
+      font-size: clamp(0.7rem, 3.2vw, 0.8rem);
+      letter-spacing: 0.08em;
+      padding: 0.65em 0.8rem;
       white-space: nowrap;
       flex-shrink: 0;
-      margin-right: var(--space-3);
     }
 
+    /* Chinese chars are compact — allow larger size */
     :lang(zh) .hero-cta {
-      letter-spacing: 0.05em;
+      font-size: clamp(0.88rem, 4vw, 0.98rem);
+      letter-spacing: 0.04em;
+      padding: 0.6em 1.1rem;
     }
 
     .hero-cta-sep {
       background-color: rgba(201, 168, 76, 0.55);
       height: 1.1rem;
       flex-shrink: 0;
-      margin-right: auto;
     }
 
     .hero-cta--ghost {
-      font-size: clamp(0.88rem, 4vw, 1rem);
-      letter-spacing: 0.09em;
+      font-size: clamp(0.7rem, 3.2vw, 0.8rem);
+      letter-spacing: 0.08em;
       white-space: nowrap;
       flex-shrink: 0;
     }
 
     :lang(zh) .hero-cta--ghost {
-      letter-spacing: 0.05em;
+      font-size: clamp(0.88rem, 4vw, 0.98rem);
+      letter-spacing: 0.04em;
     }
   }
 </style>
