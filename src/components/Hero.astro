@@ -258,27 +258,36 @@ const { t } = Astro.props;
 
     .hero-cta-group {
       flex-wrap: nowrap;
-      gap: var(--space-3);
+      gap: clamp(0.5rem, 2vw, var(--space-4));
       align-items: center;
     }
 
     .hero-cta {
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      padding: 0.65rem 0.9rem;
+      font-size: clamp(0.64rem, 3.2vw, 0.95rem);
+      letter-spacing: 0.09em;
+      padding: 0.6em clamp(0.7rem, 2.2vw, 1.1rem);
       white-space: nowrap;
       flex-shrink: 0;
+    }
+
+    :lang(zh) .hero-cta {
+      letter-spacing: 0.05em;
     }
 
     .hero-cta-sep {
       background-color: rgba(201, 168, 76, 0.55);
       height: 1rem;
+      flex-shrink: 0;
     }
 
     .hero-cta--ghost {
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
+      font-size: clamp(0.64rem, 3.2vw, 0.95rem);
+      letter-spacing: 0.09em;
       white-space: nowrap;
+    }
+
+    :lang(zh) .hero-cta--ghost {
+      letter-spacing: 0.05em;
     }
   }
 </style>
