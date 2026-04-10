@@ -125,10 +125,10 @@ export const en = {
         active: true,
         sector: 'Industrial & Manufacturing',
         profile:
-          'Dongguan-based tier-2 supplier of mechanical assemblies for global tech hardware — 1,600+ employees, industrial facilities across 5 countries, hundreds of millions in annual revenues.',
+          'Dongguan-based tier-2 supplier of precision mechanical assemblies and thermal solutions for leading global technology manufacturers — 1,600+ employees, operations across six countries, and hundreds of millions of US$ in revenue.',
         body: 'The client aimed to enter the Israeli market and position itself as a preferred partner with a leading MAG7 technology customer. We acted as the local representative, interfacing with engineering, product, and procurement teams — coordinating technical discussions, aligning stakeholders, and ensuring requirements and deliverables were clearly defined.',
         outcome:
-          'Secured over US$10 million in initial orders. 2026 revenue target: US$100 million.',
+          "Secured over US$10 million in initial orders.\n2026 revenue target: US$100 million.",
       },
       {
         active: true,
@@ -170,10 +170,10 @@ export const en = {
         active: true,
         sector: 'Technology & Financial Solutions',
         profile:
-          'Hong Kong–based technology and financial solutions provider focused on data-driven platforms and advanced analytics, with international operations supporting enterprise clients across multiple markets.',
-        body: 'The client sought to strengthen its presence in Israel by building local talent capacity and advancing targeted business development initiatives. We supported this objective by identifying and onboarding qualified local profiles while driving focused commercial outreach across the Israeli ecosystem.',
+          'Hong Kong–based technology and financial solutions provider specializing in data-driven platforms and advanced analytics, with international operations serving enterprise clients across multiple markets.',
+        body: 'The client sought to establish a stronger presence in Israel through local hiring and targeted business development. We led the identification and onboarding of qualified local talent, and directly managed commercial outreach to relevant Israeli companies.',
         outcome:
-          'Reinforced the client\'s presence through access to qualified local talent and the development of targeted commercial engagement opportunities.',
+          'Established local operational presence and initiated direct engagement with qualified Israeli partners, accelerating the client\'s market entry and commercial positioning.',
       },
       {
         active: true,
