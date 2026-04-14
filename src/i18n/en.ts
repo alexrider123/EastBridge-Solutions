@@ -135,7 +135,7 @@ export const en = {
         sector: 'Publicly-Traded Medical Group',
         profile:
           'Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries.',
-        body: 'The client sought to acquire an Israeli technology aligned with its long-term product roadmap, while preserving confidentiality and avoiding premature market signalling. We conducted a technical and commercial assessment engaging directly with the Israeli target under anonymity, then supported the negotiation and alignment of terms between both parties.',
+        body: 'The client sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',
         outcome:
           'Supported a commercial agreement with a total deal value of US$15 million.',
       },
@@ -144,7 +144,7 @@ export const en = {
         sector: 'Medical Aesthetics',
         profile:
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
-        body: 'The client was evaluating the acquisition of a pre-clinical Israeli laser technology startup to support expansion into the U.S. medical aesthetics market. We conducted targeted technical and commercial due diligence, and assessed strategic fit alongside a leading Israeli medical investment fund.',
+        body: 'The client was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. We conducted targeted technical and commercial due diligence, and assessed strategic fit in coordination with a leading Israeli medical investment fund.',
         outcome:
           'Enabled the client to evaluate a cross-border acquisition with clear visibility into technology readiness, execution risk, and capital requirements.',
       },
