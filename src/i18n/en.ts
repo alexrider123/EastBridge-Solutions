@@ -20,7 +20,7 @@ export const en = {
   hero: {
     headline: 'A trusted interface for Chinese enterprises operating in Israel.',
     subheadline:
-      'Supporting Chinese enterprises in entering, building partnerships, and operating on the ground in Israel — reducing execution risk through direct access and on-the-ground accountability.',
+      'Supporting Chinese enterprises in entering, building partnerships, and operating on the ground in Israel — ensuring controlled execution and reduced market entry risk.',
     cta: 'Get in touch',
     ctaSecondary: 'Our Track Record',
   },
