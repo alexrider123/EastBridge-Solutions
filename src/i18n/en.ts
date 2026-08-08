@@ -149,7 +149,7 @@ export const en = {
           'Enabled the client to evaluate a cross-border acquisition with clear visibility into technology readiness, execution risk, and capital requirements.',
       },
       {
-        active: false, // set to true to restore this card
+        active: true,
         sector: 'Art & Investment Advisory',
         profile:
           'Shanghai-based boutique art advisory firm — multidisciplinary consultancy specialising in high-end art collecting, investment, and cross-cultural programming, with an international network spanning China, Europe, and the Americas.',

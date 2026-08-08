@@ -148,7 +148,7 @@ export const zh: Translation = {
         outcome: '帮助客户完成跨境并购决策评估，清晰呈现技术成熟度、执行风险与资本需求。',
       },
       {
-        active: false, // set to true to restore this card
+        active: true,
         sector: '艺术与投资顾问',
         profile:
           '总部位于上海的精品艺术顾问公司，专注于高端艺术品收藏、投资及跨文化项目，国际网络覆盖中国、欧洲及美洲市场。',
