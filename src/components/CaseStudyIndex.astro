@@ -64,8 +64,8 @@ const items = t.experience.items.filter((item) => item.active);
   .cases-list-link {
     display: flex;
     align-items: baseline;
-    gap: var(--space-8);
-    padding: var(--space-5) 0;
+    gap: var(--space-10);
+    padding: var(--space-8) 0;
     border-bottom: 1px solid var(--color-border);
     transition: padding-left 180ms ease;
   }
@@ -80,10 +80,10 @@ const items = t.experience.items.filter((item) => item.active);
 
   .cases-list-sector {
     font-family: var(--font-serif);
-    font-size: 0.98rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: var(--color-navy);
-    flex: 0 0 230px;
+    flex: 0 0 270px;
     transition: color 180ms ease;
   }
 
@@ -92,7 +92,8 @@ const items = t.experience.items.filter((item) => item.active);
   }
 
   .cases-list-outcome {
-    font-size: 0.86rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
     color: var(--color-text-muted);
     flex: 1;
     min-width: 0;
@@ -106,7 +107,7 @@ const items = t.experience.items.filter((item) => item.active);
   }
 
   .cases-list-arrow {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     color: var(--color-gold);
     flex-shrink: 0;
   }
@@ -115,7 +116,7 @@ const items = t.experience.items.filter((item) => item.active);
     .cases-list-link {
       flex-direction: column;
       align-items: flex-start;
-      gap: var(--space-2);
+      gap: var(--space-3);
       position: relative;
     }
 
@@ -132,13 +133,13 @@ const items = t.experience.items.filter((item) => item.active);
       white-space: normal;
       overflow: visible;
       text-overflow: clip;
-      line-height: 1.65;
+      line-height: 1.7;
       padding-right: var(--space-8);
     }
 
     .cases-list-arrow {
       position: absolute;
-      top: var(--space-5);
+      top: var(--space-8);
       right: 0;
     }
   }
