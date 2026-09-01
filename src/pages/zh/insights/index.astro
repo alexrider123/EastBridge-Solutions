@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import InsightsIndex from '../../../components/InsightsIndex.astro';
+import { zh } from '../../../i18n/zh';
+
+const t = zh;
+const entries = await getCollection('insights', ({ data }) => data.lang === 'zh');
+const pageTitle = '洞察 | 东桥咨询';
+const pageDescription = '关于中以市场进入、成本结构与跨境业务执行的长篇分析。';
+---
+
+<BaseLayout t={t} lang="zh" title={pageTitle} description={pageDescription} path="insights/">
+  <InsightsIndex lang="zh" entries={entries} />
+</BaseLayout>

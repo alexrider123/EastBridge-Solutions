@@ -1,0 +1,120 @@
+---
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  publishDate: Date;
+}
+
+const { lang, title, publishDate } = Astro.props;
+const insightsHref = `/${lang}/insights/`;
+const backLabel = lang === 'zh' ? '← 返回全部文章' : '← Back to all insights';
+const formattedDate = publishDate.toLocaleDateString(lang === 'zh' ? 'zh-CN' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article class="section insight-article">
+  <div class="container insight-container">
+    <a href={insightsHref} class="insight-back">{backLabel}</a>
+
+    <header class="insight-header">
+      <span class="section-label">{lang === 'zh' ? '洞察' : 'Insights'}</span>
+      <h1 class="section-headline">{title}</h1>
+      <div class="divider"></div>
+      <time class="insight-date" datetime={publishDate.toISOString()}>{formattedDate}</time>
+    </header>
+
+    <div class="insight-body">
+      <slot />
+    </div>
+  </div>
+</article>
+
+<style>
+  .insight-article {
+    background-color: var(--color-off-white);
+  }
+
+  .insight-container {
+    max-width: 760px;
+  }
+
+  .insight-back {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-10);
+    transition: color 180ms ease;
+  }
+
+  .insight-back:hover {
+    color: var(--color-gold);
+  }
+
+  .insight-header {
+    margin-bottom: var(--space-10);
+  }
+
+  .insight-date {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+  }
+
+  .insight-body {
+    font-size: 0.96rem;
+    line-height: 1.85;
+    color: var(--color-text-body);
+  }
+
+  :lang(zh) .insight-body {
+    font-family: var(--font-zh-sans);
+  }
+
+  .insight-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    margin: var(--space-10) 0 var(--space-4);
+  }
+
+  :lang(zh) .insight-body :global(h2) {
+    font-family: var(--font-zh-serif);
+  }
+
+  .insight-body :global(p) {
+    margin: 0 0 var(--space-6);
+  }
+
+  .insight-body :global(ul),
+  .insight-body :global(ol) {
+    margin: 0 0 var(--space-6);
+    padding-left: var(--space-6);
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .insight-body :global(ul) {
+    list-style: disc;
+  }
+
+  .insight-body :global(li) {
+    line-height: 1.8;
+  }
+
+  .insight-body :global(strong) {
+    color: var(--color-navy);
+    font-weight: 600;
+  }
+
+  .insight-body :global(a) {
+    color: var(--color-gold);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.4);
+  }
+</style>

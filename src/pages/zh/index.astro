@@ -4,18 +4,32 @@ import Hero from '../../components/Hero.astro';
 import About from '../../components/About.astro';
 import HowWeSupport from '../../components/HowWeSupport.astro';
 import Experience from '../../components/Experience.astro';
+import InsightsTeaser from '../../components/InsightsTeaser.astro';
 import WhoWeWorkWith from '../../components/WhoWeWorkWith.astro';
 import Contact from '../../components/Contact.astro';
 import { useTranslations } from '../../i18n/utils';
 
 const t = useTranslations('zh');
+
+const servicesJsonLd = t.services.items.map((item) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: item.title,
+  description: item.body,
+  provider: {
+    '@type': 'Organization',
+    name: 'East Bridge Solutions',
+  },
+  areaServed: 'IL',
+}));
 ---
 
-<BaseLayout t={t} lang="zh">
+<BaseLayout t={t} lang="zh" jsonLd={servicesJsonLd}>
   <Hero t={t} />
   <About t={t} />
   <HowWeSupport t={t} />
-  <Experience t={t} />
+  <Experience t={t} lang="zh" />
+  <InsightsTeaser lang="zh" />
   <WhoWeWorkWith t={t} />
   <Contact t={t} />
 </BaseLayout>

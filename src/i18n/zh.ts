@@ -125,6 +125,7 @@ export const zh: Translation = {
     items: [
       {
         active: true,
+        slug: 'industrial-manufacturing',
         sector: '工业与制造业',
         profile:
           '总部位于东莞的精密机械组件与热解决方案二级供应商，服务于全球顶级科技制造商——员工逾1,600人，业务覆盖六个国家，年收入数亿美元。',
@@ -133,6 +134,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'publicly-traded-medical-group',
         sector: '上市医疗集团',
         profile:
           '总部位于广州的医疗器械全方案提供商，拥有自主研发能力及丰富临床产品线，产品应用于逾15,000家医院，出口至90余个国家。',
@@ -141,6 +143,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'medical-aesthetics',
         sector: '医疗美容',
         profile:
           '总部位于深圳的综合医疗与医美设备集团，员工逾1,300人，拥有五处生产基地，产品覆盖中国85%的大型医院，销售网络延伸至70余个国家。',
@@ -149,6 +152,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'art-investment-advisory',
         sector: '艺术与投资顾问',
         profile:
           '总部位于上海的精品艺术顾问公司，专注于高端艺术品收藏、投资及跨文化项目，国际网络覆盖中国、欧洲及美洲市场。',
@@ -157,6 +161,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'medical-devices-manufacturing',
         sector: '医疗器械制造',
         profile:
           '总部位于印度古瓦哈提的医疗器械制造商，持有USFDA认证，专注于一次性及自毁式注射器的生产，符合ISO 13485:2016标准，日产能达140万支。',
@@ -165,6 +170,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'technology-financial-solutions',
         sector: '科技与金融解决方案',
         profile:
           '总部位于香港的科技与金融解决方案提供商，专注于数据驱动平台与高级分析，国际业务服务于多个市场的企业级客户。',
@@ -173,6 +179,7 @@ export const zh: Translation = {
       },
       {
         active: true,
+        slug: 'technology-components',
         sector: '技术与元器件',
         profile:
           '总部位于深圳的工业及军用级SSD与DRAM存储解决方案一级供应商，员工120余人，服务覆盖欧洲、北美、南美及亚太地区的OEM客户。',

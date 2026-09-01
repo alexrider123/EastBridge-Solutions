@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudyIndex from '../../../components/CaseStudyIndex.astro';
+import { zh } from '../../../i18n/zh';
+
+const t = zh;
+const pageTitle = '案例研究 | 东桥咨询';
+const pageDescription =
+  '精选中以商务合作案例：涵盖工业、医疗与科技领域的市场进入、交易执行与本地代表服务。';
+---
+
+<BaseLayout t={t} lang="zh" title={pageTitle} description={pageDescription} path="cases/">
+  <CaseStudyIndex t={t} lang="zh" />
+</BaseLayout>

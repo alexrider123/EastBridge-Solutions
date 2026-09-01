@@ -1,0 +1,118 @@
+---
+import type { Translation } from '../i18n/en';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+  t: Translation;
+  lang: Lang;
+}
+
+const { t, lang } = Astro.props;
+const items = t.experience.items.filter((item) => item.active);
+---
+
+<section class="section cases-index">
+  <div class="container">
+    <header class="cases-index-header">
+      <span class="section-label">{t.experience.label}</span>
+      <h1 class="section-headline">{t.experience.headline}</h1>
+      <div class="divider"></div>
+      <p class="cases-index-intro">{t.experience.intro}</p>
+    </header>
+
+    <ul class="cases-list">
+      {items.map((item) => (
+        <li class="cases-list-item">
+          <a class="cases-list-link" href={`/${lang}/cases/${item.slug}/`}>
+            <span class="cases-list-sector">{item.sector}</span>
+            <p class="cases-list-outcome">{item.outcome}</p>
+            <span class="cases-list-cta" aria-hidden="true">
+              {lang === 'zh' ? '查看详情 →' : 'Read the case study →'}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cases-index {
+    background-color: var(--color-off-white);
+  }
+
+  .cases-index-header {
+    max-width: 640px;
+    margin-bottom: var(--space-12);
+  }
+
+  .cases-index-intro {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  :lang(zh) .cases-index-intro {
+    font-family: var(--font-zh-sans);
+    font-style: normal;
+  }
+
+  .cases-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background-color: var(--color-border);
+    border: 1px solid var(--color-border);
+  }
+
+  .cases-list-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    background-color: var(--color-navy);
+    padding: var(--space-8);
+    height: 100%;
+    transition: background-color 180ms ease;
+  }
+
+  .cases-list-link:hover {
+    background-color: var(--color-navy-mid);
+  }
+
+  .cases-list-sector {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-off-white);
+  }
+
+  :lang(zh) .cases-list-sector {
+    font-family: var(--font-zh-serif);
+  }
+
+  .cases-list-outcome {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: rgba(248, 246, 241, 0.65);
+    white-space: pre-line;
+    flex: 1;
+  }
+
+  :lang(zh) .cases-list-outcome {
+    font-family: var(--font-zh-sans);
+  }
+
+  .cases-list-cta {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-gold);
+  }
+
+  @media (max-width: 640px) {
+    .cases-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

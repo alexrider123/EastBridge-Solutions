@@ -123,6 +123,7 @@ export const en = {
     items: [
       {
         active: true,
+        slug: 'industrial-manufacturing',
         sector: 'Industrial & Manufacturing',
         profile:
           'Dongguan-based tier-2 supplier of precision mechanical assemblies and thermal solutions for leading global technology manufacturers — 1,600+ employees, operations across six countries, and hundreds of millions of US$ in revenue.',
@@ -132,6 +133,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'publicly-traded-medical-group',
         sector: 'Publicly-Traded Medical Group',
         profile:
           'Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries.',
@@ -141,6 +143,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'medical-aesthetics',
         sector: 'Medical Aesthetics',
         profile:
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
@@ -150,6 +153,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'art-investment-advisory',
         sector: 'Art & Investment Advisory',
         profile:
           'Shanghai-based boutique art advisory firm — multidisciplinary consultancy specialising in high-end art collecting, investment, and cross-cultural programming, with an international network spanning China, Europe, and the Americas.',
@@ -159,6 +163,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'medical-devices-manufacturing',
         sector: 'Medical Devices Manufacturing',
         profile:
           'Guwahati-based medical device manufacturer — USFDA-certified producer of disposable and auto-disabling syringes under ISO 13485:2016, with a production capacity of 1.4 million units per day.',
@@ -168,6 +173,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'technology-financial-solutions',
         sector: 'Technology & Financial Solutions',
         profile:
           'Hong Kong–based technology and financial solutions provider specializing in data-driven platforms and advanced analytics, with international operations serving enterprise clients across multiple markets.',
@@ -177,6 +183,7 @@ export const en = {
       },
       {
         active: true,
+        slug: 'technology-components',
         sector: 'Technology & Components',
         profile:
           'Shenzhen-based tier-1 supplier of industrial and military-grade SSD and DRAM storage solutions — 120+ employees, OEM customers across Europe, North America, South America, and Asia-Pacific.',

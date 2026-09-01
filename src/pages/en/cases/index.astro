@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudyIndex from '../../../components/CaseStudyIndex.astro';
+import { en } from '../../../i18n/en';
+
+const t = en;
+const pageTitle = 'Case Studies | East Bridge Solutions';
+const pageDescription =
+  'Selected China–Israel engagements: market entry, deal execution, and local representation across industrial, medical, and technology sectors.';
+---
+
+<BaseLayout t={t} lang="en" title={pageTitle} description={pageDescription} path="cases/">
+  <CaseStudyIndex t={t} lang="en" />
+</BaseLayout>
