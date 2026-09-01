@@ -21,14 +21,12 @@ const items = t.experience.items.filter((item) => item.active);
     </header>
 
     <ul class="cases-list">
-      {items.map((item, i) => (
-        <li class={`cases-list-item${i === items.length - 1 && items.length % 2 === 1 ? ' is-last-odd' : ''}`}>
+      {items.map((item) => (
+        <li class="cases-list-row">
           <a class="cases-list-link" href={`/${lang}/cases/${item.slug}/`}>
             <span class="cases-list-sector">{item.sector}</span>
-            <p class="cases-list-outcome">{item.outcome}</p>
-            <span class="cases-list-cta" aria-hidden="true">
-              {lang === 'zh' ? '查看详情 →' : 'Read the case study →'}
-            </span>
+            <span class="cases-list-outcome">{item.outcome}</span>
+            <span class="cases-list-arrow" aria-hidden="true">→</span>
           </a>
         </li>
       ))}
@@ -58,41 +56,35 @@ const items = t.experience.items.filter((item) => item.active);
     font-style: normal;
   }
 
+  /* ─── Directory list: hairline-divided rows ─── */
   .cases-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    background-color: var(--color-border);
-    border: 1px solid var(--color-border);
-  }
-
-  .cases-list-item.is-last-odd {
-    grid-column: 1 / -1;
-  }
-
-  .is-last-odd .cases-list-outcome {
-    max-width: 640px;
+    border-top: 1px solid var(--color-border);
   }
 
   .cases-list-link {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    background-color: var(--color-navy);
-    padding: var(--space-8);
-    height: 100%;
-    transition: background-color 180ms ease;
+    align-items: baseline;
+    gap: var(--space-8);
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: padding-left 180ms ease;
   }
 
   .cases-list-link:hover {
-    background-color: var(--color-navy-mid);
+    padding-left: var(--space-3);
+  }
+
+  .cases-list-link:hover .cases-list-sector {
+    color: var(--color-gold);
   }
 
   .cases-list-sector {
     font-family: var(--font-serif);
-    font-size: 1.1rem;
+    font-size: 0.98rem;
     font-weight: 500;
-    color: var(--color-off-white);
+    color: var(--color-navy);
+    flex: 0 0 230px;
+    transition: color 180ms ease;
   }
 
   :lang(zh) .cases-list-sector {
@@ -100,27 +92,54 @@ const items = t.experience.items.filter((item) => item.active);
   }
 
   .cases-list-outcome {
-    font-size: 0.85rem;
-    line-height: 1.7;
-    color: rgba(248, 246, 241, 0.65);
-    white-space: pre-line;
+    font-size: 0.86rem;
+    color: var(--color-text-muted);
     flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   :lang(zh) .cases-list-outcome {
     font-family: var(--font-zh-sans);
   }
 
-  .cases-list-cta {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
+  .cases-list-arrow {
+    font-size: 0.82rem;
     color: var(--color-gold);
+    flex-shrink: 0;
   }
 
-  @media (max-width: 640px) {
-    .cases-list {
-      grid-template-columns: 1fr;
+  @media (max-width: 700px) {
+    .cases-list-link {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+      position: relative;
+    }
+
+    .cases-list-link:hover {
+      padding-left: 0;
+    }
+
+    .cases-list-sector {
+      flex: none;
+      padding-right: var(--space-8);
+    }
+
+    .cases-list-outcome {
+      white-space: normal;
+      overflow: visible;
+      text-overflow: clip;
+      line-height: 1.65;
+      padding-right: var(--space-8);
+    }
+
+    .cases-list-arrow {
+      position: absolute;
+      top: var(--space-5);
+      right: 0;
     }
   }
 </style>
