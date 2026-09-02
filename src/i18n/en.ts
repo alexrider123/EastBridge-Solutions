@@ -139,6 +139,13 @@ export const en = {
           "We acted as the client's local representative, interfacing directly with engineering, product, and procurement teams. This included weekly technical meetings to track progress and keep both sides aligned on requirements, as well as negotiation meetings bringing in the client's senior stakeholders to advance commercial terms and reinforce the relationship at the executive level.",
         challenge:
           "Beyond the technical requirements, the real challenge was navigating the procurement hierarchy inside a major multinational technology company. The client's components were being evaluated as the newest addition to a bill of materials built around long-established, qualified suppliers — so earning a foothold meant identifying exactly which stakeholder could open that door, then making the case in terms that mattered to them: technical fit, cost structure, and supply chain reliability, explained with the fluency of someone who genuinely understood the product. Technical credibility alone rarely moves a multinational procurement process, though — it also took building real working relationships with the engineers and procurement leads evaluating the opportunity, enough that they were willing to champion a new, unproven vendor internally rather than default to the safer, already-qualified alternative.",
+        timeline: [
+          { label: 'First inquiry call', description: "Initial call to understand the client's ambitions in Israel and scope a realistic path forward." },
+          { label: 'Landing support requested', description: 'The client asked East Bridge to organize and deliver full on-the-ground support for a senior leadership business trip to Israel, including arranging meetings with the Israeli prospect.' },
+          { label: 'Business trip & first contact', description: 'Client senior leadership traveled to Israel; East Bridge facilitated the first direct meeting with the Israeli prospect.' },
+          { label: 'Confirmed as local representative', description: "East Bridge was confirmed as the client's local representative in Israel, taking responsibility for business development with the Israeli prospect." },
+          { label: 'Ongoing local representation', description: "Continuing as local representative, with weekly technical and commercial reporting to the client's headquarters in China." },
+        ],
         companySize: '1,600+ employees · 6 countries',
         engagementFormat: 'Ongoing representation',
         duration: '1 year',
