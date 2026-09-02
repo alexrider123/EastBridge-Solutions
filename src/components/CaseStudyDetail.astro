@@ -15,6 +15,15 @@ interface Props {
 const { t, lang, item, prevItem, nextItem } = Astro.props;
 const casesHref = `/${lang}/cases/`;
 const backLabel = lang === 'zh' ? '← 返回所有案例' : '← Back to all case studies';
+
+const fields = t.experience.fieldLabels;
+const mandateText = 'mandate' in item && item.mandate ? item.mandate : item.profile;
+const approachText = 'approach' in item && item.approach ? item.approach : item.body;
+const challengeText = 'challenge' in item ? item.challenge : undefined;
+const timeline = 'timeline' in item ? item.timeline : undefined;
+const companySize = 'companySize' in item ? item.companySize : undefined;
+const engagementFormat = 'engagementFormat' in item ? item.engagementFormat : undefined;
+const duration = 'duration' in item ? item.duration : undefined;
 ---
 
 <section class="section case-detail">
@@ -27,21 +36,70 @@ const backLabel = lang === 'zh' ? '← 返回所有案例' : '← Back to all ca
       <div class="divider"></div>
     </header>
 
-    <div class="case-card">
-      <div class="case-card-body">
-        <div class="case-col case-col--client">
-          <span class="case-col-label">{t.experience.fieldLabels.profile}</span>
-          <p class="case-col-text">{item.profile}</p>
+    <div class="case-layout">
+      <div class="case-main">
+        <span class="case-subhead">{fields.mandate}</span>
+        <p class="case-text">{mandateText}</p>
+
+        <span class="case-subhead">{fields.approach}</span>
+        <p class="case-text">{approachText}</p>
+
+        {challengeText && (
+          <>
+            <span class="case-subhead">{fields.challenge}</span>
+            <p class="case-text">{challengeText}</p>
+          </>
+        )}
+
+        <div class="case-pullquote">
+          <p>{item.outcome}</p>
         </div>
-        <div class="case-col case-col--engagement">
-          <span class="case-col-label">{t.experience.fieldLabels.engagement}</span>
-          <p class="case-col-text">{item.body}</p>
-        </div>
-        <div class="case-col case-col--outcome">
-          <span class="case-col-label">{t.experience.fieldLabels.outcome}</span>
-          <p class="case-outcome-text">{item.outcome}</p>
-        </div>
+
+        {timeline && timeline.length > 0 && (
+          <>
+            <div class="case-timeline-heading">
+              <h2>{fields.timelineHeading}</h2>
+            </div>
+            <div class="case-timeline">
+              {timeline.map((step, i) => (
+                <div class={`case-timeline-item${i === timeline.length - 1 ? ' is-result' : ''}`}>
+                  <span class="case-timeline-dot"></span>
+                  <div class="case-timeline-body">
+                    <span class="case-timeline-label">{step.label}</span>
+                    <p>{step.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </div>
+
+      <aside class="case-sidebar">
+        <span class="case-glance-label">{fields.atAGlance}</span>
+        <div class="case-field">
+          <span class="case-field-k">{fields.sector}</span>
+          <span class="case-field-v">{item.sector}</span>
+        </div>
+        {companySize && (
+          <div class="case-field">
+            <span class="case-field-k">{fields.companySize}</span>
+            <span class="case-field-v">{companySize}</span>
+          </div>
+        )}
+        {engagementFormat && (
+          <div class="case-field">
+            <span class="case-field-k">{fields.engagementFormat}</span>
+            <span class="case-field-v">{engagementFormat}</span>
+          </div>
+        )}
+        {duration && (
+          <div class="case-field">
+            <span class="case-field-k">{fields.duration}</span>
+            <span class="case-field-v">{duration}</span>
+          </div>
+        )}
+      </aside>
     </div>
 
     <nav class="case-pager" aria-label="More case studies">
@@ -80,69 +138,204 @@ const backLabel = lang === 'zh' ? '← 返回所有案例' : '← Back to all ca
 
   .case-header {
     max-width: 700px;
-    margin-bottom: var(--space-10);
+    margin-bottom: var(--space-12);
   }
 
-  .case-card {
-    background-color: var(--color-navy);
-  }
-
-  .case-card-body {
+  /* ─── Layout: narrative + sticky sidebar ─── */
+  .case-layout {
     display: grid;
-    grid-template-columns: 1fr 1.4fr 1fr;
+    grid-template-columns: 1fr 300px;
+    gap: var(--space-16);
+    align-items: start;
   }
 
-  .case-col {
-    padding: var(--space-12) var(--space-8);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-6);
+  .case-main {
+    max-width: 66ch;
   }
 
-  .case-col--engagement,
-  .case-col--outcome {
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .case-col-label {
-    font-size: 0.7rem;
+  .case-subhead {
+    display: block;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(248, 246, 241, 0.45);
-    flex-shrink: 0;
+    color: var(--color-gold);
+    margin: var(--space-10) 0 var(--space-4);
   }
 
-  .case-col-text {
+  .case-subhead:first-child {
+    margin-top: 0;
+  }
+
+  .case-text {
     font-size: 1rem;
     line-height: 1.9;
-    color: rgba(248, 246, 241, 0.8);
+    color: var(--color-text-body);
     margin: 0;
   }
 
-  :lang(zh) .case-col-text {
+  :lang(zh) .case-text {
     font-family: var(--font-zh-sans);
   }
 
-  .case-outcome-text {
-    font-size: 1.2rem;
+  .case-pullquote {
+    border-left: 3px solid var(--color-gold);
+    padding: var(--space-2) 0 var(--space-2) var(--space-6);
+    margin: var(--space-10) 0 var(--space-4);
+  }
+
+  .case-pullquote p {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
     font-weight: 500;
-    line-height: 1.75;
-    color: var(--color-gold);
+    color: var(--color-navy);
+    line-height: 1.55;
     margin: 0;
     white-space: pre-line;
   }
 
-  :lang(zh) .case-outcome-text {
+  :lang(zh) .case-pullquote p {
+    font-family: var(--font-zh-serif);
+  }
+
+  /* ─── Engagement timeline ─── */
+  .case-timeline-heading {
+    margin: var(--space-12) 0 var(--space-8);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .case-timeline-heading h2 {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-navy);
+    margin: 0;
+  }
+
+  :lang(zh) .case-timeline-heading h2 {
+    font-family: var(--font-zh-serif);
+  }
+
+  .case-timeline {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .case-timeline-item {
+    display: flex;
+    gap: var(--space-5);
+    padding-bottom: var(--space-8);
+    position: relative;
+  }
+
+  .case-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 24px;
+    bottom: 0;
+    width: 1px;
+    background-color: var(--color-border);
+  }
+
+  .case-timeline-item:last-child::before {
+    display: none;
+  }
+
+  .case-timeline-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .case-timeline-item.is-result .case-timeline-dot {
+    background-color: var(--color-navy);
+    width: 13px;
+    height: 13px;
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.25);
+  }
+
+  .case-timeline-label {
+    display: block;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--color-navy);
+    margin-bottom: var(--space-2);
+  }
+
+  :lang(zh) .case-timeline-label {
+    font-family: var(--font-zh-serif);
+  }
+
+  .case-timeline-body p {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  :lang(zh) .case-timeline-body p {
     font-family: var(--font-zh-sans);
   }
 
+  /* ─── Sidebar: At a Glance ─── */
+  .case-sidebar {
+    background-color: var(--color-warm-gray);
+    border: 1px solid var(--color-border);
+    padding: var(--space-8) var(--space-6);
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-6));
+  }
+
+  .case-glance-label {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-6);
+  }
+
+  .case-field {
+    margin-bottom: var(--space-6);
+  }
+
+  .case-field:last-child {
+    margin-bottom: 0;
+  }
+
+  .case-field-k {
+    display: block;
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .case-field-v {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-navy);
+  }
+
+  :lang(zh) .case-field-v {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* ─── Prev/next pager ─── */
   .case-pager {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
     gap: var(--space-6);
-    margin-top: var(--space-12);
+    margin-top: var(--space-16);
     border-top: 1px solid var(--color-border);
     padding-top: var(--space-8);
   }
@@ -172,42 +365,23 @@ const backLabel = lang === 'zh' ? '← 返回所有案例' : '← Back to all ca
     flex-shrink: 0;
   }
 
-  @media (max-width: 860px) {
-    .case-card-body {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
+  @media (max-width: 900px) {
+    .case-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
     }
 
-    .case-col--client { grid-column: 1; grid-row: 1; }
-    .case-col--outcome { grid-column: 2; grid-row: 1; }
-    .case-col--engagement {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    .case-main {
+      max-width: none;
+    }
+
+    .case-sidebar {
+      position: static;
+      order: -1;
     }
   }
 
   @media (max-width: 560px) {
-    .case-card-body {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
-
-    .case-col--client, .case-col--outcome {
-      grid-column: auto;
-      grid-row: auto;
-      border-left: none;
-    }
-
-    .case-col--outcome {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .case-col--engagement {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
     .case-pager {
       flex-direction: column;
     }

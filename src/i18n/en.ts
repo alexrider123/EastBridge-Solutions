@@ -110,13 +110,16 @@ export const en = {
     label: 'Selected Experience',
     headline: 'A record built quietly.',
     fieldLabels: {
-      outcome: 'Outcome',
-      profile: 'Client',
-      engagement: 'Engagement',
-    },
-    mobileToggle: {
-      expand: 'View full engagement',
-      collapse: 'Hide engagement details',
+      mandate: 'The Mandate',
+      approach: 'Our Approach',
+      challenge: 'The Challenge',
+      result: 'Result',
+      atAGlance: 'At a Glance',
+      sector: 'Sector',
+      companySize: 'Company Size',
+      engagementFormat: 'Engagement Format',
+      duration: 'Duration',
+      timelineHeading: 'Engagement Timeline',
     },
     intro:
       'Our clients\' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.',
@@ -130,6 +133,15 @@ export const en = {
         body: 'The client aimed to enter the Israeli market and position itself as a preferred partner with a leading MAG7 technology customer. We acted as the local representative, interfacing with engineering, product, and procurement teams — coordinating technical discussions, aligning stakeholders, and ensuring requirements and deliverables were clearly defined.',
         outcome:
           "Secured over US$10 million in initial orders.\n2026 revenue target: US$100 million.",
+        mandate:
+          'A Dongguan-based tier-2 supplier of precision mechanical assemblies and thermal solutions — with components increasingly deployed in the newest generation of AI data centers and related infrastructure — sought to enter the Israeli market and position itself as a preferred partner with a leading MAG7 technology customer. With 1,600+ employees and operations across six countries, the client brought an established global manufacturing footprint, but Israel represented a market where it had no existing relationships or local presence.',
+        approach:
+          "We acted as the client's local representative, interfacing directly with engineering, product, and procurement teams. This included weekly technical meetings to track progress and keep both sides aligned on requirements, as well as negotiation meetings bringing in the client's senior stakeholders to advance commercial terms and reinforce the relationship at the executive level.",
+        challenge:
+          "Beyond the technical requirements, the real challenge was navigating the procurement hierarchy inside a major multinational technology company. The client's components were being evaluated as the newest addition to a bill of materials built around long-established, qualified suppliers — so earning a foothold meant identifying exactly which stakeholder could open that door, then making the case in terms that mattered to them: technical fit, cost structure, and supply chain reliability, explained with the fluency of someone who genuinely understood the product. Technical credibility alone rarely moves a multinational procurement process, though — it also took building real working relationships with the engineers and procurement leads evaluating the opportunity, enough that they were willing to champion a new, unproven vendor internally rather than default to the safer, already-qualified alternative.",
+        companySize: '1,600+ employees · 6 countries',
+        engagementFormat: 'Ongoing representation',
+        duration: '1 year',
       },
       {
         active: true,
@@ -140,6 +152,8 @@ export const en = {
         body: 'The client sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',
         outcome:
           'Supported a commercial agreement with a total deal value of US$15 million.',
+        companySize: '15,000+ hospitals served · 90+ countries',
+        engagementFormat: 'Deal Execution',
       },
       {
         active: true,
@@ -149,7 +163,25 @@ export const en = {
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
         body: 'The client was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. We conducted targeted technical and commercial due diligence, and assessed strategic fit in coordination with a leading Israeli medical investment fund.',
         outcome:
-          'Enabled the client to evaluate a cross-border acquisition with clear visibility into technology readiness, execution risk, and capital requirements.',
+          "Delivered a fully independent view of the target's technology readiness, execution risk, and capital requirements, enabling a well-informed decision.\nThe client ultimately chose not to proceed with the acquisition at this time.",
+        mandate:
+          "A Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China's major hospitals — was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. The startup's technology presented a strategic fit for the client's planned expansion into the US market.",
+        approach:
+          "We coordinated the full due diligence process on the client's behalf, assembling and managing a team of relevant local experts — scientific, intellectual property, and commercial — to assess the technology, its IP position, and its commercial readiness. This was carried out in close coordination with a leading Israeli medical investment fund, ensuring the client's read on execution risk and strategic fit was grounded in independent, specialist input rather than a single outside opinion.",
+        challenge:
+          "The real challenge was less about the technology and more about competitive positioning on both sides of the table. The startup had other, better-known venture investors circling the same opportunity, so the client needed a credible way to stand out — not just as a source of capital, but as the right long-term partner for a pre-clinical company entering its next stage of growth. At the same time, as a Chinese acquirer relatively unknown within the Israeli venture ecosystem, the client had its own trust and credibility to establish. The turning point was reframing the conversation: rather than competing purely on valuation, we helped articulate the client's unique advantages — its existing distribution across 85% of China's major hospitals, its in-house manufacturing capacity, and its stated ambition to expand into the US — as a fit no financial investor could match.",
+        timeline: [
+          { label: 'First meeting with the CEO', description: "Initial meeting with the client's CEO at their headquarters in Shenzhen, China." },
+          { label: 'Defining the opportunity', description: 'Briefed the client on the opportunity to acquire an early-stage Israeli company to support its planned US expansion.' },
+          { label: 'Criteria & screening framework', description: 'Agreed a shared definition of criteria for the initial market analysis and startup identification process.' },
+          { label: 'Initial screening', description: 'Completed a first screening of relevant startups and opened initial engagements.' },
+          { label: 'Weekly sync & shortlisting', description: 'Weekly syncs and reporting with the client narrowed the field to a single go-forward candidate.' },
+          { label: 'Advanced due diligence', description: 'Conducted advanced due diligence on the shortlisted startup in collaboration with a leading Israeli medical investment fund.' },
+          { label: 'Negotiation', description: 'Supported negotiation between the client and the startup.' },
+          { label: 'Final decision', description: 'The client ultimately decided not to pursue the acquisition at this time.' },
+        ],
+        companySize: '1,300+ employees · 5 manufacturing sites',
+        engagementFormat: 'Deal Support',
       },
       {
         active: true,
@@ -160,6 +192,20 @@ export const en = {
         body: 'The client sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes. We sourced and screened relevant prospects across private wealth, family offices, and the cultural sector, and facilitated targeted introductions.',
         outcome:
           'Sourced and secured introductions to a curated set of high-net-worth Israeli clients and investors.',
+        mandate:
+          'A Shanghai-based boutique art advisory firm, with an international network spanning China, Europe, and the Americas, sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes — with a further ambition to establish itself as the art advisor of choice to Israeli investment funds and family offices.',
+        approach:
+          "Before making any introductions, we first analyzed the client's positioning — understanding the specific asset classes within its advisory practice, and identifying which type of Israeli investor's return expectations and investment methodology would genuinely align with that offering. Only once that fit was clear did we source and screen relevant prospects across private wealth, family offices, and the cultural sector, and facilitate targeted introductions.",
+        challenge:
+          "Art is not widely perceived in Israel as a mainstream, high-return asset class the way it might be in more established art-investment markets — so before any specific introduction could land, there was an initial skepticism to overcome about whether art belonged in a sophisticated investor's portfolio at all. Shifting that framing, from a collectible to an asset class with its own return profile and diversification logic, was the real precondition for the introductions that followed to succeed.",
+        timeline: [
+          { label: 'Initial introduction in Shanghai', description: "Met with the client's advisors in Shanghai, including a visit to their gallery space." },
+          { label: 'Defining positioning', description: "Follow-up meeting to define the client's needs and the positioning best suited to succeed with Israeli prospects." },
+          { label: 'Prospect mapping', description: "Identified and screened relevant collectors and family offices across Israel's private wealth community." },
+          { label: 'Introductions facilitated', description: 'Direct introductions made between the client and a shortlist of qualified contacts.' },
+        ],
+        companySize: 'Boutique advisory firm',
+        engagementFormat: 'Access & Introductions',
       },
       {
         active: true,
@@ -170,6 +216,8 @@ export const en = {
         body: 'The client sought to identify Israeli buyers and distributors for its medical device product line. We mapped relevant prospects across Israel\'s healthcare procurement landscape, assessed commercial and regulatory fit, and facilitated targeted introductions to potential clients.',
         outcome:
           'Identified and introduced a curated set of Israeli healthcare clients and procurement decision-makers; negotiations ongoing.',
+        companySize: '1.4M units/day capacity',
+        engagementFormat: 'Access & Introductions',
       },
       {
         active: true,
@@ -180,6 +228,8 @@ export const en = {
         body: 'The client sought to establish a stronger presence in Israel through local hiring and targeted business development. We led the identification and onboarding of qualified local talent, and directly managed commercial outreach to relevant Israeli companies.',
         outcome:
           'Established local operational presence and initiated direct engagement with qualified Israeli partners, accelerating the client\'s market entry and commercial positioning.',
+        companySize: 'International operations',
+        engagementFormat: 'Local Representation',
       },
       {
         active: true,
@@ -190,6 +240,8 @@ export const en = {
         body: 'The client was assessing entry points into Israel\'s industrial and technology ecosystem. We mapped the landscape, identified organisations aligned with the client\'s product profile, and conducted technical and commercial assessments to support internal strategic positioning and early business development.',
         outcome:
           'Delivered structured market intelligence and pre-qualified engagement opportunities, materially reducing time-to-first-engagement.',
+        companySize: '120+ employees',
+        engagementFormat: 'Market Clarity',
       },
     ],
   },
