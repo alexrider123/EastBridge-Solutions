@@ -159,6 +159,20 @@ export const en = {
         body: 'The client sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',
         outcome:
           'Supported a commercial agreement with a total deal value of US$15 million.',
+        mandate:
+          "A Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries — sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. The need was urgent: the client wanted to move quickly, without the delays or exposure risk a public, broadly-shopped search would have created.",
+        approach:
+          'We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',
+        challenge:
+          "Securing favorable deal terms while preserving the client's anonymity proved difficult in practice. Order volume and shipment terms shifted multiple times over the course of the negotiation, each change reshaping the commercial dynamics and creating real strain on the Israeli side's production planning. What ultimately held the deal together was the relationship itself — enough trust had been built on both sides that the negotiation could absorb those changes without breaking down.",
+        timeline: [
+          { label: 'Inquiry call', description: "Initial call to define the client's need and confirm the scope of a fully confidential search." },
+          { label: 'Sourcing', description: 'Identified and evaluated candidate Israeli medical device technologies matching the requirement.' },
+          { label: 'Live demo under anonymity', description: "Arranged a live product demonstration with the Israeli counterparty without disclosing the client's identity." },
+          { label: "Negotiation on the client's behalf", description: 'Represented the client through commercial negotiations as order volume and shipment terms evolved.' },
+          { label: 'Order placed', description: 'Commercial terms finalized and the order confirmed.' },
+          { label: 'Logistics arranged', description: 'Coordinated shipment and delivery logistics to close out the engagement.' },
+        ],
         companySize: '15,000+ hospitals served · 90+ countries',
         engagementFormat: 'Deal Execution',
       },
