@@ -148,7 +148,7 @@ export const zh: Translation = {
           { label: '持续本地代表', description: '持续担任本地代表角色，并与客户中国总部保持每周技术与商务汇报机制。' },
         ],
         companySize: '1,600余名员工 · 业务覆盖六国',
-        engagementFormat: '持续本地代表',
+        engagementFormat: '本地代表',
         duration: '1年',
       },
       {

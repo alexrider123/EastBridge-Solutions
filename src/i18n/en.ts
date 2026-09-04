@@ -147,7 +147,7 @@ export const en = {
           { label: 'Ongoing local representation', description: "Continuing as local representative, with weekly technical and commercial reporting to the client's headquarters in China." },
         ],
         companySize: '1,600+ employees · 6 countries',
-        engagementFormat: 'Ongoing representation',
+        engagementFormat: 'Local Representation',
         duration: '1 year',
       },
       {
