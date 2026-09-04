@@ -153,7 +153,7 @@ export const en = {
       {
         active: true,
         slug: 'publicly-traded-medical-group',
-        sector: 'Publicly-Traded Medical Group',
+        sector: 'Medical Equipment',
         profile:
           'Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries.',
         body: 'The client sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',
@@ -209,12 +209,12 @@ export const en = {
         slug: 'art-investment-advisory',
         sector: 'Art & Investment Advisory',
         profile:
-          'Shanghai-based boutique art advisory firm — multidisciplinary consultancy specialising in high-end art collecting, investment, and cross-cultural programming, with an international network spanning China, Europe, and the Americas.',
-        body: 'The client sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes. We sourced and screened relevant prospects across private wealth, family offices, and the cultural sector, and facilitated targeted introductions.',
+          'Arthouse Advisory — a Shanghai-based boutique art advisory firm and multidisciplinary consultancy specialising in high-end art collecting, investment, and cross-cultural programming, with an international network spanning China, Europe, and the Americas.',
+        body: 'Arthouse Advisory sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes. We sourced and screened relevant prospects across private wealth, family offices, and the cultural sector, and facilitated targeted introductions.',
         outcome:
-          'Sourced and secured introductions to a curated set of high-net-worth Israeli clients and investors.',
+          'Delivered Arthouse Advisory direct, qualified access to a curated network of high-net-worth Israeli collectors, family offices, and investors — establishing a credible foothold in a market where the firm had no prior presence or relationships.',
         mandate:
-          'A Shanghai-based boutique art advisory firm, with an international network spanning China, Europe, and the Americas, sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes — with a further ambition to establish itself as the art advisor of choice to Israeli investment funds and family offices.',
+          'Arthouse Advisory, a Shanghai-based boutique art advisory firm with an international network spanning China, Europe, and the Americas, sought access to high-net-worth Israeli collectors and investors for business development and partnership purposes — with a further ambition to establish itself as the art advisor of choice to Israeli investment funds and family offices.',
         approach:
           "Before making any introductions, we first analyzed the client's positioning — understanding the specific asset classes within its advisory practice, and identifying which type of Israeli investor's return expectations and investment methodology would genuinely align with that offering. Only once that fit was clear did we source and screen relevant prospects across private wealth, family offices, and the cultural sector, and facilitate targeted introductions.",
         challenge:
