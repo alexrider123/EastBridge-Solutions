@@ -8,7 +8,15 @@ interface Props {
 }
 
 const { t, lang } = Astro.props;
-const teaserItems = t.experience.items.filter((item) => item.active).slice(0, 3);
+
+// Curated order for the homepage teaser only — independent of
+// t.experience.items' own order, which also drives the case-detail
+// pages' prev/next pager.
+const teaserOrderBySlug = ['industrial-manufacturing', 'publicly-traded-medical-group', 'automotive-ev-technology'];
+const activeItems = t.experience.items.filter((item) => item.active);
+const teaserItems = teaserOrderBySlug
+  .map((slug) => activeItems.find((item) => item.slug === slug))
+  .filter((item): item is (typeof activeItems)[number] => Boolean(item));
 const viewAllLabel = lang === 'zh' ? '查看全部案例研究 →' : 'View all case studies →';
 const swipeHint = lang === 'zh' ? '← 左右滑动 →' : '← swipe →';
 ---

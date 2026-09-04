@@ -6,6 +6,7 @@ import HowWeSupport from '../../components/HowWeSupport.astro';
 import Experience from '../../components/Experience.astro';
 import InsightsTeaser from '../../components/InsightsTeaser.astro';
 import WhoWeWorkWith from '../../components/WhoWeWorkWith.astro';
+import SectionDivider from '../../components/SectionDivider.astro';
 import Contact from '../../components/Contact.astro';
 import { useTranslations } from '../../i18n/utils';
 
@@ -30,6 +31,7 @@ const servicesJsonLd = t.services.items.map((item) => ({
   <HowWeSupport t={t} />
   <Experience t={t} lang="zh" />
   <WhoWeWorkWith t={t} />
+  <SectionDivider />
   <InsightsTeaser lang="zh" />
   <Contact t={t} />
 </BaseLayout>
