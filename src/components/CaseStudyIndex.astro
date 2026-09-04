@@ -34,7 +34,6 @@ const items = t.experience.items
   });
 
 const fields = t.experience.fieldLabels;
-const hint = lang === 'zh' ? '点击任意案例查看完整成果。' : 'Click any case for the full result.';
 const detailsLabel = lang === 'zh' ? '详情' : 'Details';
 const closeLabel = lang === 'zh' ? '收起' : 'Close';
 const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case study';
@@ -47,7 +46,6 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
       <h1 class="section-headline">{t.experience.headline}</h1>
       <div class="divider"></div>
       <p class="cases-index-intro">{t.experience.intro}</p>
-      <p class="cases-index-hint">{hint}</p>
     </header>
 
     <div class="cases-cols" aria-hidden="true">
@@ -109,23 +107,11 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     color: var(--color-text-muted);
     font-style: italic;
     line-height: 1.75;
-    margin-bottom: var(--space-2);
   }
 
   :lang(zh) .cases-index-intro {
     font-family: var(--font-zh-sans);
     font-style: normal;
-  }
-
-  .cases-index-hint {
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: var(--color-gold);
-    letter-spacing: 0.01em;
-  }
-
-  :lang(zh) .cases-index-hint {
-    font-family: var(--font-zh-sans);
   }
 
   /* ─── Column header row ─── */
