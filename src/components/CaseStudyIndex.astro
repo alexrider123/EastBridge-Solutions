@@ -63,7 +63,7 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
               <a href={`/${lang}/cases/${item.slug}/`}>{item.sector}</a>
             </span>
             <span class="cell-format">{item.engagementFormat}</span>
-            <div class="cell-results-wrap" data-case-results>
+            <div class="cell-results-wrap">
               <p class="cell-results">{item.outcome}</p>
               <a class="cell-results-link" href={`/${lang}/cases/${item.slug}/`}>
                 {viewCaseLabel} <span aria-hidden="true">→</span>
@@ -87,9 +87,9 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
       const target = event.target as HTMLElement;
       if (target.closest('a')) return;
 
-      // Once a row is open, the whole revealed results area is a click
-      // target too — not just the "View full case study" link inside it.
-      if (row.classList.contains('is-open') && target.closest('[data-case-results]')) {
+      // Once a row is open, the entire expanded block navigates on click —
+      // only the dedicated Details/Close toggle keeps its own behavior.
+      if (row.classList.contains('is-open') && !target.closest('[data-case-toggle]')) {
         const href = row.dataset.href;
         if (href) window.location.href = href;
         return;
