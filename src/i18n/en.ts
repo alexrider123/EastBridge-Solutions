@@ -236,11 +236,13 @@ export const en = {
           'Dajing Medical — a Chinese manufacturer of next-generation endoscopic camera systems — with no distributor and no prior sales in Israel.',
         body: "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers.",
         outcome:
-          'Established the legal and regulatory structure required to meet Israeli Ministry of Health obligations, putting Dajing Medical in a position to sell its products in Israel — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
+          'Identified and connected Dajing Medical with qualified Israeli healthcare clients for its endoscopic camera systems — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
         mandate:
           'Dajing Medical, a Chinese manufacturer of next-generation endoscopic camera systems, sought to enter the Israeli market with no existing distributor and no prior sales in the country — starting from a blank slate on both the regulatory and commercial sides.',
         approach:
           "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers. East Bridge also established the legal and regulatory structure needed to meet Israeli Ministry of Health obligations, putting Dajing Medical in a position to sell its products in Israel.",
+        challenge:
+          "The real challenge was finding qualified leads for a new product category that had never been tested or established in Israel, for a company with no prior presence, contacts, or representation in the country to build from. That took more than persistence — it required a genuine understanding of what the market actually needed, a clear read on how the relevant stakeholders and decision-makers operate day to day, and, ultimately, the access to reach them directly.",
         timeline: [
           { label: 'Inquiry call with Dajing Medical', description: 'Initial call with a company that had no distributor and no prior sales in Israel.' },
           { label: 'Regulatory review', description: "Reviewed the company and its products against Israeli Ministry of Health requirements." },
@@ -250,6 +252,7 @@ export const en = {
         ],
         companySize: 'Endoscopic camera systems manufacturer',
         engagementFormat: 'Access & Introductions',
+        duration: '4 months',
       },
       {
         active: false,
@@ -291,25 +294,25 @@ export const en = {
         slug: 'automotive-ev-technology',
         sector: 'Automotive & EV Technology',
         profile:
-          'Yodosmart, coordinating on behalf of a top-3 global EV manufacturer\'s China team, engaged East Bridge to lead the Israel-side program for the manufacturer\'s newest EV model introduction.',
+          "A top-3 global EV manufacturer engaged East Bridge, working directly with its designated Chinese project owner, to lead the Israel-side program for the manufacturer's newest EV model introduction.",
         body: "We designed and ran the Israel side of the program end-to-end, working in close cooperation with the manufacturer's designated Chinese project owner throughout.",
         outcome:
-          'Delivering a fully tailor-made program spanning regulatory approval, licensing, shipping and insurance, in-country logistics, multi-stakeholder coordination, and public-facing brand exposure for the manufacturer\'s Israel market entry.',
+          "Delivering a fully tailor-made program spanning regulatory approval, licensing, shipping and insurance, in-country logistics, multi-stakeholder coordination, and public-facing brand exposure for the manufacturer's new model introduction in Israel.",
         mandate:
-          "Yodosmart, coordinating on behalf of a top-3 global EV manufacturer's China team, engaged East Bridge to organize the complete Israel-based program for the introduction of the manufacturer's newest EV model — spanning an intelligent driving functionality test program and a market audit event, in close cooperation with the manufacturer's designated Chinese project owner. The mandate was entirely tailor-made: no existing template to draw on, and no single function it fell under. The scope touched regulatory compliance, licensing, shipping, insurance, in-country logistics, multi-stakeholder program management, and public relations and brand exposure, all at once.",
+          "A top-3 global EV manufacturer engaged East Bridge, working directly with its designated Chinese project owner, to organize the complete Israel-based program for the introduction of its newest EV model — spanning an intelligent driving functionality test program and a market audit event. The mandate was entirely tailor-made: no existing template to draw on, and no single function it fell under. The scope touched regulatory compliance, licensing, shipping, insurance, in-country logistics, multi-stakeholder program management, and public relations and brand exposure, all at once.",
         approach:
-          "We designed and ran the Israel side of the program end-to-end: securing the regulatory approvals, licensing, shipping, and insurance needed to bring the vehicles into the country; coordinating in-country logistics; and managing the full roster of local stakeholders — testing venues, technical partners, and media — while reporting directly to the manufacturer's Chinese project owner throughout.",
+          "We designed and ran the Israel side of the program end-to-end: securing the regulatory approvals, licensing, shipping, and insurance needed to bring the vehicle into the country; coordinating in-country logistics; and managing the full roster of local stakeholders — testing venues, technical partners, and media — while reporting directly to the manufacturer's Chinese project owner throughout.",
         challenge:
-          "There was no existing playbook to work from. Bringing a new EV model, complete with its intelligent driving systems, into Israel for both technical testing and public market exposure meant assembling a program from scratch across half a dozen domains that don't normally sit under one roof: import regulation and licensing, insurance and liability, logistics, venue and stakeholder coordination, and PR. Each domain carried its own local rules and relationships, and the manufacturer needed a single point of accountability across all of them rather than a patchwork of specialist vendors.",
+          "There was no existing playbook to work from. Bringing a new EV model, complete with its intelligent driving systems, into Israel for both technical testing and public market exposure meant assembling a program from scratch across half a dozen domains that don't normally sit under one roof: import regulation and licensing, insurance and liability, logistics, venue and stakeholder coordination, and PR. The vehicle itself added a further complication: as a pre-production prototype, it didn't qualify for the standard vehicle import process, and instead required a separate, special-case licensing route worked out from scratch. Each domain carried its own local rules and relationships, and the manufacturer needed a single point of accountability across all of them rather than a patchwork of specialist vendors.",
         timeline: [
-          { label: 'First inquiry call', description: "Initial call with Yodosmart to scope the opportunity and the manufacturer's objectives for entering the Israeli market." },
+          { label: 'First inquiry call', description: "Initial call with the manufacturer's Chinese project owner to scope the opportunity and the objectives for the new model's introduction in Israel." },
           { label: 'Initial feasibility assessment', description: 'Assessed regulatory, logistical, and market feasibility for bringing the vehicle and its intelligent driving systems into Israel.' },
           { label: 'Weekly sync during the intelligent driving test program', description: "Ran a weekly cadence with the manufacturer's Chinese project owner to manage the technical testing program as it progressed." },
           { label: 'Co-organizing the market audit event', description: "Working jointly with the manufacturer's team to plan and deliver a market audit event in Israel, covering logistics, stakeholder coordination, and PR." },
         ],
         companySize: 'Top-3 global EV manufacturer',
         engagementFormat: 'Local Representation',
-        duration: '5 months',
+        duration: '6 months',
       },
     ],
   },
