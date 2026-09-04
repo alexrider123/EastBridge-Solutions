@@ -57,13 +57,13 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
 
     <div class="cases-list">
       {items.map((item) => (
-        <div class="case-row" data-case-row>
+        <div class="case-row" data-case-row data-href={`/${lang}/cases/${item.slug}/`}>
           <div class="case-row-head">
             <span class="cell-sector">
               <a href={`/${lang}/cases/${item.slug}/`}>{item.sector}</a>
             </span>
             <span class="cell-format">{item.engagementFormat}</span>
-            <div class="cell-results-wrap">
+            <div class="cell-results-wrap" data-case-results>
               <p class="cell-results">{item.outcome}</p>
               <a class="cell-results-link" href={`/${lang}/cases/${item.slug}/`}>
                 {viewCaseLabel} <span aria-hidden="true">→</span>
@@ -86,6 +86,15 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     row.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       if (target.closest('a')) return;
+
+      // Once a row is open, the whole revealed results area is a click
+      // target too — not just the "View full case study" link inside it.
+      if (row.classList.contains('is-open') && target.closest('[data-case-results]')) {
+        const href = row.dataset.href;
+        if (href) window.location.href = href;
+        return;
+      }
+
       const open = row.classList.toggle('is-open');
       row.querySelector('[data-case-toggle]')?.setAttribute('aria-expanded', String(open));
     });
