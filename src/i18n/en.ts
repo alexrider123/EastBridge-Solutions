@@ -153,7 +153,7 @@ export const en = {
       {
         active: true,
         slug: 'publicly-traded-medical-group',
-        sector: 'Medical Equipment',
+        sector: 'Medical Technology',
         profile:
           'Guangzhou-based total-solution provider of medical apparatus with in-house R&D — products used in 15,000+ hospitals and exported to 90+ countries.',
         body: 'The client sought to acquire an innovative Israeli medical device, while maintaining strict confidentiality and avoiding premature market exposure. We conducted a targeted technical and commercial assessment, engaging directly with the Israeli counterparty under anonymity, and supported the negotiation and alignment of terms between both parties.',

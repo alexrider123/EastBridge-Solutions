@@ -154,7 +154,7 @@ export const zh: Translation = {
       {
         active: true,
         slug: 'publicly-traded-medical-group',
-        sector: '医疗设备',
+        sector: '医疗科技',
         profile:
           '总部位于广州的医疗器械全方案提供商，拥有自主研发能力及丰富临床产品线，产品应用于逾15,000家医院，出口至90余个国家。',
         body: '该客户希望收购一款创新以色列医疗器械，同时需严格保密、避免过早暴露于市场。我们开展了针对性的技术与商务评估，以匿名方式直接接触以色列对方，并协助双方完成条款谈判与对齐。',
