@@ -96,7 +96,7 @@ export const en = {
         body: 'For companies that know what they want. We open targeted access to relevant partners and decision-makers, creating fast value and tangible commercial outcomes.',
       },
       {
-        title: 'Deal Execution',
+        title: 'Deal Support',
         body: 'For active opportunities. We support execution from engagement to alignment, negotiation, structuration and, if needed, logistics.',
       },
       {
@@ -122,7 +122,7 @@ export const en = {
       timelineHeading: 'Engagement Timeline',
     },
     intro:
-      'Our clients\' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.',
+      "Seven representative engagements, among others. Each one a different entry point — audit, introduction, negotiation, or standing presence on the ground.\nOur clients' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.",
     items: [
       {
         active: true,
@@ -174,7 +174,7 @@ export const en = {
           { label: 'Logistics arranged', description: 'Coordinated shipment and delivery logistics to close out the engagement.' },
         ],
         companySize: '15,000+ hospitals served · 90+ countries',
-        engagementFormat: 'Deal Execution',
+        engagementFormat: 'Deal Support',
       },
       {
         active: true,

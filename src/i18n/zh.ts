@@ -98,7 +98,7 @@ export const zh: Translation = {
         body: '适用于目标已明确的企业。快速触达关键合作方与决策层，推动高质量对接，形成可量化的阶段成果。',
       },
       {
-        title: '交易执行',
+        title: '交易支持',
         body: '适用于已有明确机会的项目。围绕对接、推进、谈判与协同执行全流程介入，以结果为导向提升成交概率与效率。',
       },
       {
@@ -124,7 +124,7 @@ export const zh: Translation = {
       timelineHeading: '合作历程',
     },
     intro:
-      '我们对客户身份严格保密。以下案例反映了我们所支持的委托类型、规模与实际成果。',
+      '以下为七项代表性案例，仅为部分示例——每一项都是不同的切入点：审计评估、资源对接、谈判推进，或长期驻地代表。\n我们对客户身份严格保密。以下案例反映了我们所支持的委托类型、规模与实际成果。',
     items: [
       {
         active: true,
@@ -174,7 +174,7 @@ export const zh: Translation = {
           { label: '物流安排', description: '协调发货与交付物流，完成整个委托的收尾工作。' },
         ],
         companySize: '覆盖15,000余家医院 · 90余个国家',
-        engagementFormat: '交易执行',
+        engagementFormat: '交易支持',
       },
       {
         active: true,
