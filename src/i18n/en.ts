@@ -179,7 +179,7 @@ export const en = {
       {
         active: true,
         slug: 'medical-aesthetics',
-        sector: 'Medical Aesthetics',
+        sector: 'Medical Technology',
         profile:
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
         body: 'The client was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. We conducted targeted technical and commercial due diligence, and assessed strategic fit in coordination with a leading Israeli medical investment fund.',
@@ -231,12 +231,12 @@ export const en = {
       {
         active: true,
         slug: 'dajing-medical',
-        sector: 'Endoscopic Medical Devices',
+        sector: 'Medical Technology',
         profile:
           'Dajing Medical — a Chinese manufacturer of next-generation endoscopic camera systems — with no distributor and no prior sales in Israel.',
         body: "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers.",
         outcome:
-          'Identified relevant opportunities in the Israeli healthcare market, conducted the necessary due diligence, met with key decision-makers, and led negotiations on Dajing Medical\'s behalf — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
+          "Secured evaluation by Herzliya Medical Center (HMC), a leading private Israeli hospital, of Dajing Medical's endoscopic camera systems — delivered through regulatory groundwork, due diligence, and negotiations conducted entirely on the company's behalf, in a market where it had no distributor, no prior sales, and no existing contacts.",
         mandate:
           'Dajing Medical, a Chinese manufacturer of next-generation endoscopic camera systems, sought to enter the Israeli market with no existing distributor and no prior sales in the country — starting from a blank slate on both the regulatory and commercial sides.',
         approach:
@@ -297,7 +297,7 @@ export const en = {
           "A top-3 global EV manufacturer engaged East Bridge, working directly with its designated Chinese project owner, to lead the Israel-side program for the manufacturer's newest EV model introduction.",
         body: "We designed and ran the Israel side of the program end-to-end, working in close cooperation with the manufacturer's designated Chinese project owner throughout.",
         outcome:
-          "Delivering a fully tailor-made program spanning regulatory approval, licensing, shipping and insurance, in-country logistics, multi-stakeholder coordination, and public-facing brand exposure for the manufacturer's new model introduction in Israel.",
+          "Delivered a fully tailor-made program spanning regulatory approval, licensing, shipping and insurance, in-country logistics, multi-stakeholder coordination, and public-facing brand exposure for the manufacturer's new model introduction in Israel.",
         mandate:
           "A top-3 global EV manufacturer engaged East Bridge, working directly with its designated Chinese project owner, to organize the complete Israel-based program for the introduction of its newest EV model — spanning an intelligent driving functionality test program and a market audit event. The mandate was entirely tailor-made: no existing template to draw on, and no single function it fell under. The scope touched regulatory compliance, licensing, shipping, insurance, in-country logistics, multi-stakeholder program management, and public relations and brand exposure, all at once.",
         approach:

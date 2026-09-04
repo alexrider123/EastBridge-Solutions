@@ -179,7 +179,7 @@ export const zh: Translation = {
       {
         active: true,
         slug: 'medical-aesthetics',
-        sector: '医疗美容',
+        sector: '医疗科技',
         profile:
           '总部位于深圳的综合医疗与医美设备集团，员工逾1,300人，拥有五处生产基地，产品覆盖中国85%的大型医院，销售网络延伸至70余个国家。',
         body: '该客户正在评估对一家以色列临床前激光技术公司的战略投资，包括潜在的收购、少数股权投资或分销合作。我们开展了针对性的技术与商务尽职调查，并联合一家领先的以色列医疗投资基金共同评估战略匹配度。',
@@ -230,12 +230,12 @@ export const zh: Translation = {
       {
         active: true,
         slug: 'dajing-medical',
-        sector: '内窥镜医疗设备',
+        sector: '医疗科技',
         profile:
           'Dajing Medical——一家中国内窥镜摄像系统制造商——在以色列尚无经销商，也从未有过销售记录。',
         body: '我们针对该公司及其产品，依照以色列卫生部相关要求开展了全面的合规审查，随后在以色列全境展开业务拓展，识别相关潜在客户与决策者。',
         outcome:
-          '在以色列医疗市场中识别相关商机，开展必要的尽职调查，与关键决策者会面，并代表Dajing Medical主导谈判——目前，首批测试样机已交由以色列领先的私立医院Herzliya Medical Center（HMC）进行评估。',
+          '促成以色列领先私立医院Herzliya Medical Center（HMC）对Dajing Medical内窥镜摄像系统的评估——这一成果建立在我们代表该公司独立完成的合规审查、尽职调查与谈判之上，而彼时Dajing Medical在当地既无经销商、也从未有过销售记录，更谈不上任何既有人脉。',
         mandate:
           'Dajing Medical是一家中国内窥镜摄像系统制造商，希望进入以色列市场，但在当地尚无经销商，也从未有过销售记录——这意味着监管与商务两方面都需要从零开始建立。',
         approach:
