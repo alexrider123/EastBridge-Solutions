@@ -145,7 +145,7 @@ export const zh: Translation = {
           { label: '提出落地支持需求', description: '客户要求东桥统筹并提供客户高层赴以色列商务考察的全程本地支持，包括与Nvidia的会面安排。' },
           { label: '商务考察与首次接触', description: '客户高层赴以色列实地考察，东桥促成与Nvidia的首次直接会面。' },
           { label: '确认为以色列本地代表', description: '东桥被正式确认为客户在以色列的本地代表，负责推进与Nvidia的业务拓展。' },
-          { label: '持续本地代表', description: '持续担任本地代表角色，并与客户中国总部保持每周技术与商务汇报机制。' },
+          { label: '本地代表', description: '担任本地代表满一年，其间与客户中国总部保持每周技术与商务汇报机制。' },
         ],
         companySize: '1,600余名员工 · 业务覆盖六国',
         engagementFormat: '本地代表',

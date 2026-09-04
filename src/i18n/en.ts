@@ -144,7 +144,7 @@ export const en = {
           { label: 'Landing support requested', description: 'The client asked East Bridge to organize and deliver full on-the-ground support for a senior leadership business trip to Israel, including arranging meetings with Nvidia.' },
           { label: 'Business trip & first contact', description: 'Client senior leadership traveled to Israel; East Bridge facilitated the first direct meeting with Nvidia.' },
           { label: 'Confirmed as local representative', description: "East Bridge was confirmed as the client's local representative in Israel, taking responsibility for business development with Nvidia." },
-          { label: 'Ongoing local representation', description: "Continuing as local representative, with weekly technical and commercial reporting to the client's headquarters in China." },
+          { label: 'Local representation', description: "Served as local representative for one year, providing weekly technical and commercial reporting to the client's headquarters in China." },
         ],
         companySize: '1,600+ employees · 6 countries',
         engagementFormat: 'Local Representation',
