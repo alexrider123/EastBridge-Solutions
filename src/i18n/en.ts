@@ -230,18 +230,29 @@ export const en = {
       },
       {
         active: true,
-        slug: 'medical-devices-manufacturing',
-        sector: 'Medical Devices Manufacturing',
+        slug: 'dajing-medical',
+        sector: 'Endoscopic Medical Devices',
         profile:
-          'Guwahati-based medical device manufacturer — USFDA-certified producer of disposable and auto-disabling syringes under ISO 13485:2016, with a production capacity of 1.4 million units per day.',
-        body: 'The client sought to identify Israeli buyers and distributors for its medical device product line. We mapped relevant prospects across Israel\'s healthcare procurement landscape, assessed commercial and regulatory fit, and facilitated targeted introductions to potential clients.',
+          'Dajing Medical — a Chinese manufacturer of next-generation endoscopic camera systems — with no distributor and no prior sales in Israel.',
+        body: "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers.",
         outcome:
-          'Identified and introduced a curated set of Israeli healthcare clients and procurement decision-makers; negotiations ongoing.',
-        companySize: '1.4M units/day capacity',
+          'Established the legal and regulatory structure required to meet Israeli Ministry of Health obligations, putting Dajing Medical in a position to sell its products in Israel — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
+        mandate:
+          'Dajing Medical, a Chinese manufacturer of next-generation endoscopic camera systems, sought to enter the Israeli market with no existing distributor and no prior sales in the country — starting from a blank slate on both the regulatory and commercial sides.',
+        approach:
+          "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers. East Bridge also established the legal and regulatory structure needed to meet Israeli Ministry of Health obligations, putting Dajing Medical in a position to sell its products in Israel.",
+        timeline: [
+          { label: 'Inquiry call with Dajing Medical', description: 'Initial call with a company that had no distributor and no prior sales in Israel.' },
+          { label: 'Regulatory review', description: "Reviewed the company and its products against Israeli Ministry of Health requirements." },
+          { label: 'Business development across Israel', description: 'Identified and approached relevant prospects for the endoscopic camera systems.' },
+          { label: 'Negotiation with a lead', description: 'Entered negotiation with a qualified prospect identified through the business development effort.' },
+          { label: 'First units under evaluation at HMC', description: 'Herzliya Medical Center (HMC), a leading private hospital, began probing the first test units.' },
+        ],
+        companySize: 'Endoscopic camera systems manufacturer',
         engagementFormat: 'Access & Introductions',
       },
       {
-        active: true,
+        active: false,
         slug: 'technology-financial-solutions',
         sector: 'Technology & Financial Solutions',
         profile:
@@ -261,8 +272,44 @@ export const en = {
         body: 'The client was assessing entry points into Israel\'s industrial and technology ecosystem. We mapped the landscape, identified organisations aligned with the client\'s product profile, and conducted technical and commercial assessments to support internal strategic positioning and early business development.',
         outcome:
           'Delivered structured market intelligence and pre-qualified engagement opportunities, materially reducing time-to-first-engagement.',
+        mandate:
+          "A Shenzhen-based tier-1 supplier of industrial and military-grade SSD and DRAM storage solutions — 120+ employees, with OEM customers across Europe, North America, South America, and Asia-Pacific — needed a clear, evidence-based read on Israel's industrial and technology ecosystem before deciding whether the market was worth pursuing at all.",
+        approach:
+          "This was a scoped market-research engagement, not an open-ended business development mandate: we mapped the landscape, identified organisations aligned with the client's product profile, and conducted technical and commercial assessments — delivered as a defined set of research outputs against an agreed scope, rather than an ongoing representation role.",
+        timeline: [
+          { label: 'Inquiry call & need formulation', description: "First call to understand the client's objective and define the scope of the market research request." },
+          { label: 'Scope negotiation', description: 'Agreed the specific deliverables, boundaries, and timeline for the engagement.' },
+          { label: 'First deliverable & client feedback', description: "Delivered an initial research output after two weeks and incorporated the client's feedback." },
+          { label: 'Final deliverable', description: 'Delivered the completed market intelligence and pre-qualified engagement list after five weeks, closing out the engagement.' },
+        ],
         companySize: '120+ employees',
         engagementFormat: 'Market Clarity',
+        duration: '5 weeks',
+      },
+      {
+        active: true,
+        slug: 'automotive-ev-technology',
+        sector: 'Automotive & EV Technology',
+        profile:
+          'Yodosmart, coordinating on behalf of a top-3 global EV manufacturer\'s China team, engaged East Bridge to lead the Israel-side program for the manufacturer\'s newest EV model introduction.',
+        body: "We designed and ran the Israel side of the program end-to-end, working in close cooperation with the manufacturer's designated Chinese project owner throughout.",
+        outcome:
+          'Delivering a fully tailor-made program spanning regulatory approval, licensing, shipping and insurance, in-country logistics, multi-stakeholder coordination, and public-facing brand exposure for the manufacturer\'s Israel market entry.',
+        mandate:
+          "Yodosmart, coordinating on behalf of a top-3 global EV manufacturer's China team, engaged East Bridge to organize the complete Israel-based program for the introduction of the manufacturer's newest EV model — spanning an intelligent driving functionality test program and a market audit event, in close cooperation with the manufacturer's designated Chinese project owner. The mandate was entirely tailor-made: no existing template to draw on, and no single function it fell under. The scope touched regulatory compliance, licensing, shipping, insurance, in-country logistics, multi-stakeholder program management, and public relations and brand exposure, all at once.",
+        approach:
+          "We designed and ran the Israel side of the program end-to-end: securing the regulatory approvals, licensing, shipping, and insurance needed to bring the vehicles into the country; coordinating in-country logistics; and managing the full roster of local stakeholders — testing venues, technical partners, and media — while reporting directly to the manufacturer's Chinese project owner throughout.",
+        challenge:
+          "There was no existing playbook to work from. Bringing a new EV model, complete with its intelligent driving systems, into Israel for both technical testing and public market exposure meant assembling a program from scratch across half a dozen domains that don't normally sit under one roof: import regulation and licensing, insurance and liability, logistics, venue and stakeholder coordination, and PR. Each domain carried its own local rules and relationships, and the manufacturer needed a single point of accountability across all of them rather than a patchwork of specialist vendors.",
+        timeline: [
+          { label: 'First inquiry call', description: "Initial call with Yodosmart to scope the opportunity and the manufacturer's objectives for entering the Israeli market." },
+          { label: 'Initial feasibility assessment', description: 'Assessed regulatory, logistical, and market feasibility for bringing the vehicle and its intelligent driving systems into Israel.' },
+          { label: 'Weekly sync during the intelligent driving test program', description: "Ran a weekly cadence with the manufacturer's Chinese project owner to manage the technical testing program as it progressed." },
+          { label: 'Co-organizing the market audit event', description: "Working jointly with the manufacturer's team to plan and deliver a market audit event in Israel, covering logistics, stakeholder coordination, and PR." },
+        ],
+        companySize: 'Top-3 global EV manufacturer',
+        engagementFormat: 'Local Representation',
+        duration: '5 months',
       },
     ],
   },
