@@ -235,7 +235,7 @@ export const zh: Translation = {
           'Dajing Medical——一家中国内窥镜摄像系统制造商——在以色列尚无经销商，也从未有过销售记录。',
         body: '我们针对该公司及其产品，依照以色列卫生部相关要求开展了全面的合规审查，随后在以色列全境展开业务拓展，识别相关潜在客户与决策者。',
         outcome:
-          '为Dajing Medical的内窥镜摄像系统对接并锁定了符合资质的以色列医疗客户——目前，首批测试样机已交由以色列领先的私立医院Herzliya Medical Center（HMC）进行评估。',
+          '在以色列医疗市场中识别相关商机，开展必要的尽职调查，与关键决策者会面，并代表Dajing Medical主导谈判——目前，首批测试样机已交由以色列领先的私立医院Herzliya Medical Center（HMC）进行评估。',
         mandate:
           'Dajing Medical是一家中国内窥镜摄像系统制造商，希望进入以色列市场，但在当地尚无经销商，也从未有过销售记录——这意味着监管与商务两方面都需要从零开始建立。',
         approach:

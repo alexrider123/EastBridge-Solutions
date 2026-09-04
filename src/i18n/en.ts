@@ -236,7 +236,7 @@ export const en = {
           'Dajing Medical — a Chinese manufacturer of next-generation endoscopic camera systems — with no distributor and no prior sales in Israel.',
         body: "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers.",
         outcome:
-          'Identified and connected Dajing Medical with qualified Israeli healthcare clients for its endoscopic camera systems — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
+          'Identified relevant opportunities in the Israeli healthcare market, conducted the necessary due diligence, met with key decision-makers, and led negotiations on Dajing Medical\'s behalf — with the first test units now being evaluated by Herzliya Medical Center (HMC), a leading private hospital.',
         mandate:
           'Dajing Medical, a Chinese manufacturer of next-generation endoscopic camera systems, sought to enter the Israeli market with no existing distributor and no prior sales in the country — starting from a blank slate on both the regulatory and commercial sides.',
         approach:
