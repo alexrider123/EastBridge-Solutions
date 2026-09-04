@@ -8,7 +8,36 @@ interface Props {
 }
 
 const { t, lang } = Astro.props;
-const items = t.experience.items.filter((item) => item.active);
+
+// Display order only — grouped by engagement format (Local Representation →
+// Deal Support → Access & Introductions → Market Clarity), no group headers.
+// Keyed by slug (language-independent) so it doesn't depend on the localized
+// engagementFormat string, and left separate from t.experience.items itself
+// since that array's order also drives the prev/next pager on detail pages.
+const formatOrderBySlug = [
+  'industrial-manufacturing',
+  'automotive-ev-technology',
+  'publicly-traded-medical-group',
+  'medical-aesthetics',
+  'art-investment-advisory',
+  'dajing-medical',
+  'technology-components',
+];
+
+const items = t.experience.items
+  .filter((item) => item.active)
+  .slice()
+  .sort((a, b) => {
+    const ai = formatOrderBySlug.indexOf(a.slug);
+    const bi = formatOrderBySlug.indexOf(b.slug);
+    return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+  });
+
+const fields = t.experience.fieldLabels;
+const hint = lang === 'zh' ? '点击任意案例查看完整成果。' : 'Click any case for the full result.';
+const detailsLabel = lang === 'zh' ? '详情' : 'Details';
+const closeLabel = lang === 'zh' ? '收起' : 'Close';
+const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case study';
 ---
 
 <section class="section cases-index">
@@ -18,21 +47,52 @@ const items = t.experience.items.filter((item) => item.active);
       <h1 class="section-headline">{t.experience.headline}</h1>
       <div class="divider"></div>
       <p class="cases-index-intro">{t.experience.intro}</p>
+      <p class="cases-index-hint">{hint}</p>
     </header>
 
-    <ul class="cases-list">
+    <div class="cases-cols" aria-hidden="true">
+      <span>{fields.sector}</span>
+      <span>{fields.engagementFormat}</span>
+      <span>{fields.results}</span>
+      <span></span>
+    </div>
+
+    <div class="cases-list">
       {items.map((item) => (
-        <li class="cases-list-row">
-          <a class="cases-list-link" href={`/${lang}/cases/${item.slug}/`}>
-            <span class="cases-list-sector">{item.sector}</span>
-            <span class="cases-list-outcome">{item.outcome}</span>
-            <span class="cases-list-arrow" aria-hidden="true">→</span>
-          </a>
-        </li>
+        <div class="case-row" data-case-row>
+          <div class="case-row-head">
+            <span class="cell-sector">
+              <a href={`/${lang}/cases/${item.slug}/`}>{item.sector}</a>
+            </span>
+            <span class="cell-format">{item.engagementFormat}</span>
+            <div class="cell-results-wrap">
+              <p class="cell-results">{item.outcome}</p>
+              <a class="cell-results-link" href={`/${lang}/cases/${item.slug}/`}>
+                {viewCaseLabel} <span aria-hidden="true">→</span>
+              </a>
+            </div>
+            <button type="button" class="cell-toggle" aria-expanded="false" data-case-toggle aria-label={`${detailsLabel}: ${item.sector}`}>
+              <span class="icon" aria-hidden="true"></span>
+              <span class="label-more" aria-hidden="true">{detailsLabel}</span>
+              <span class="label-less" aria-hidden="true">{closeLabel}</span>
+            </button>
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-case-row]').forEach((row) => {
+    row.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (target.closest('a')) return;
+      const open = row.classList.toggle('is-open');
+      row.querySelector('[data-case-toggle]')?.setAttribute('aria-expanded', String(open));
+    });
+  });
+</script>
 
 <style>
   .cases-index {
@@ -41,14 +101,15 @@ const items = t.experience.items.filter((item) => item.active);
 
   .cases-index-header {
     max-width: 640px;
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-10);
   }
 
   .cases-index-intro {
     font-size: 0.9rem;
     color: var(--color-text-muted);
     font-style: italic;
-    line-height: 1.7;
+    line-height: 1.75;
+    margin-bottom: var(--space-2);
   }
 
   :lang(zh) .cases-index-intro {
@@ -56,91 +117,249 @@ const items = t.experience.items.filter((item) => item.active);
     font-style: normal;
   }
 
-  /* ─── Directory list: hairline-divided rows ─── */
-  .cases-list {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .cases-list-link {
-    display: flex;
-    align-items: baseline;
-    gap: var(--space-10);
-    padding: var(--space-8) 0;
-    border-bottom: 1px solid var(--color-border);
-    transition: padding-left 180ms ease;
-  }
-
-  .cases-list-link:hover {
-    padding-left: var(--space-3);
-  }
-
-  .cases-list-link:hover .cases-list-sector {
-    color: var(--color-gold);
-  }
-
-  .cases-list-sector {
-    font-family: var(--font-serif);
-    font-size: 1.1rem;
+  .cases-index-hint {
+    font-size: 0.78rem;
     font-weight: 600;
-    color: var(--color-navy);
-    flex: 0 0 270px;
-    transition: color 180ms ease;
+    color: var(--color-gold);
+    letter-spacing: 0.01em;
   }
 
-  :lang(zh) .cases-list-sector {
-    font-family: var(--font-zh-serif);
-  }
-
-  .cases-list-outcome {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--color-text-muted);
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  :lang(zh) .cases-list-outcome {
+  :lang(zh) .cases-index-hint {
     font-family: var(--font-zh-sans);
   }
 
-  .cases-list-arrow {
-    font-size: 0.9rem;
+  /* ─── Column header row ─── */
+  .cases-cols {
+    display: grid;
+    grid-template-columns: 260px 190px 1fr 110px;
+    gap: var(--space-6);
+    padding: 0 var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-navy);
+  }
+
+  .cases-cols span {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* ─── Rows ─── */
+  .cases-list {
+    padding-bottom: var(--space-4);
+  }
+
+  .case-row {
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color 220ms ease;
+    cursor: pointer;
+  }
+
+  .case-row:hover,
+  .case-row.is-open {
+    background-color: var(--color-warm-gray);
+  }
+
+  .case-row-head {
+    display: grid;
+    grid-template-columns: 260px 190px 1fr 110px;
+    gap: var(--space-6);
+    align-items: start;
+    padding: var(--space-6) var(--space-2);
+  }
+
+  .cell-sector a {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    transition: color 180ms ease;
+  }
+
+  :lang(zh) .cell-sector a {
+    font-family: var(--font-zh-serif);
+  }
+
+  .case-row:hover .cell-sector a,
+  .case-row.is-open .cell-sector a {
     color: var(--color-gold);
+  }
+
+  .cell-format {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    letter-spacing: 0.01em;
+    padding-top: 0.15em;
+  }
+
+  :lang(zh) .cell-format {
+    font-family: var(--font-zh-sans);
+  }
+
+  /* Results: one block that grows in place from a clipped one-line
+     preview to the full text — no second, duplicate paragraph. */
+  .cell-results-wrap {
+    overflow: hidden;
+    max-height: 1.55em;
+    transition: max-height 320ms ease;
+  }
+
+  .cell-results {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  :lang(zh) .cell-results {
+    font-family: var(--font-zh-sans);
+  }
+
+  .case-row:hover .cell-results,
+  .case-row.is-open .cell-results {
+    color: var(--color-navy);
+  }
+
+  .case-row:hover .cell-results-wrap,
+  .case-row.is-open .cell-results-wrap {
+    max-height: 20em;
+  }
+
+  .cell-results-link {
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 200ms ease 80ms;
+  }
+
+  :lang(zh) .cell-results-link {
+    font-family: var(--font-zh-sans);
+  }
+
+  .case-row:hover .cell-results-link,
+  .case-row.is-open .cell-results-link {
+    opacity: 1;
+  }
+
+  .cell-results-link span {
+    color: var(--color-gold);
+  }
+
+  /* Persistent affordance — plain text + icon, no invented chip/badge */
+  .cell-toggle {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0.15em 0 0;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    text-align: right;
+    cursor: pointer;
+  }
+
+  .cell-toggle .icon {
+    width: 15px;
+    height: 15px;
+    border: 1.5px solid var(--color-gold);
+    border-radius: 50%;
+    position: relative;
     flex-shrink: 0;
   }
 
-  @media (max-width: 700px) {
-    .cases-list-link {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-3);
-      position: relative;
+  .cell-toggle .icon::before,
+  .cell-toggle .icon::after {
+    content: '';
+    position: absolute;
+    background: var(--color-gold);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cell-toggle .icon::before {
+    width: 7px;
+    height: 1.4px;
+  }
+
+  .cell-toggle .icon::after {
+    width: 1.4px;
+    height: 7px;
+    transition: transform 220ms ease;
+  }
+
+  .case-row.is-open .cell-toggle .icon::after,
+  .case-row:hover .cell-toggle .icon::after {
+    transform: translate(-50%, -50%) scaleY(0);
+  }
+
+  .cell-toggle .label-more {
+    display: inline;
+  }
+
+  .cell-toggle .label-less {
+    display: none;
+  }
+
+  .case-row.is-open .cell-toggle .label-more,
+  .case-row:hover .cell-toggle .label-more {
+    display: none;
+  }
+
+  .case-row.is-open .cell-toggle .label-less,
+  .case-row:hover .cell-toggle .label-less {
+    display: inline;
+  }
+
+  @media (max-width: 780px) {
+    .cases-cols {
+      display: none;
     }
 
-    .cases-list-link:hover {
-      padding-left: 0;
+    .case-row-head {
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 'sector toggle' 'format format' 'results results';
+      row-gap: var(--space-2);
+      padding: var(--space-4) var(--space-2);
     }
 
-    .cases-list-sector {
-      flex: none;
-      padding-right: var(--space-8);
+    .cell-sector {
+      grid-area: sector;
     }
 
-    .cases-list-outcome {
-      white-space: normal;
-      overflow: visible;
-      text-overflow: clip;
-      line-height: 1.7;
-      padding-right: var(--space-8);
+    .cell-format {
+      grid-area: format;
+      padding-top: 0;
     }
 
-    .cases-list-arrow {
-      position: absolute;
-      top: var(--space-8);
-      right: 0;
+    .cell-results-wrap {
+      grid-area: results;
+      max-height: 0;
+    }
+
+    .case-row.is-open .cell-results-wrap {
+      max-height: 20em;
+      margin-top: var(--space-2);
+    }
+
+    .cell-toggle {
+      grid-area: toggle;
+      padding-top: 0;
     }
   }
 </style>

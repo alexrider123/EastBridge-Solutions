@@ -116,6 +116,7 @@ export const zh: Translation = {
       approach: '我们的做法',
       challenge: '核心挑战',
       result: '成果',
+      results: '成果',
       atAGlance: '概览',
       sector: '所属领域',
       companySize: '企业规模',

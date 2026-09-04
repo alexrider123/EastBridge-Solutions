@@ -114,6 +114,7 @@ export const en = {
       approach: 'Our Approach',
       challenge: 'The Challenge',
       result: 'Result',
+      results: 'Results',
       atAGlance: 'At a Glance',
       sector: 'Sector',
       companySize: 'Company Size',
