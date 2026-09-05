@@ -4,10 +4,11 @@ import Hero from '../../components/Hero.astro';
 import About from '../../components/About.astro';
 import HowWeSupport from '../../components/HowWeSupport.astro';
 import Experience from '../../components/Experience.astro';
-import InsightsTeaser from '../../components/InsightsTeaser.astro';
 import WhoWeWorkWith from '../../components/WhoWeWorkWith.astro';
-import SectionDivider from '../../components/SectionDivider.astro';
 import Contact from '../../components/Contact.astro';
+// Insights section temporarily removed from the site (not deleted — see
+// InsightsTeaser/InsightsIndex/InsightArticle components and
+// src/content/insights/, all still intact for when it comes back).
 import { useTranslations } from '../../i18n/utils';
 
 const t = useTranslations('en');
@@ -31,7 +32,5 @@ const servicesJsonLd = t.services.items.map((item) => ({
   <HowWeSupport t={t} />
   <Experience t={t} lang="en" />
   <WhoWeWorkWith t={t} />
-  <SectionDivider />
-  <InsightsTeaser lang="en" />
   <Contact t={t} />
 </BaseLayout>
