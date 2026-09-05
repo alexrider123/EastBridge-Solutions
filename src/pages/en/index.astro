@@ -6,16 +6,31 @@ import HowWeSupport from '../../components/HowWeSupport.astro';
 import Experience from '../../components/Experience.astro';
 import WhoWeWorkWith from '../../components/WhoWeWorkWith.astro';
 import Contact from '../../components/Contact.astro';
+// Insights section temporarily removed from the site (not deleted — see
+// InsightsTeaser/InsightsIndex/InsightArticle components and
+// src/content/insights/, all still intact for when it comes back).
 import { useTranslations } from '../../i18n/utils';
 
 const t = useTranslations('en');
+
+const servicesJsonLd = t.services.items.map((item) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: item.title,
+  description: item.body,
+  provider: {
+    '@type': 'Organization',
+    name: 'East Bridge Solutions',
+  },
+  areaServed: 'IL',
+}));
 ---
 
-<BaseLayout t={t} lang="en">
+<BaseLayout t={t} lang="en" jsonLd={servicesJsonLd}>
   <Hero t={t} />
   <About t={t} />
   <HowWeSupport t={t} />
-  <Experience t={t} />
+  <Experience t={t} lang="en" />
   <WhoWeWorkWith t={t} />
   <Contact t={t} />
 </BaseLayout>

@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import InsightArticle from '../../../components/InsightArticle.astro';
+import { zh } from '../../../i18n/zh';
+import { buildArticleJsonLd } from '../../../i18n/utils';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('insights', ({ data }) => data.lang === 'zh');
+  return entries.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const t = zh;
+const path = `insights/${entry.data.slug}/`;
+
+const jsonLd = buildArticleJsonLd({
+  headline: entry.data.title,
+  description: entry.data.description,
+  url: `https://eastbridge.solutions/zh/${path}`,
+  lang: 'zh',
+  datePublished: entry.data.publishDate.toISOString(),
+});
+---
+
+<BaseLayout
+  t={t}
+  lang="zh"
+  title={`${entry.data.title} | 东桥咨询`}
+  description={entry.data.description}
+  path={path}
+  jsonLd={jsonLd}
+>
+  <InsightArticle lang="zh" title={entry.data.title} publishDate={entry.data.publishDate}>
+    <Content />
+  </InsightArticle>
+</BaseLayout>

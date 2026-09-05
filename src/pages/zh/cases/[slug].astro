@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudyDetail from '../../../components/CaseStudyDetail.astro';
+import { zh } from '../../../i18n/zh';
+import { truncate, buildArticleJsonLd } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  const items = zh.experience.items.filter((item) => item.active);
+  return items.map((item, index) => ({
+    params: { slug: item.slug },
+    props: {
+      item,
+      prevItem: items[index - 1] ?? null,
+      nextItem: items[index + 1] ?? null,
+    },
+  }));
+}
+
+const { item, prevItem, nextItem } = Astro.props;
+const t = zh;
+
+const pageTitle = `${item.sector} — 案例研究 | 东桥咨询`;
+const pageDescription = truncate(`${item.sector}：${item.body}`, 155);
+const path = `cases/${item.slug}/`;
+
+const jsonLd = buildArticleJsonLd({
+  headline: `${item.sector} — 案例研究`,
+  description: pageDescription,
+  url: `https://eastbridge.solutions/zh/${path}`,
+  lang: 'zh',
+});
+---
+
+<BaseLayout t={t} lang="zh" title={pageTitle} description={pageDescription} path={path} jsonLd={jsonLd}>
+  <CaseStudyDetail t={t} lang="zh" item={item} prevItem={prevItem} nextItem={nextItem} />
+</BaseLayout>

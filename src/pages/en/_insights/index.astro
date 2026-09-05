@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import InsightsIndex from '../../../components/InsightsIndex.astro';
+import { en } from '../../../i18n/en';
+
+const t = en;
+const entries = await getCollection('insights', ({ data }) => data.lang === 'en');
+const pageTitle = 'Insights | East Bridge Solutions';
+const pageDescription =
+  'Long-form analysis on China–Israel market entry, cost structure, and cross-border business execution.';
+---
+
+<BaseLayout t={t} lang="en" title={pageTitle} description={pageDescription} path="insights/">
+  <InsightsIndex lang="en" entries={entries} />
+</BaseLayout>

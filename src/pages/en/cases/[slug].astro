@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CaseStudyDetail from '../../../components/CaseStudyDetail.astro';
+import { en } from '../../../i18n/en';
+import { truncate, buildArticleJsonLd } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  const items = en.experience.items.filter((item) => item.active);
+  return items.map((item, index) => ({
+    params: { slug: item.slug },
+    props: {
+      item,
+      prevItem: items[index - 1] ?? null,
+      nextItem: items[index + 1] ?? null,
+    },
+  }));
+}
+
+const { item, prevItem, nextItem } = Astro.props;
+const t = en;
+
+const pageTitle = `${item.sector} — Case Study | East Bridge Solutions`;
+const pageDescription = truncate(`${item.sector}: ${item.body}`, 155);
+const path = `cases/${item.slug}/`;
+
+const jsonLd = buildArticleJsonLd({
+  headline: `${item.sector} — Case Study`,
+  description: pageDescription,
+  url: `https://eastbridge.solutions/en/${path}`,
+  lang: 'en',
+});
+---
+
+<BaseLayout t={t} lang="en" title={pageTitle} description={pageDescription} path={path} jsonLd={jsonLd}>
+  <CaseStudyDetail t={t} lang="en" item={item} prevItem={prevItem} nextItem={nextItem} />
+</BaseLayout>

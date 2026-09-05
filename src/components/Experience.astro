@@ -1,11 +1,24 @@
 ---
 import type { Translation } from '../i18n/en';
+import type { Lang } from '../i18n/utils';
 
 interface Props {
   t: Translation;
+  lang: Lang;
 }
 
-const { t } = Astro.props;
+const { t, lang } = Astro.props;
+
+// Curated order for the homepage teaser only — independent of
+// t.experience.items' own order, which also drives the case-detail
+// pages' prev/next pager.
+const teaserOrderBySlug = ['industrial-manufacturing', 'publicly-traded-medical-group', 'automotive-ev-technology'];
+const activeItems = t.experience.items.filter((item) => item.active);
+const teaserItems = teaserOrderBySlug
+  .map((slug) => activeItems.find((item) => item.slug === slug))
+  .filter((item): item is (typeof activeItems)[number] => Boolean(item));
+const viewAllLabel = lang === 'zh' ? '查看全部案例研究 →' : 'View all case studies →';
+const swipeHint = lang === 'zh' ? '← 左右滑动 →' : '← swipe →';
 ---
 
 <section id="experience" class="section experience-section">
@@ -18,186 +31,26 @@ const { t } = Astro.props;
       <p class="exp-intro">{t.experience.intro}</p>
     </div>
 
-    <!-- Carousel widget -->
-    <div class="exp-widget">
+    <div class="exp-teaser-grid">
+      {teaserItems.map((item) => (
+        <a class="exp-teaser-card" href={`/${lang}/cases/${item.slug}/`}>
+          <span class="exp-teaser-sector">{item.sector}</span>
+          <p class="exp-teaser-outcome">{item.outcome}</p>
+          <span class="exp-teaser-cta" aria-hidden="true">
+            {lang === 'zh' ? '查看详情 →' : 'Read more →'}
+          </span>
+        </a>
+      ))}
+    </div>
 
-      <!-- All cards stacked in the same spot -->
-      <div class="exp-cards">
-        {t.experience.items.filter(item => item.active).map((item, i) => (
-          <div
-            class={`exp-card${i === 0 ? ' is-active' : ''}`}
-            data-index={String(i)}
-            aria-hidden={i !== 0 ? 'true' : 'false'}
-          >
-            <!-- Card header -->
-            <div class="exp-card-header">
-              <h3 class="exp-card-sector">{item.sector}</h3>
-            </div>
+    <p class="exp-swipe-hint" aria-hidden="true">{swipeHint}</p>
 
-            <button
-              class="exp-mobile-toggle"
-              type="button"
-              data-mobile-toggle
-              data-label-open={t.experience.mobileToggle.expand}
-              data-label-close={t.experience.mobileToggle.collapse}
-              aria-expanded="false"
-              aria-controls={`exp-engagement-${i}`}
-            >
-              <span class="exp-mobile-toggle-text">{t.experience.mobileToggle.expand}</span>
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-                <path d="M3 5.25L7 9.25L11 5.25" stroke="currentColor" stroke-width="1.4" stroke-linecap="square" stroke-linejoin="miter"/>
-              </svg>
-            </button>
-
-            <!-- Three columns -->
-            <div class="exp-card-body">
-              <div class="exp-col exp-col--client">
-                <span class="exp-col-label">{t.experience.fieldLabels.profile}</span>
-                <p class="exp-col-text">{item.profile}</p>
-              </div>
-              <div class="exp-col exp-col--engagement" id={`exp-engagement-${i}`}>
-                <span class="exp-col-label">{t.experience.fieldLabels.engagement}</span>
-                <p class="exp-col-text">{item.body}</p>
-              </div>
-              <div class="exp-col exp-col--outcome">
-                <span class="exp-col-label">{t.experience.fieldLabels.outcome}</span>
-                <p class="exp-outcome-text">{item.outcome}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <!-- Navigation bar -->
-      <div class="exp-nav">
-        <button class="exp-nav-btn exp-nav-prev" type="button" aria-label="Previous" disabled>
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
-            <path d="M8.5 1L1.5 8L8.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
-          </svg>
-        </button>
-
-        <div class="exp-dots">
-          {t.experience.items.filter(item => item.active).map((_, i) => (
-            <button
-              class={`exp-dot${i === 0 ? ' is-active' : ''}`}
-              data-index={String(i)}
-              type="button"
-              aria-label={`Go to slide ${i + 1}`}
-            ></button>
-          ))}
-        </div>
-
-        <button class="exp-nav-btn exp-nav-next" type="button" aria-label="Next">
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
-            <path d="M1.5 1L8.5 8L1.5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="miter"/>
-          </svg>
-        </button>
-      </div>
-
-    </div><!-- /.exp-widget -->
+    <div class="exp-view-all">
+      <a href={`/${lang}/cases/`} class="exp-view-all-link">{viewAllLabel}</a>
+    </div>
 
   </div>
 </section>
-
-<script>
-  const cards   = Array.from(document.querySelectorAll<HTMLElement>('.exp-card'));
-  const dots    = Array.from(document.querySelectorAll<HTMLButtonElement>('.exp-dot'));
-  const prevBtn = document.querySelector<HTMLButtonElement>('.exp-nav-prev')!;
-  const nextBtn = document.querySelector<HTMLButtonElement>('.exp-nav-next')!;
-  const widget  = document.querySelector<HTMLElement>('.exp-widget')!;
-
-  const TOTAL   = cards.length;
-  const ANIM_MS = 380;
-  let current   = 0;
-  let animating = false;
-
-  function updateNav() {
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === TOTAL - 1;
-  }
-
-  function collapseMobileCard(card: HTMLElement) {
-    card.classList.remove('is-expanded');
-    const toggle = card.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
-    if (!toggle) return;
-
-    toggle.setAttribute('aria-expanded', 'false');
-    const labelOpen = toggle.dataset.labelOpen ?? '';
-    const textNode = toggle.querySelector<HTMLElement>('.exp-mobile-toggle-text');
-    if (textNode) textNode.textContent = labelOpen;
-  }
-
-  function go(next: number, dir: 'fwd' | 'bwd') {
-    if (animating || next === current) return;
-    animating = true;
-
-    collapseMobileCard(cards[current]);
-    collapseMobileCard(cards[next]);
-
-    // Prepare entering card direction
-    cards[next].classList.add(dir === 'fwd' ? 'from-right' : 'from-left');
-
-    // Swap
-    cards[current].classList.remove('is-active');
-    cards[current].setAttribute('aria-hidden', 'true');
-    cards[next].classList.add('is-active');
-    cards[next].setAttribute('aria-hidden', 'false');
-
-    dots[current].classList.remove('is-active');
-    dots[next].classList.add('is-active');
-
-    current = next;
-    updateNav();
-
-    setTimeout(() => {
-      cards[current].classList.remove('from-right', 'from-left');
-      animating = false;
-    }, ANIM_MS);
-  }
-
-  prevBtn.addEventListener('click', () => go(current - 1, 'bwd'));
-  nextBtn.addEventListener('click', () => go(current + 1, 'fwd'));
-  dots.forEach((d, i) => d.addEventListener('click', () => go(i, i > current ? 'fwd' : 'bwd')));
-
-  cards.forEach((card) => {
-    const toggle = card.querySelector<HTMLButtonElement>('[data-mobile-toggle]');
-    if (!toggle) return;
-
-    toggle.addEventListener('click', () => {
-      const nextExpanded = !card.classList.contains('is-expanded');
-
-      cards.forEach((other) => {
-        if (other !== card) collapseMobileCard(other);
-      });
-
-      card.classList.toggle('is-expanded', nextExpanded);
-      toggle.setAttribute('aria-expanded', nextExpanded ? 'true' : 'false');
-
-      const label = nextExpanded
-        ? (toggle.dataset.labelClose ?? '')
-        : (toggle.dataset.labelOpen ?? '');
-      const textNode = toggle.querySelector<HTMLElement>('.exp-mobile-toggle-text');
-      if (textNode) textNode.textContent = label;
-    });
-  });
-
-  // Keyboard
-  widget.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'ArrowLeft' && current > 0)          go(current - 1, 'bwd');
-    if (e.key === 'ArrowRight' && current < TOTAL - 1) go(current + 1, 'fwd');
-  });
-
-  // Swipe
-  let tx = 0;
-  widget.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
-  widget.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - tx;
-    if (dx < -50 && current < TOTAL - 1) go(current + 1, 'fwd');
-    if (dx > 50  && current > 0)         go(current - 1, 'bwd');
-  });
-
-  updateNav();
-</script>
 
 <style>
   /* ─── Section ─── */
@@ -215,6 +68,7 @@ const { t } = Astro.props;
     color: var(--color-text-muted);
     font-style: italic;
     line-height: 1.65;
+    white-space: pre-line;
   }
 
   :lang(zh) .exp-intro {
@@ -222,331 +76,130 @@ const { t } = Astro.props;
     font-style: normal;
   }
 
-  /* ─── Widget container ─── */
-  .exp-widget {
-    background-color: var(--color-navy);
-  }
-
-  /* ─── Card stack ─── */
-  .exp-cards {
+  /* ─── Teaser grid: 3 larger cards on desktop ─── */
+  .exp-teaser-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background-color: var(--color-border);
+    border: 1px solid var(--color-border);
   }
 
-  .exp-card {
-    grid-column: 1;
-    grid-row: 1;
+  .exp-teaser-card {
     display: flex;
     flex-direction: column;
-
-    /* Hidden state */
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(18px);
-    transition:
-      opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 360ms cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s 360ms;
+    gap: var(--space-6);
+    background-color: var(--color-navy);
+    padding: var(--space-12) var(--space-8);
+    transition: background-color 180ms ease;
   }
 
-  .exp-card.is-active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-    transition:
-      opacity 360ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 360ms cubic-bezier(0.4, 0, 0.2, 1),
-      visibility 0s 0s;
+  .exp-teaser-card:hover {
+    background-color: var(--color-navy-mid);
   }
 
-  .exp-card.from-right { transform: translateX(18px); }
-  .exp-card.from-left  { transform: translateX(-18px); }
-
-  /* ─── Card header ─── */
-  .exp-card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-6) var(--space-8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .exp-card-sector {
+  .exp-teaser-sector {
     font-family: var(--font-serif);
-    font-size: 1.3rem;
-    font-weight: 500;
+    font-size: 1.25rem;
+    font-weight: 600;
     color: var(--color-off-white);
-    margin: 0;
-    line-height: 1.3;
+    line-height: 1.35;
   }
 
-  :lang(zh) .exp-card-sector {
+  :lang(zh) .exp-teaser-sector {
     font-family: var(--font-zh-serif);
   }
 
-  /* ─── Mobile details toggle ─── */
-  .exp-mobile-toggle {
+  .exp-teaser-outcome {
+    font-size: 0.94rem;
+    line-height: 1.8;
+    color: rgba(248, 246, 241, 0.7);
+    flex: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
+
+  :lang(zh) .exp-teaser-outcome {
+    font-family: var(--font-zh-sans);
+  }
+
+  .exp-teaser-cta {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--color-gold);
+  }
+
+  .exp-swipe-hint {
     display: none;
   }
 
-  .exp-mobile-toggle-text {
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-  }
-
-  /* ─── Three-column body ─── */
-  .exp-card-body {
-    display: grid;
-    grid-template-columns: 1fr 1.4fr 1fr;
-  }
-
-  .exp-col {
-    padding: var(--space-6) var(--space-8);
+  .exp-view-all {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
+    justify-content: center;
+    margin-top: var(--space-10);
   }
 
-  .exp-col--engagement,
-  .exp-col--outcome {
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  /* ─── Column labels ─── */
-  .exp-col-label {
-    font-size: 0.6rem;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(248, 246, 241, 0.4);
-    flex-shrink: 0;
-  }
-
-  /* ─── Body text (client + engagement) ─── */
-  .exp-col-text {
-    font-size: 0.88rem;
-    line-height: 1.75;
-    color: rgba(248, 246, 241, 0.75);
-    margin: 0;
-  }
-
-  :lang(zh) .exp-col-text {
-    font-family: var(--font-zh-sans);
-  }
-
-  /* ─── Outcome text: gold, prominent ─── */
-  .exp-outcome-text {
-    font-size: 1rem;
+  .exp-view-all-link {
+    font-size: 0.85rem;
     font-weight: 500;
-    line-height: 1.65;
-    color: var(--color-gold);
-    margin: 0;
-    white-space: pre-line;
+    letter-spacing: 0.04em;
+    color: var(--color-navy);
+    border-bottom: 1px solid var(--color-gold);
+    padding-bottom: 2px;
+    transition: color 180ms ease;
   }
 
-  :lang(zh) .exp-outcome-text {
-    font-family: var(--font-zh-sans);
-  }
-
-  /* ─── Navigation bar ─── */
-  .exp-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-6);
-    padding: var(--space-4) var(--space-6);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  /* ─── Arrow buttons ─── */
-  .exp-nav-btn {
-    width: 34px;
-    height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: transparent;
-    border: 1px solid rgba(201, 168, 76, 0.3);
-    color: rgba(248, 246, 241, 0.55);
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: border-color 200ms ease, color 200ms ease, opacity 200ms ease;
-  }
-
-  .exp-nav-btn:hover:not(:disabled) {
-    border-color: var(--color-gold);
+  .exp-view-all-link:hover {
     color: var(--color-gold);
   }
 
-  .exp-nav-btn:disabled {
-    opacity: 0.2;
-    cursor: not-allowed;
-  }
-
-  /* ─── Dots ─── */
-  .exp-dots {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .exp-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: rgba(248, 246, 241, 0.2);
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    transition: background 220ms ease, width 220ms ease, border-radius 220ms ease;
-  }
-
-  .exp-dot.is-active {
-    background: var(--color-gold);
-    width: 22px;
-    border-radius: 3px;
-  }
-
-  /* ─── Tablet: engagement full-width bottom row ─── */
-  @media (max-width: 860px) {
-    .exp-card-body {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto auto;
-    }
-
-    .exp-col--client    { grid-column: 1; grid-row: 1; }
-    .exp-col--outcome   { grid-column: 2; grid-row: 1; }
-    .exp-col--engagement {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-  }
-
-  /* ─── Mobile: single column ─── */
-  @media (max-width: 560px) {
-    .exp-card-body {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
-
-    .exp-card-header {
-      padding-left: var(--space-4);
-      padding-right: var(--space-4);
-    }
-
-    .exp-mobile-toggle {
+  /* ─── Mobile/tablet: horizontal swipe row instead of stacking ─── */
+  @media (max-width: 820px) {
+    .exp-teaser-grid {
       display: flex;
-      width: calc(100% - (var(--space-4) * 2));
-      margin: 0 var(--space-4);
-      padding: 0.85rem 0;
-      border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.12);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      background: transparent;
-      color: rgba(248, 246, 241, 0.8);
-      align-items: center;
-      justify-content: space-between;
       gap: var(--space-3);
-      cursor: pointer;
-      transition: color 220ms ease, border-color 220ms ease;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      background-color: transparent;
+      border: none;
+      scrollbar-width: none;
+      margin-inline: calc(-1 * var(--section-pad-h));
+      padding-inline: var(--section-pad-h);
+      padding-bottom: 2px;
     }
 
-    .exp-mobile-toggle svg {
-      color: var(--color-gold);
-      transition: transform 220ms ease;
-      flex-shrink: 0;
+    .exp-teaser-grid::-webkit-scrollbar {
+      display: none;
     }
 
-    .exp-card.is-expanded .exp-mobile-toggle {
-      color: var(--color-gold);
-      border-color: rgba(201, 168, 76, 0.45);
+    .exp-teaser-card {
+      flex: 0 0 82%;
+      scroll-snap-align: start;
     }
 
-    .exp-card.is-expanded .exp-mobile-toggle svg {
-      transform: rotate(180deg);
-    }
-
-    .exp-col {
-      padding-left: var(--space-4);
-      padding-right: var(--space-4);
-    }
-
-    .exp-col--client {
-      grid-column: auto;
-      grid-row: auto;
-      border-top: none;
-    }
-
-    .exp-col--outcome {
-      grid-column: auto;
-      grid-row: auto;
-      border-left: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .exp-col--engagement {
-      border-left: none;
-      border-top: none;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      padding-top: 0;
-      padding-bottom: 0;
-      transition:
-        max-height 280ms cubic-bezier(0.4, 0, 0.2, 1),
-        opacity 220ms ease,
-        padding 280ms cubic-bezier(0.4, 0, 0.2, 1),
-        border-color 220ms ease;
-    }
-
-    .exp-card.is-expanded .exp-col--engagement {
-      border-top: 1px solid rgba(201, 168, 76, 0.32);
-      max-height: 740px;
-      opacity: 1;
-      padding-top: var(--space-4);
-      padding-bottom: var(--space-4);
-    }
-
-    .exp-col--client .exp-col-text,
-    .exp-col--outcome .exp-outcome-text {
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .exp-col--client .exp-col-text {
-      -webkit-line-clamp: 4;
-    }
-
-    .exp-col--outcome .exp-outcome-text {
-      -webkit-line-clamp: 3;
-    }
-
-    .exp-card.is-expanded .exp-col--client .exp-col-text,
-    .exp-card.is-expanded .exp-col--outcome .exp-outcome-text {
+    .exp-swipe-hint {
       display: block;
-      overflow: visible;
-    }
-
-    :lang(zh) .exp-mobile-toggle-text {
-      font-family: var(--font-zh-sans);
-      letter-spacing: 0.08em;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      color: var(--color-text-muted);
+      margin-top: var(--space-4);
     }
   }
 
-  /* ─── Reduced motion ─── */
-  @media (prefers-reduced-motion: reduce) {
-    .exp-card {
-      transform: none !important;
-      transition: opacity 200ms ease, visibility 0s 200ms;
+  @media (max-width: 480px) {
+    .exp-teaser-card {
+      flex-basis: 88%;
     }
-    .exp-card.is-active {
-      transition: opacity 200ms ease, visibility 0s 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .exp-teaser-grid {
+      scroll-behavior: auto;
     }
   }
 </style>
