@@ -123,7 +123,7 @@ export const en = {
       timelineHeading: 'Engagement Timeline',
     },
     intro:
-      "Seven representative engagements, among others. Each one a different entry point — audit, introduction, negotiation, or standing presence on the ground.\nOur clients' identities are protected by NDA. The following reflects the nature, scale, and outcomes of engagements we have supported.",
+      "Seven representative engagements, among others. Each one a different entry point — audit, introduction, negotiation, or standing presence on the ground.\nMost engagements are protected by NDAs — a few are named with our clients' permission. The following reflects the nature, scale, and outcomes of engagements we have supported.",
     items: [
       {
         active: true,
