@@ -234,7 +234,7 @@ export const en = {
           'Dajing Medical — a Chinese manufacturer of next-generation endoscopic camera systems — with no distributor and no prior sales in Israel.',
         body: "We conducted a full regulatory review of the company and its products against Israeli Ministry of Health requirements, then led business development efforts across Israel to identify relevant prospects and decision-makers.",
         outcome:
-          "Secured evaluation by Herzliya Medical Center (HMC), a leading private Israeli hospital, of Dajing Medical's endoscopic camera systems — delivered through regulatory groundwork, due diligence, and negotiations conducted entirely on the company's behalf, in a market where it had no distributor, no prior sales, and no existing contacts.",
+          "Secured evaluation by Herzliya Medical Center (HMC), Israel's largest private hospital with over 5,000 employees, of Dajing Medical's endoscopic camera systems — delivered through regulatory groundwork, due diligence, and negotiations conducted entirely on the company's behalf, in a market where it had no distributor, no prior sales, and no existing contacts.",
         mandate:
           'Dajing Medical, a Chinese manufacturer of next-generation endoscopic camera systems, sought to enter the Israeli market with no existing distributor and no prior sales in the country — starting from a blank slate on both the regulatory and commercial sides.',
         approach:
@@ -246,7 +246,7 @@ export const en = {
           { label: 'Regulatory review', description: "Reviewed the company and its products against Israeli Ministry of Health requirements." },
           { label: 'Business development across Israel', description: 'Identified and approached relevant prospects for the endoscopic camera systems.' },
           { label: 'Negotiation with a lead', description: 'Entered negotiation with a qualified prospect identified through the business development effort.' },
-          { label: 'First units under evaluation at HMC', description: 'Herzliya Medical Center (HMC), a leading private hospital, began probing the first test units.' },
+          { label: 'First units under evaluation at HMC', description: "Herzliya Medical Center (HMC), Israel's largest private hospital with over 5,000 employees, began probing the first test units." },
         ],
         companySize: 'Endoscopic camera systems manufacturer',
         engagementFormat: 'Access & Introductions',

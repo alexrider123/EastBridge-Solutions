@@ -233,7 +233,7 @@ export const zh: Translation = {
           'Dajing Medical——一家中国内窥镜摄像系统制造商——在以色列尚无经销商，也从未有过销售记录。',
         body: '我们针对该公司及其产品，依照以色列卫生部相关要求开展了全面的合规审查，随后在以色列全境展开业务拓展，识别相关潜在客户与决策者。',
         outcome:
-          '促成以色列领先私立医院Herzliya Medical Center（HMC）对Dajing Medical内窥镜摄像系统的评估——这一成果建立在我们代表该公司独立完成的合规审查、尽职调查与谈判之上，而彼时Dajing Medical在当地既无经销商、也从未有过销售记录，更谈不上任何既有人脉。',
+          '促成以色列最大私立医院Herzliya Medical Center（HMC，员工逾5,000人）对Dajing Medical内窥镜摄像系统的评估——这一成果建立在我们代表该公司独立完成的合规审查、尽职调查与谈判之上，而彼时Dajing Medical在当地既无经销商、也从未有过销售记录，更谈不上任何既有人脉。',
         mandate:
           'Dajing Medical是一家中国内窥镜摄像系统制造商，希望进入以色列市场，但在当地尚无经销商，也从未有过销售记录——这意味着监管与商务两方面都需要从零开始建立。',
         approach:
@@ -245,7 +245,7 @@ export const zh: Translation = {
           { label: '合规审查', description: '依照以色列卫生部相关要求，对该公司及其产品展开审查。' },
           { label: '以色列全境业务拓展', description: '针对内窥镜摄像系统，识别并接触相关潜在客户。' },
           { label: '与意向客户展开谈判', description: '与通过业务拓展识别出的合格意向客户展开谈判。' },
-          { label: 'HMC开始评估首批样机', description: '以色列领先的私立医院Herzliya Medical Center（HMC）开始对首批测试样机进行评估。' },
+          { label: 'HMC开始评估首批样机', description: '以色列最大私立医院Herzliya Medical Center（HMC，员工逾5,000人）开始对首批测试样机进行评估。' },
         ],
         companySize: '内窥镜摄像系统制造商',
         engagementFormat: '资源触达与定向引荐',
