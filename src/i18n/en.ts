@@ -184,7 +184,7 @@ export const en = {
           'Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China\'s major hospitals, distributed across 70+ countries.',
         body: 'The client was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. We conducted targeted technical and commercial due diligence, and assessed strategic fit in coordination with a leading Israeli medical investment fund.',
         outcome:
-          "Delivered a fully independent view of the target's technology readiness, execution risk, and capital requirements, enabling a well-informed decision.\nThe client ultimately chose not to proceed with the acquisition at this time.",
+          "Delivered a fully independent view of the target's technology readiness, execution risk, and capital requirements, enabling a well-informed decision.",
         mandate:
           "A Shenzhen-based integrated medical and aesthetic devices group — 1,300+ employees, five manufacturing sites, products used in 85% of China's major hospitals — was evaluating a strategic investment in an Israeli pre-clinical laser technology company, including potential acquisition, minority investment, or distribution partnership. The startup's technology presented a strategic fit for the client's planned expansion into the US market.",
         approach:

@@ -82,21 +82,65 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
 </section>
 
 <script>
+  // A single `is-open` class drives both the hover preview (desktop) and the
+  // tap-to-expand behavior (touch) — real mouse hover sets it, taps toggle it
+  // directly. There is no separate CSS :hover state, which is what caused the
+  // "stuck open" bug on touch screens (a lingering :hover match after a tap
+  // made the row look open even once `is-open` had been removed by the Close
+  // button).
+  //
+  // Pointer Events (not mouseenter/mouseleave) are used to detect hover,
+  // gated to pointerType === 'mouse': touch taps also fire synthetic
+  // mouseenter/mouseover events for legacy-site compatibility, which would
+  // otherwise mark the row "open" before the tap's own click ever runs,
+  // making the very first tap navigate immediately instead of previewing.
+  //
+  // Focus is deliberately NOT used to pre-open the row: tapping a link also
+  // focuses it, and focus/blur firing around the same tap raced against the
+  // click handler's own open/close state and reintroduced the same bug.
   document.querySelectorAll<HTMLElement>('[data-case-row]').forEach((row) => {
+    const toggleBtn = row.querySelector<HTMLElement>('[data-case-toggle]');
+
+    const openPreview = () => {
+      row.classList.add('is-open');
+      toggleBtn?.setAttribute('aria-expanded', 'true');
+    };
+    const closePreview = () => {
+      row.classList.remove('is-open');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+    };
+
+    row.addEventListener('pointerenter', (event) => {
+      if ((event as PointerEvent).pointerType === 'mouse') openPreview();
+    });
+    row.addEventListener('pointerleave', (event) => {
+      if ((event as PointerEvent).pointerType === 'mouse') closePreview();
+    });
+
     row.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
-      if (target.closest('a')) return;
 
-      // Once a row is open, the entire expanded block navigates on click —
-      // only the dedicated Details/Close toggle keeps its own behavior.
-      if (row.classList.contains('is-open') && !target.closest('[data-case-toggle]')) {
+      // The Details/Close toggle always just opens or closes — never navigates.
+      if (target.closest('[data-case-toggle]')) {
+        if (row.classList.contains('is-open')) closePreview();
+        else openPreview();
+        return;
+      }
+
+      // Already open (via hover or a previous tap) — any click navigates,
+      // including the title link and "View full case study" link following
+      // their own href natively.
+      if (row.classList.contains('is-open')) {
+        if (target.closest('a')) return;
         const href = row.dataset.href;
         if (href) window.location.href = href;
         return;
       }
 
-      const open = row.classList.toggle('is-open');
-      row.querySelector('[data-case-toggle]')?.setAttribute('aria-expanded', String(open));
+      // Still closed: first click/tap previews instead of navigating —
+      // identical whether it lands on the title or anywhere else in the row.
+      if (target.closest('a')) event.preventDefault();
+      openPreview();
     });
   });
 </script>
@@ -152,7 +196,6 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     cursor: pointer;
   }
 
-  .case-row:hover,
   .case-row.is-open {
     background-color: var(--color-warm-gray);
   }
@@ -178,7 +221,6 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     font-family: var(--font-zh-serif);
   }
 
-  .case-row:hover .cell-sector a,
   .case-row.is-open .cell-sector a {
     color: var(--color-gold);
   }
@@ -215,12 +257,10 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     font-family: var(--font-zh-sans);
   }
 
-  .case-row:hover .cell-results,
   .case-row.is-open .cell-results {
     color: var(--color-navy);
   }
 
-  .case-row:hover .cell-results-wrap,
   .case-row.is-open .cell-results-wrap {
     max-height: 20em;
   }
@@ -240,7 +280,6 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     font-family: var(--font-zh-sans);
   }
 
-  .case-row:hover .cell-results-link,
   .case-row.is-open .cell-results-link {
     opacity: 1;
   }
@@ -299,8 +338,7 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     transition: transform 220ms ease;
   }
 
-  .case-row.is-open .cell-toggle .icon::after,
-  .case-row:hover .cell-toggle .icon::after {
+  .case-row.is-open .cell-toggle .icon::after {
     transform: translate(-50%, -50%) scaleY(0);
   }
 
@@ -312,13 +350,11 @@ const viewCaseLabel = lang === 'zh' ? '查看完整案例' : 'View full case stu
     display: none;
   }
 
-  .case-row.is-open .cell-toggle .label-more,
-  .case-row:hover .cell-toggle .label-more {
+  .case-row.is-open .cell-toggle .label-more {
     display: none;
   }
 
-  .case-row.is-open .cell-toggle .label-less,
-  .case-row:hover .cell-toggle .label-less {
+  .case-row.is-open .cell-toggle .label-less {
     display: inline;
   }
 
